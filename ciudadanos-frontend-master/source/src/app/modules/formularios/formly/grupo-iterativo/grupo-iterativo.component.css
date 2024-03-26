@@ -1,0 +1,26 @@
+.contenedor-grupo-iterativo h4{
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: "OpenSans", Helvetica, Arial, sans-serif!important;
+    margin: 2em 0 0;
+}
+.contenedor-grupo-iterativo p{
+    font-size: 0.9em;
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+.contenedor-grupo-iterativo .contenedor-next-prev{
+    display: none!important;
+    opacity: 0!important;
+}
+
+.contenedor-grupo-iterativo h3.titulo-detalle-tramite-form{
+    font-size: 1.1em;
+}
+
+.contenedor-grupo-iterativo .mensajeSubsanacion .icono-multilinea {
+    color: #606060;
+    float: left;
+    margin-right: 5px;
+}

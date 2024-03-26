@@ -1,0 +1,108 @@
+.home-container {
+  padding: 30px 190px;
+}
+
+.table-container {
+  width: 100%;
+}
+
+table {
+  min-width: 100%;
+}
+
+thead {
+  background-color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 100%;
+  position: sticky;
+}
+
+th {
+  margin: 0px 12px;
+  padding: 12px 10px; 
+  text-align: center; 
+  max-width: 100%;
+  position:sticky;
+}
+
+tr {
+  margin: 0px 12px;
+}
+
+td {
+  padding: 18px;
+  margin: 0px 10px;
+  text-align: center; 
+}
+
+td.dias {
+  white-space: nowrap;
+}
+
+td.horario {
+  white-space: nowrap;
+}
+
+td.dias table,
+td.horario table {
+  width: 100%;
+}
+
+td.dias table p,
+td.horario table p {
+  margin: 0;
+}
+
+td.sede {
+  max-width: 280px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+td.direccion{
+  max-width: 200px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+th,
+td {
+  white-space: nowrap; 
+  text-align: center;
+}
+
+tr.show-details td {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+td div.instance-name,
+tr.show-details td {
+  width: 100%;
+}
+
+.instance-name {
+  display: flex;
+  height: 100%;
+  margin-left: 50px;
+}
+
+td div.instance-name button {
+  margin-top: 0; 
+  margin-left: auto; 
+  }
+
+td div.sede-details {
+  display: flex;
+  gap: 15px; 
+}
+
+td div.sede-details button {
+  margin-top: 0; 
+}
+
+.horario {
+  white-space: pre-line;
+}

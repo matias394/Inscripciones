@@ -1,0 +1,136 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+body {
+  margin: 0;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background-color: #f4f6f9;
+}
+
+.custom-icon {
+  display: inline !important;
+  padding: 5px;
+}
+
+// INSCRIPCIONES STEPPER
+
+.stepper .step-title {
+  font-size: 16px;
+  font-weight: normal;
+  pointer-events: none !important;
+}
+
+.step .step-bullet {
+  z-index: 2;
+}
+
+.step.completed .step-bullet {
+  color: #ffffff !important;
+  background-color: #23c16b !important;
+}
+.stepper .steps .step.completed + .step:after {
+  background-color: #cdd1d6 !important;
+}
+
+.stepper-body {
+  padding: 1rem 0 !important;
+}
+
+.stepper .steps .step:after {
+  content: "" !important;
+  position: absolute;
+  width: 100% !important;
+  height: 3px !important;
+  background-color: #b3babe !important;
+  top: 50% !important;
+  left: -50% !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+.stepper .steps .step:first-child:after {
+  content: none !important;
+}
+
+.step[_ngcontent-xxh-c122] {
+  position: relative !important;
+}
+
+.stepper .steps .step {
+  width: 33.33% !important;
+  border: none !important;
+  background-color: transparent !important;
+  height: 2.625rem !important;
+  pointer-events: none !important;
+}
+
+.stepper .steps .step.active {
+  background-color: transparent !important;
+  pointer-events: none !important;
+}
+
+.step-bullet {
+  background-color: #ffdb2e !important;
+  color: #38485c !important;
+  pointer-events: none !important;
+}
+
+.step-bullet-done {
+  background-color: #23c16b !important;
+  color: #ffffff !important;
+  pointer-events: none !important;
+}
+
+.step-bullet-disabled {
+  background-color: #cdd1d6 !important;
+  color: #ffffff !important;
+  pointer-events: none !important;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.img-disabled {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+thead {
+  background-color: #ffffff !important;
+}
+
+td {
+  padding: 18px;
+}
+
+.table-btn {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.has-error-input {
+  box-shadow: 0 0 0 4px #ce0000;
+}
+
+.mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled:checked
+  + .mdc-radio__background
+  .mdc-radio__outer-circle {
+  border-color: #414141 !important;
+}
+
+.mat-mdc-radio-button
+  .mdc-radio
+  .mdc-radio__native-control:enabled
+  + .mdc-radio__background
+  .mdc-radio__inner-circle {
+  border-color: #414141 !important;
+}

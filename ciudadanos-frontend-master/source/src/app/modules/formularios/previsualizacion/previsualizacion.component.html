@@ -1,0 +1,22 @@
+<div class="container bg-light p-4">
+  <div *ngIf="fields.length > 0">
+    <!-- <div class="flex-column">
+      <h1 class="-mb-3">Formulario de Curso #{{formId}}</h1>
+      <p>
+        Por favor, ingrese los datos requeridos por el curso.
+      </p>
+    </div> -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit(model)" class="mt-8 p-5 bg-white rounded">
+        <formly-form [form]="form" [fields]="fields" [model]="model">
+        </formly-form>
+        <!-- <button class="btn btn-primary" (click)="nextStep()">Siguiente</button> -->
+        <button type="submit" class="btn btn-primary submit-button">Submit</button>
+      </form>
+    </div>
+    <div *ngIf="fields.length <= 0">
+      <h1>
+        Formulario no disponible.
+      </h1>
+      <!-- <button class="btn btn-primary submit-button" (click)="goBack()">Regresar</button> -->
+  </div>
+</div>

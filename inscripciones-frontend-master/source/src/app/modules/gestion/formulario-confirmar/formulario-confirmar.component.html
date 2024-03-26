@@ -1,0 +1,80 @@
+<div class="bg-light p-4">
+  <div class="flex-column">
+    <h1>Confirmación de formulario</h1>
+  </div>
+  <form
+    #formCurso="ngForm"
+    class="p-4 bg-white mt-5 rounded-3 row col-6 flex-column"
+  >
+    <div class="p-5">
+      <table class="table table-bordered table-striped w-75">
+        <tbody>
+          <tr>
+            <td>Curso</td>
+            <td>{{title}}</td>
+          </tr>
+          <tr>
+            <td>Cantidad de cupos</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Para</td>
+            <td>{{name}} {{lastname}}</td>
+          </tr>
+          <tr>
+            <td>Sede</td>
+            <td>{{sede}}</td>
+          </tr>
+          <tr>
+            <td>Fecha de inicio</td>
+            <td>{{fechaInicio}}</td>
+          </tr>
+          <tr>
+            <td>Horario</td>
+            <td>{{horario}}</td>
+          </tr>
+          <tr>
+            <td>Modalidad</td>
+            <td>{{modalidad}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row col-12 mt-5">
+        <div class="d-flex flex-direction-row">
+          <button
+            type="button"
+            class="btn btn-secondary mr-3"
+            [routerLink]="['../']"
+          >
+            Volver
+          </button>
+          <button class="btn btn-primary"
+          (click)="isInscrito()"
+          >Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row col-9 ml-2">
+      <div *ngIf="correct" class="form-group col-12">
+        <app-alertas
+          [message]="'Inscripción exitosa'"
+          [type]="'alert alert-success'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+
+      <div class="row col-12">
+        <div *ngIf="error" class="form-group col-12">
+          <app-alertas
+            [message]="message"
+            [type]="'alert alert-danger'"
+            (onClose)="closeAlert()"
+          ></app-alertas>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

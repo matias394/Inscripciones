@@ -1,0 +1,157 @@
+<div class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">Crear sede</h1>
+    <p>
+      Para agregar una sede al sistema complete el formulario a continuación
+    </p>
+  </div>
+  <form
+    class="mt-8 p-5 bg-white rounded"
+    #formSede="ngForm"
+    (ngSubmit)="createSede(formSede)"
+  >
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="name-input">Nombre</label>
+        <div class="form-search position-relative">
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="nombre"
+            name="nombre"
+            placeholder="Ingresá nombre de la sede"
+            [(ngModel)]="nombre"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label for="name-input">Dirección</label>
+        <div class="form-search position-relative">
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="direccion"
+            name="direccion"
+            placeholder="Ingresá dirección"
+            [(ngModel)]="direccion"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="name-input">Piso</label>
+        <div class="form-search position-relative">
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="piso"
+            name="piso"
+            placeholder="Ingresá número del piso"
+            [(ngModel)]="piso"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label for="name-input">Contacto</label>
+        <div class="form-search position-relative">
+          <select
+            class="custom-select mt-2"
+            id="contacto"
+            name="contacto"
+            ngModel
+            [(ngModel)]="selectedOption"
+            ngModelOptions="{standalone: true}"
+            required
+          >
+            <option>Seleccionar</option>
+            <option *ngFor="let s of opcionesContacto" [ngValue]="s.id">
+              {{ s.nombre }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <div class="form-group col-6" *ngIf="selectedOption === 1">
+        <label for="perfil">Email</label>
+        <input
+          type="email"
+          class="form-control mt-2"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="sohopalermo@ejemplo.ar"
+          required
+        />
+      </div>
+
+      <div class="form-group col-6" *ngIf="selectedOption === 2">
+        <label for="perfil">Teléfono</label>
+        <input
+          type="text"
+          class="form-control mt-2"
+          id="telefono"
+          name="telefono"
+          placeholder="1122334455"
+          [(ngModel)]="telefono"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-12">
+        <div class="btn-wrapper d-flex justify-content-start mt-5">
+          <button type="button" class="btn btn-link mr-4" (click)="openModal()">
+            Cancelar
+          </button>
+          <app-modals
+            *ngIf="modalSwitch === true"
+            [title]="modalTitle"
+            [message]="modalMessage"
+            (triggerCancel)="closeModal()"
+            (triggerConfirm)="redirectToPage()"
+          ></app-modals>
+          <button
+            type="submit"
+            [disabled]="formSede.invalid || disableButton"
+            class="btn btn-primary"
+          >
+            Crear
+          </button>
+        </div>
+        <div class="row">
+          <div class="form-group col-6 mt-5">
+            <div *ngIf="confirm">
+              <app-alertas
+                [message]="'Sede creada exitosamente'"
+                [type]="'alert alert-success'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+
+            <div *ngIf="error">
+              <app-alertas
+                [message]="'Nombre de sede ya existente'"
+                [type]="'alert alert-danger'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  $(function () {
+    $(".selectpicker").selectpicker();
+  });
+</script>

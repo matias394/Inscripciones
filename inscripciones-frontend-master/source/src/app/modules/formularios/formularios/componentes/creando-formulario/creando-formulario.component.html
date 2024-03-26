@@ -1,0 +1,154 @@
+<div class="container bg-light p-4">
+  <div class="flex-column">
+    <app-alertas
+      *ngIf="respuesta"
+      [type]="type"
+      [message]="message"
+    ></app-alertas>
+
+    <h1 class="-mb-3">{{ titulo }}</h1>
+
+    <!-- Top -->
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12">
+        <div class="form-wrapper row" [formGroup]="form">
+          <div class="form-group col-5">
+            <label class="mb-2" for="nombre">Nombre*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombre"
+              maxlength="100"
+              formControlName="nombre"
+            />
+          </div>
+          <div class="form-group col-6" *ngIf="codigoId">
+            <label class="mb-2" for="nombre">Codigo</label>
+            <input
+              type="text"
+              class="form-control"
+              id="codigo"
+              maxlength="100"
+              formControlName="codigo"
+            />
+          </div>
+          <div
+            class="invalid-msg col-10"
+            [ngClass]="classCol()"
+            *ngIf="nombre.invalid && (nombre.touched || nombre.dirty)"
+          >
+            <span class="danger" *ngIf="nombre.errors['required']"
+              >* Nombre es requerido</span
+            >
+            <span class="danger" *ngIf="nombre.errors['invalidName']"
+              >* Nombre inválido</span
+            >
+          </div>
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <div id="botones" class="row justify-content-end mb-2 col-11">
+      <div class="btn-wrapper">
+        <button
+          *ngIf="edicion"
+          title="Exportar"
+          class="btn btn-link m-1"
+          (click)="exportar()"
+        >
+          <i class="bx bx-export" aria-hidden="true"></i>
+        </button>
+
+        <label
+          *ngIf="usuarioPuedeEditar"
+          for="file-upload"
+          title="Importar"
+          class="btn btn-link m-1"
+        >
+          <i class="bx bx-import" aria-hidden="true"></i>
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          (change)="importar($event)"
+          multiple="false"
+          accept="application/json"
+        />
+
+        <button
+          title="Previsualizar"
+          class="btn btn-link m-1"
+          (click)="previsualizar()"
+          type="button"
+        >
+          <i class="bx bx-low-vision" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <section class="form-wrapper bg-light p-4">
+      <div class="form-group">
+        <div class="container">
+          <div class="row" #contenedorRelativo>
+            <div class="col-11 paddingR0">
+              <app-contenedor-secciones-formulario
+                [usuarioPuedeEditar]="usuarioPuedeEditar"
+              ></app-contenedor-secciones-formulario>
+            </div>
+            <div class="col-1 text-right">
+              <app-contenedor-barra-lateral
+                *ngIf="usuarioPuedeEditar"
+                [contenedor]="contenedorRelativo"
+              ></app-contenedor-barra-lateral>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards-container justify-content-start">
+      <div class="container">
+        <!-- Botonera -->
+        <div class="row">
+          <div class="col-6">
+            <button
+              class="btn btn-link m-1"
+              type="button"
+              (click)="openModal()"
+            >
+              <i class="bx bx-arrow-back" aria-hidden="true"></i>
+              Cancelar
+            </button>
+            <app-modals
+              *ngIf="modalSwitch === true"
+              [title]="modalTitle"
+              [message]="modalMessage"
+              (triggerCancel)="closeModal()"
+              (triggerConfirm)="volver()"
+            ></app-modals>
+          </div>
+          <div class="row justify-content-end mb-2 col-5">
+            <div class="btn-wrapper">
+              <button
+                *ngIf="usuarioPuedeEditar"
+                title="Guardar"
+                class="btn btn-primary m-1"
+                type="button"
+                (click)="guardar()"
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <ng-template componenteDinamico></ng-template>
+    <button
+      class="btn-primary fixed-bottom m-5 redondo"
+      (click)="irInicioPagina()"
+    >
+      <i class="bx bx-chevrons-up" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>

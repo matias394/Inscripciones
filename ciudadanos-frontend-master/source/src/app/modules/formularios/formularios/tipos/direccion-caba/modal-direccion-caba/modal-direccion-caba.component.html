@@ -1,0 +1,66 @@
+<app-modal-tipo-campo-formulario>
+  <div class="app-tipo-campo-formulario-header text-center">
+    <h3>Dirección CABA</h3>
+  </div>
+
+  <!-- Formulario general -->
+  <div class="app-tipo-campo-formulario-general">
+    <form [formGroup]="formGeneral">
+      <div class="form-wrapper bg-light p-4">
+        <div class="form-group" [ngClass]="getCssClases('nombre')">
+          <label for="nombre">Nombre único *
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true" title="El nombre debe ser único."></i>
+            </span>
+          </label>
+          <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre" maxlength="100" />
+        </div>
+        <div class="invalid-msg" *ngIf="nombre.invalid && (nombre.touched || nombre.dirty )">
+          <span class="danger" *ngIf="nombre.errors">*</span>
+          Nombre es requerido
+        </div>
+        <!-- <div class="form-group" [ngClass]="getCssClases('nombre')">
+        <label for="nombre">
+          Nombre único *
+          <span class="icon">
+            <i class="fa fa-question-circle" aria-hidden="true"
+              title="El nombre debe ser único."></i>
+          </span>
+        </label>
+        <input type="text" id="nombre" name="nombre" formControlName="nombre" maxlength="100">
+        <app-validador-campo-formulario [mostrarError]="hasErrors('nombre')" [mensajeError]="errores.nombre">
+        </app-validador-campo-formulario>
+        <app-validador-campo-formulario [mostrarError]="nombreCampoExistente" [mensajeError]="errores.nombreUnico">
+        </app-validador-campo-formulario>
+      </div> -->
+
+        <!-- Subsanable -->
+        <hr>
+        <div class="form-group custom-control custom-switch" [ngClass]="getCssClases('esSubsanable')">
+          <input type="checkbox" class="custom-control-input" id="esSubsanable" name="esSubsanable"
+            formControlName="esSubsanable">
+          <label class="custom-control-label" for="esSubsanable">Es subsanable
+            <span class="icon">
+              <i class="fa fa-question-circle" aria-hidden="true"
+                title="Indica que el campo podrá ser seleccionado para la solicitud de correcciones de un trámite creado con errores."></i>
+            </span>
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-tipo-campo-formulario-visibilidad">
+    <app-tipo-campo-formulario-visibilidad [modoEdicion]="modoEdicion">
+    </app-tipo-campo-formulario-visibilidad>
+  </div>
+
+  <div class="app-tipo-campo-formulario-footer">
+    <button type="button" class="btn btn-secondary mr-2" (click)="cerrar()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary" (click)="guardar()">
+      Aceptar
+    </button>
+  </div>
+</app-modal-tipo-campo-formulario>

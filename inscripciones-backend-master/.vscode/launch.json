@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-InscripcionesWsApp<InscripcionesWsApp>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.asi.inscripciones.mvp.InscripcionesWsApp",
+            "projectName": "InscripcionesWsApp",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-InscripcionesWsApp<source>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.asi.inscripciones.mvp.InscripcionesWsApp",
+            "projectName": "source",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

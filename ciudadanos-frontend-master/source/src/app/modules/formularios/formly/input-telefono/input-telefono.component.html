@@ -1,0 +1,54 @@
+<div *ngIf="mostrarElemento">
+  <label>{{to.label}}{{to.required ? ' *' : ''}}</label>
+  <br />
+  <small>{{ descripciones }}</small>
+  <div class="grid-wraper">
+    <div class="container">
+      <div class="row" [ngClass]="{'required': to.required}" [formGroup]="formTelefono">
+        <div class="col-4 col-md-2 ml-n3"> 
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="codigopais"
+            (keyup)="validateFormat('codigopais')"
+            maxlength="4"
+            placeholder="+54" />
+        </div>
+        <div class="col-4 col-md-2 ml-lg-n3 ml-n3">
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="codigoarea" 
+            (keyup)="validateFormat('codigoarea')" 
+            maxlength="4"
+            placeholder="11"/>
+        </div>
+        <div class="col-4 col-md-3 ml-n3 ml-xl-n3"> 
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="numerotelefono" 
+            (keyup)="validateFormat('numerotelefono')" 
+            maxlength="8"
+            placeholder="99999999"/>
+        </div>
+        <div class="col-1 col-md-1 ml-n3">
+          <!-- <div [ngClass]="editarEnMiba === true ? 'enabled' : 'disabled'" class="col col-sm-auto container-btn-miba">
+            <button 
+              class="btn btn-success btn-miba" 
+              type="button" 
+              [disabled]="isButtonDisabled()" 
+              (click)="redirigirMiba()"
+              title="Editar en miBA">
+              <i class="bx bxs-pencil"></i>
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div *ngIf="errorPhone">
+      <span class="form-control-feedback is-invalid"></span>
+      <div class="invalid-feedback">{{ errorPhoneMessage }}</div>
+    </div>
+  </div>
+</div>

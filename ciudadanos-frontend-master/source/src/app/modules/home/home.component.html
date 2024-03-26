@@ -1,0 +1,40 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+
+<app-banner [image]="image" [description]="description"></app-banner>
+
+<ng-template #templateDesk>
+  <app-table
+    [headData]="headData"
+    [bodyData]="listFiltered"
+    [currentPage]="currentPage"
+  ></app-table>
+</ng-template>
+
+<ng-template #templateMob>
+  <card-inscripciones
+    [data]="listFiltered"
+    messageButton="Inscribíte"
+  ></card-inscripciones>
+</ng-template>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>
+
+<app-pagination
+  *ngIf="listFiltered.length > 0"
+  [allPagesNumber]="allPages"
+  (changePage)="onPageChange($event)"
+  [_currentPage]="currentPage"
+></app-pagination>
+
+<div class="d-flex justify-content-start" style="padding: 5px 190px">
+  <div class="form-group col-5" *ngIf="inscrito">
+    <app-alertas
+      [message]="message"
+      [showCloseButton]="true"
+      [type]="'alert alert-success'"
+      (onClose)="closeAlert()"
+    ></app-alertas>
+  </div>
+</div>

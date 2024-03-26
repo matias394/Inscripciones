@@ -1,0 +1,73 @@
+.campo-formulario {
+  background: white;
+}
+
+.seccion-input {
+  padding: 20px !important;
+  position: relative;
+  max-width: calc(100% - 33px);
+}
+
+.cover-controles-campo-formulario {
+  background: none;
+  position: absolute;
+  display: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.campo-formulario.hover .cover-controles-campo-formulario {
+  background: #aae9f54d;
+  display: block !important;
+}
+
+.campo-formulario.selected .cover-controles-campo-formulario {
+  background: #00c9ff4d;
+  display: block !important;
+}
+
+
+.drag-icon-container {
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 0 !important;
+}
+
+.drag-icon {
+  position: relative;
+  width: 23px;
+  height: 60px;
+  cursor: move;
+  margin-top: 0.6rem;
+}
+
+.drag-icon::before {
+  content: '.';
+  position: absolute;
+  display: none;
+  left: 0;
+  font-size: 40px;
+  line-height: 0px;
+  color: #909090;
+  text-shadow: 0 15px #909090, 0 30px #909090, 0 45px #909090, 10px 0 #909090, 10px 15px #909090,
+    10px 30px #909090, 10px 45px #909090;
+  top: -10px;
+}
+
+.campo-formulario.hover .drag-icon-container {
+  background: #aae9f54d;
+}
+
+.campo-formulario.selected .drag-icon-container {
+  background: #00c9ff4d;
+}
+
+.campo-formulario.hover .drag-icon::before {
+  display: block;
+}
+
+.campo-formulario.selected .drag-icon::before {
+  display: block;
+}

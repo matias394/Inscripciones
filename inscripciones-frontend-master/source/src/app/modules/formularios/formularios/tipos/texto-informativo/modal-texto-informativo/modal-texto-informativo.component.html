@@ -1,0 +1,63 @@
+<app-modal-tipo-campo-formulario>
+  <div class="app-tipo-campo-formulario-header text-center">
+    <span><img src="assets/images/componentes/textoinformativo.svg" alt=""></span>
+    <h3>Texto informativo</h3>
+  </div>
+
+  <div class="app-tipo-campo-formulario-general">
+    <form [formGroup]="formGeneral">
+      <div class="form-wrapper bg-light p-4">
+        <div class="form-group" [ngClass]="getCssClases('formato')">
+          <label for="formato">
+            Formato *
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Estilo que se aplica al texto según la jerarquía que deba tener"></i>
+            </span>
+          </label>
+          <select class="custom-select" name="formato" id="formato" formControlName="formato"
+            (change)="largoDescripcionPorFormato()">
+            <option *ngFor="let opt of tiposFormatos" [value]="opt">
+              {{ opt }}
+            </option>
+          </select>
+          <div class="invalid-msg" *ngIf="formato.invalid && (formato.touched || formato.dirty )">
+            <span class="danger" *ngIf="formato.errors">*</span>
+            Formato es requerido
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="getCssClases('descripcion')">
+          <label for="descripcion">Descripción *
+          </label>
+          <textarea class="form-control" id="descripcion" name="descripcion" formControlName="descripcion" rows="3"
+            maxlength="descripcionMaxLength"></textarea>
+        </div>
+        <div class="invalid-msg" *ngIf="descripcion.invalid && (descripcion.touched || descripcion.dirty )">
+          <span class="danger" *ngIf="descripcion.errors">*</span>
+          Descripción es requerido
+        </div>
+        <hr />
+        <div class="form-group">
+          <label for="descripcion">
+            Grupo iterativo al que pertenece
+          </label>
+          <p>{{ grupoIterativo }}</p>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-tipo-campo-formulario-visibilidad">
+    <app-tipo-campo-formulario-visibilidad [modoEdicion]="modoEdicion"></app-tipo-campo-formulario-visibilidad>
+  </div>
+
+  <div class="app-tipo-campo-formulario-footer">
+    <button type="button" class="btn btn-secondary mr-2" (click)="cerrar()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary" (click)="guardar()">
+      Aceptar
+    </button>
+  </div>
+</app-modal-tipo-campo-formulario>

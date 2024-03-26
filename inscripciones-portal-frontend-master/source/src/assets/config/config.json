@@ -1,0 +1,9 @@
+{
+  "entorno": "Staging",
+  "production": false,
+  "baseUrl": "https://inscripciones-backoffice-back-dev.gcba.gob.ar/inscripciones-service/api/",
+  "baseUrlFron": "https://inscripciones-backoffice-back-dev.gcba.gob.ar/inscripciones-service/front/",
+  "recaptchaKey": "6Ldow6skAAAAAGI8BhCuRrdoE7-ZiBOilH3LQm7c",
+  "baseHref": "./inscripciones/",
+  "backendClient": "https://inscripciones-back-dev.gcba.gob.ar/cliente/v1"
+}

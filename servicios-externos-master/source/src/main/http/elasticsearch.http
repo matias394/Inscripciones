@@ -1,0 +1,58 @@
+# curl -X PUT "http://localhost:9200/i01-reportes-inscriptos"
+PUT http://localhost:9200/i01-reportes-inscriptos
+###
+
+
+
+# curl -i http://localhost:9200
+GET http://localhost:9200
+###
+
+
+
+# curl -u elastic:PzGD5RFydGpWCiRvdRGe -i http://inscripciones-elasticsearch-inscripciones-dev.apps.ocp4-dev.gcba.gob.ar/
+GET http://inscripciones-elasticsearch-inscripciones-dev.apps.ocp4-dev.gcba.gob.ar/
+Authorization: Basic elastic PzGD5RFydGpWCiRvdRGe
+###
+
+
+
+## BORRAR ENTORNO DE QA
+# curl -X POST -u elastic:HrRuxWtMMBCwoYrlHKAa -X POST "http://inscripciones-elasticsearch-inscripciones-qa.apps.ocp4-dev.gcba.gob.ar/i01-reportes-inscriptos/_delete_by_query" -H 'Content-Type: application/json' -d'
+#{
+#  "query": {
+#    "match_all": {}
+#  }
+#}'
+POST http://inscripciones-elasticsearch-inscripciones-qa.apps.ocp4-dev.gcba.gob.ar/i01-reportes-inscriptos/_delete_by_query
+Authorization: Basic elastic HrRuxWtMMBCwoYrlHKAa
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+###
+
+
+
+## BORRAR ENTORNO DE DEV
+# curl -X POST -u elastic:PzGD5RFydGpWCiRvdRGe -X POST "http://inscripciones-elasticsearch-inscripciones-dev.apps.ocp4-dev.gcba.gob.ar/i01-reportes-inscriptos/_delete_by_query" -H 'Content-Type: application/json' -d'
+#{
+#  "query": {
+#    "match_all": {}
+#  }
+#}'
+POST http://inscripciones-elasticsearch-inscripciones-dev.apps.ocp4-dev.gcba.gob.ar/i01-reportes-inscriptos/_delete_by_query
+Authorization: Basic elastic PzGD5RFydGpWCiRvdRGe
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+###
+

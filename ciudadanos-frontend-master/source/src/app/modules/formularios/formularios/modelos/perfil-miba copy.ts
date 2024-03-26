@@ -1,0 +1,33 @@
+//import { NivelSeguridad } from './../../tramites-backend/dependencias/modelo/nivelSeguridad';
+export interface PerfilMIBA {
+  province: string;
+  cellphone: string;
+  first_name: string;
+  last_name: string;
+  alternative_email: string;
+  picture: string;
+  gender: string;
+  document_number: string;
+  floor: string;
+  phone: string;
+  birthday: string;
+  postal_code: string;
+  location: string;
+  document_type: string;
+  address: string;
+  street_address: string;
+  street_number: string;
+  department: string;
+  nationality: string;
+  identifier: string;
+  email: string;
+  area_code_cellphone: string;
+  area_code_phone: string;
+  address_is_normalized: boolean;
+  address_is_intersection: boolean;
+  document_nationality: string;
+  code_phone: string;
+  code_cellphone: string;
+  cuil: string;
+  //levels: NivelSeguridad;
+}

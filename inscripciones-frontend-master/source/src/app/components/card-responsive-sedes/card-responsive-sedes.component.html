@@ -1,0 +1,27 @@
+<div>
+  <ng-container *ngFor="let item of data">
+    <ng-container *ngFor="let it of item.instanciaSedes">
+      <ng-container *ngIf="sedeIdNumber === it.id">
+        <ng-container *ngIf="sedeIdNumber === it.id">
+          <div class="card-ins">
+            <h2 class="card-title">{{ it.sedeNomnbre }}</h2>
+            <div class="card-body">
+              <span class="horaInicio mb-2"
+                >Del {{ item.fechaInicio | date : "dd/MM/yyyy" }} al
+                {{ item.fechaFin | date : "dd/MM/yyyy" }}</span
+              >
+            </div>
+            <ng-container>
+              <button
+                class="card-btn btn btn-primary"
+                [routerLink]="['../../../', it.id, item.id, dataTwo]"
+              >
+                Ver Clases
+              </button>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

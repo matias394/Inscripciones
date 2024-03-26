@@ -1,0 +1,17 @@
+div.row.contenedor-telefono {
+  align-items: baseline;
+  border: none !important;
+}
+
+.contenedor-telefono.ng-invalid.ng-touched.required input {
+  border: solid 1px #e74c3c;
+}
+
+.container-btn-miba {
+  padding-top: 5px;
+  padding-left: 0;
+}
+
+.container-btn-miba .btn-miba {
+  margin: 0 !important;
+}

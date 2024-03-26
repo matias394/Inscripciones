@@ -1,0 +1,38 @@
+<div class="form-group" *ngIf="mostrarElemento">
+  <label for="textboxSimple">{{ to.label }}{{ to.required ? " *" : "" }}</label>
+  <br />
+  <p>
+    <small class="descripcion">{{ to.description }}</small>
+  </p>
+  <!--  <div *ngIf="to.subsanacion">
+    <div class="mensajeSubsanacion">
+      <p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p>
+    </div>
+  </div>-->
+  <textarea
+    type="text"
+    minLength="{{ to.minLength }}"
+    pattern="{{ to.pattern }}"
+    maxlength="{{ to.maxLength }}"
+    class="form-control"
+    id="textboxSimple"
+    aria-describedby="descripcion"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [(ngModel)]="valor"
+    [placeholder]="to.placeholder ? to.placeholder : ''"
+    [readonly]="readonly"
+    (keypress)="validateFormat($event)"
+  ></textarea>
+  <div *ngIf="editarEnMiba" class="input-group-append container-btn-miba">
+    <button
+      class="btn btn-success"
+      type="button"
+      [disabled]="isButtonDisabled()"
+      (click)="redirigirMiba()"
+      title="Editar en miBA"
+    >
+      <i class="bx bx-edit'" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>

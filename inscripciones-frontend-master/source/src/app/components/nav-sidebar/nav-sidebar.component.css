@@ -1,0 +1,49 @@
+#my-custom-nav .brand-logo {
+  height: 100%;
+  width: 100%;
+}
+#my-custom-nav .sidebar {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+#my-custom-nav .nav-item:hover {
+  border-radius: 0px;
+}
+
+#my-custom-nav .nav-link {
+  color: #a4a6b3 !important;
+  border-radius: 0px;
+  width: 100% !important;
+  margin: 0px !important;
+  padding: 1rem 1rem 1rem 1.4rem !important;
+}
+#my-custom-nav .nav-link:hover,
+#my-custom-nav .nav-link:focus,
+#my-custom-nav .nav-link:active {
+  border: none !important;
+  box-shadow: 0 0 0 0 !important;
+  color: #4c5a6c !important;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#my-custom-nav .nav-sidebar .nav-link p {
+  margin: 0px 10px !important;
+  vertical-align: text-top;
+  font-weight: 300 !important;
+}
+#my-custom-nav .brand-link {
+  height: 80px;
+  padding: 1.2rem !important;
+}
+#my-custom-nav .nav-link i {
+  font-size: 24px;
+  vertical-align: middle;
+}
+#my-custom-nav .nav-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#my-custom-nav .disabled-item {
+  cursor: default;
+}

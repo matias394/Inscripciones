@@ -1,0 +1,62 @@
+<form [formGroup]="form">
+  <div class="form-wrapper bg-light p-4">
+    <div class="form-group">
+      <h4>
+        Conceptos de pago asociados a valores del componente
+      </h4>
+      <p><small>
+          Permite indicar los conceptos de pago asociados a los valores configurados
+          en el componente que, al ser seleccionados durante la carga del formulario
+          por parte del ciudadano, modifican el costo total del trámite</small>
+      </p>
+    </div>
+    <div class="form-group">
+      <app-switch _id="tieneConceptosPagoAsociados" formControlName="tieneConceptosPagoAsociados">
+        Asociar conceptos de pago a valores del componente
+        <span class="icon" *ngIf="!componenteTieneConceptosPagoAsociados()">
+        <i class='bx bxs-help-circle' aria-hidden="true"
+          title="Antes de configurar conceptos de pago, es necesario cargar valores para el componente y el formulario debe estar asignado a un tipo de trámite pago con conceptos variables de pago configurados. Tener en cuenta que el componente no puede estar configurado como subsanable ni formar parte de un grupo iterativo"></i>
+        </span>
+      </app-switch>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+    </div>
+  </div>
+  <div class="form-group" *ngIf="componenteTieneConceptosPagoAsociados()">
+    <div class="titulo-grilla-conceptos-pago">
+      <div class="row">
+        <div class="col-sm-4"><strong>Valores del componente</strong></div>
+        <div class="col-sm-5"><strong>Conceptos de pago</strong></div>
+        <div class="col-sm-3">
+          <strong>Cantidad</strong>
+          <span class="icon">
+            <i class="fa fa-question-circle" aria-hidden="true"
+              title="Factor por el cual se multiplica el valor del concepto de pago para definir el monto a sumar al costo total del trámite si se selecciona este valor en el componente durante la carga del trámite"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="item-grilla-conceptos-pago" formArrayName="itemsConceptosPago">
+      <div *ngFor="let c of this.controlItemsConceptosPago().controls; let i = index">
+        <app-tipo-campo-formulario-item-concepto [formControlName]="i">
+        </app-tipo-campo-formulario-item-concepto>
+        <div *ngIf="itemInvalido(i)" class="row">
+          <div class="col-sm-7 offset-sm-5">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="row" [hidden]="!componenteTieneConceptosPagoAsociados()">
+  <div class="col-12 col-sm-12">
+    <div class="contenedor-paginacion">
+<!--      <pagination *ngIf="mostrarPaginacion" [(ngModel)]="page" [totalItems]="cantidadTotalResultados"
+        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" [firstText]="'<<'"
+        [lastText]="'>>'" [nextText]="'>'" [previousText]="'<'" (pageChanged)="cambiarPagina($event)">
+      </pagination>-->
+    </div>
+  </div>
+</div>

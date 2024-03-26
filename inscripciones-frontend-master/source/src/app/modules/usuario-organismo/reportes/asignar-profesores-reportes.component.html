@@ -1,0 +1,462 @@
+<ng-template #templateDesk>
+  <div id="content-ciudadanos-inscriptos" class="bg-light p-4">
+    <div class="flex-column">
+      <h1 class="-mb-3">Reportes</h1>
+    </div>
+
+    <form class="p-5 bg-white rounded mt-3 table" id="config">
+      <div class="d-flex">
+        <div class="form-group col-6 mb-2">
+          <app-select-input
+            [id]="'categoria'"
+            [label]="'Categoría'"
+            [control]="formUser.get('categoria')"
+            [listaOptions]="categorias"
+            (change)="onCategoriaChange()"
+            [name]="'categoria'"
+          ></app-select-input>
+        </div>
+        <div class="form-group col-6">
+          <app-select-input
+            [id]="'inscripcion'"
+            [label]="'Inscripción'"
+            [control]="formUser.get('inscripcion')"
+            [listaOptions]="inscripcion"
+            [disabled]="inscripcionDisabled"
+            [name]="'inscripcion'"
+            (change)="onInscripcionChange()"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="d-flex align-items-center">
+        <div class="form-group col-6">
+          <app-select-input
+            [id]="'instancia'"
+            [label]="'Instancia'"
+            [control]="formUser.get('instancia')"
+            [listaOptions]="instancia"
+            [disabled]="instanciaDisabled"
+            [name]="'instancia'"
+            (change)="onInstanciaChange()"
+          ></app-select-input>
+        </div>
+        <div class="form-group col-6">
+          <app-select-input
+            [id]="'sede'"
+            [label]="'Sede'"
+            [control]="formUser.get('sede')"
+            [listaOptions]="sede"
+            [disabled]="sedeDisabled"
+            [name]="'sede'"
+            (change)="onSedeChange()"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="d-flex">
+        <div class="form-group col-6">
+          <app-select-input
+            [id]="'estado'"
+            [listaOptions]="estado"
+            [label]="'Estado'"
+            [control]="formUser.get('estado')"
+            [name]="'estado'"
+            (change)="onEstadoChange()"
+            [disabled]="estadoDisabled"
+          ></app-select-input>
+        </div>
+
+        <div class="form-group col-6">
+          <div class="d-flex">
+            <div class="form-group col-6">
+              <toggle-switch
+                [label]="'Descargar formularios'"
+                [titleActive]="'Sí'"
+                [titleDisabled]="'No'"
+                [valueDefault]="true"
+                class="mt-2"
+                (changeValue)="onToggleSwitchChanged($event)"
+                [name]="'reporteDetallado'"
+              >
+              </toggle-switch>
+            </div>
+            <div class="form-group col-6"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-wrapper d-flex justify-content-start ml-3 mt-5">
+        <button type="button" class="btn btn-link mr-4" (click)="resetForm()">
+          Limpiar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!selectedCategoria"
+          (click)="buscarReportes()"
+        >
+          Buscar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <ng-container *ngIf="searchHasBeenTriggered && tableData.length > 0">
+    <div class="bg-light p-4">
+      <div class="table mt-4 px-3 py-3 bg-white rounded-1">
+        <div
+          class="d-flex align-items-left justify-content-between flex-column px-3 mt-3 mb-4"
+        >
+          <h3
+            *ngIf="
+              selectedCategoriaNombre &&
+              !selectedInscripcionNombre &&
+              !selectedInstanciaNombre &&
+              !selectedSedeNombre
+            "
+          >
+            Alumnos inscriptos en: {{ selectedCategoriaNombre }} -
+            {{ selectedEstadoNombre }}
+          </h3>
+          <h3
+            *ngIf="
+              selectedCategoriaNombre &&
+              selectedInscripcionNombre &&
+              !selectedInstanciaNombre &&
+              !selectedSedeNombre
+            "
+          >
+            Alumnos inscriptos en:
+            {{ selectedInscripcionNombre }} - {{ selectedEstadoNombre }}
+          </h3>
+          <h3
+            *ngIf="
+              selectedCategoriaNombre &&
+              selectedInscripcionNombre &&
+              selectedInstanciaNombre &&
+              !selectedSedeNombre
+            "
+          >
+            Alumnos inscriptos en:
+            {{ selectedInscripcionNombre }} - {{ selectedInstanciaNombre }} -
+            {{ selectedEstadoNombre }}
+          </h3>
+          <h3
+            *ngIf="
+              selectedCategoriaNombre &&
+              selectedInscripcionNombre &&
+              selectedInstanciaNombre &&
+              selectedSedeNombre
+            "
+          >
+            Alumnos inscriptos en: {{ selectedInscripcionNombre }} -
+            {{ selectedInstanciaNombre }} - {{ selectedEstadoNombre }}
+          </h3>
+          <h3 *ngIf="selectedSedeNombre">Sede: {{ selectedSedeNombre }}</h3>
+          <h3>Reporte generado: {{ fechaReporte }}</h3>
+        </div>
+        <table
+          class="table border-0 px-4"
+          aria-label="tabla de reportes de ciudadanos inscriptos"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Nombre y Apellido</th>
+              <th scope="col">DNI</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Inscripción</th>
+              <th scope="col">Categoría</th>
+              <th scope="col">Sede</th>
+              <th scope="col">Instancia</th>
+              <th scope="col" class="text-center">Acción</th>
+            </tr>
+          </thead>
+          <span class="border-bottom"></span>
+          <tbody>
+            <tr *ngFor="let item of tableData">
+              <td>{{ item.nombreApellido }}</td>
+              <td>{{ item.dni }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.inscripcion.nombre }}</td>
+              <td>{{ selectedCategoriaNombre }}</td>
+              <td>{{ item.sede.nombre }}</td>
+              <td>{{ item.instancia.nombre }}</td>
+              <td>
+                <div class="d-flex justify-content-center cursorPointer">
+                  <img
+                    src="./assets/icons/ver.svg"
+                    alt="check_circle_icon"
+                    role="button"
+                    [routerLink]="[
+                      './formularios',
+                      item.respuestaIdRefMongo,
+                      item.formularioIdRefMongo
+                    ]"
+                  />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-pagination
+        [allPagesNumber]="allPages"
+        (changePage)="onPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+      <div class="btn-wrapper d-flex justify-content-start ml-5 mt-5">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="bajarReportesSinPaginado()"
+        >
+          Exportar
+        </button>
+      </div>
+
+      <div class="row d-flex justify-content-center align-items-center mt-5">
+        <app-alertas
+          *ngIf="correct"
+          [message]="'Su reporte ha sido generado exitosamente'"
+          [type]="'alert alert-success'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+
+        <app-alertas
+          *ngIf="errorMessage"
+          [message]="'Error al generar el reporte'"
+          [type]="'alert alert-danger'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="searchHasBeenTriggered && tableData.length === 0">
+    <p class="ml-5 text-lg font-weight-bold">
+      No se encontraron resultados. Realizá una nueva búsqueda.
+    </p>
+  </ng-container>
+</ng-template>
+
+<ng-template #templateMob>
+  <div id="content-ciudadanos-inscriptos" class="bg-light">
+    <div
+      class="d-flex flex-row justify-content-between align-items-center mt-5 mb-4"
+    >
+      <h1 class="text-lg mt-2">Reportes</h1>
+      <button class="btn btn-link btn-sm" (click)="refreshWindow()">
+        Volver a buscar
+      </button>
+    </div>
+
+    <form
+      class="py-3 px-0 rounded mt-3"
+      id="config"
+      *ngIf="!searchHasBeenTriggered"
+    >
+      <div class="d-flex flex-column">
+        <div class="form-group col-12 mb-4">
+          <app-select-input
+            [id]="'categoria'"
+            [label]="'Categoría'"
+            [control]="formUser.get('categoria')"
+            [listaOptions]="categorias"
+            (change)="onCategoriaChange()"
+            [name]="'categoria'"
+          ></app-select-input>
+        </div>
+        <div class="form-group col-12">
+          <app-select-input
+            [id]="'inscripcion'"
+            [label]="'Inscripción'"
+            [control]="formUser.get('inscripcion')"
+            [listaOptions]="inscripcion"
+            [disabled]="inscripcionDisabled"
+            [name]="'inscripcion'"
+            (change)="onInscripcionChange()"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="d-flex flex-column align-items-center">
+        <div class="form-group col-12 mb-4 mt-3">
+          <app-select-input
+            [id]="'instancia'"
+            [label]="'Instancia'"
+            [control]="formUser.get('instancia')"
+            [listaOptions]="instancia"
+            [disabled]="instanciaDisabled"
+            [name]="'instancia'"
+            (change)="onInstanciaChange()"
+          ></app-select-input>
+        </div>
+        <div class="form-group col-12">
+          <app-select-input
+            [id]="'sede'"
+            [label]="'Sede'"
+            [control]="formUser.get('sede')"
+            [listaOptions]="sede"
+            [disabled]="sedeDisabled"
+            [name]="'sede'"
+            (change)="onSedeChange()"
+          ></app-select-input>
+        </div>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="form-group col-12 mt-3">
+          <app-select-input
+            [id]="'estado'"
+            [listaOptions]="estado"
+            [label]="'Estado'"
+            [control]="formUser.get('estado')"
+            [name]="'estado'"
+            (change)="onEstadoChange()"
+            [disabled]="estadoDisabled"
+          ></app-select-input>
+        </div>
+
+        <div class="px-0 col-12 mt-3">
+          <div class="d-flex justify-content-start">
+            <div class="form-group col-12">
+              <toggle-switch
+                [label]="'Descargar formularios'"
+                [titleActive]="'Sí'"
+                [titleDisabled]="'No'"
+                [valueDefault]="true"
+                class="mt-2"
+                (changeValue)="onToggleSwitchChanged($event)"
+                [name]="'reporteDetallado'"
+              >
+              </toggle-switch>
+            </div>
+            <div class="form-group col-6"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-wrapper d-flex justify-content-start ml-3 mt-5">
+        <button type="button" class="btn btn-link mr-4" (click)="resetForm()">
+          Limpiar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!selectedCategoria"
+          (click)="buscarReportes()"
+        >
+          Buscar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <ng-container *ngIf="searchHasBeenTriggered && tableData.length > 0">
+    <div class="bg-light">
+      <div class="table mt-4 px-0 py-3 bg-white rounded-1">
+        <div
+          class="d-flex align-items-left justify-content-between flex-column px-3 mt-3 mb-4"
+        >
+          <h5
+            class="font-weight-normal"
+            *ngIf="
+              selectedCategoriaNombre &&
+              !selectedInscripcionNombre &&
+              !selectedInstanciaNombre &&
+              !selectedSedeNombre
+            "
+          >
+            Alumnos inscriptos en:
+            {{ selectedCategoriaNombre }} - {{ selectedEstadoNombre }}
+          </h5>
+          <h5
+            class="font-weight-normal"
+            *ngIf="
+              selectedCategoriaNombre &&
+              selectedInscripcionNombre &&
+              !selectedInstanciaNombre &&
+              !selectedSedeNombre
+            "
+          >
+            Alumnos inscriptos en:
+            {{ selectedInscripcionNombre }} - {{ selectedEstadoNombre }}
+          </h5>
+          <h5
+            class="font-weight-normal"
+            *ngIf="
+              selectedCategoriaNombre &&
+              selectedInscripcionNombre &&
+              selectedInstanciaNombre &&
+              !selectedSedeNombre
+            "
+          >
+            Alumnos inscriptos en:
+
+            {{ selectedInscripcionNombre }} - {{ selectedInstanciaNombre }} -
+            {{ selectedEstadoNombre }}
+          </h5>
+          <h5
+            class="font-weight-normal"
+            *ngIf="
+              selectedCategoriaNombre &&
+              selectedInscripcionNombre &&
+              selectedInstanciaNombre &&
+              selectedSedeNombre
+            "
+          >
+            Alumnos inscriptos en:
+            {{ selectedInscripcionNombre }} - {{ selectedInstanciaNombre }} -
+            {{ selectedEstadoNombre }}
+          </h5>
+          <h5 class="font-weight-normal" *ngIf="selectedSedeNombre">
+            Sede: {{ selectedSedeNombre }}
+          </h5>
+          <h5 class="font-weight-normal">
+            Reporte generado: {{ fechaReporte }}
+          </h5>
+        </div>
+        <app-card-responsive-reportes
+          [data]="tableData"
+        ></app-card-responsive-reportes>
+      </div>
+      <app-pagination
+        [allPagesNumber]="allPages"
+        (changePage)="onPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+      <div class="btn-wrapper d-flex justify-content-center px-5 mt-5">
+        <button
+          type="button"
+          class="btn btn-primary btn-block"
+          (click)="bajarReportesSinPaginado()"
+        >
+          Exportar
+        </button>
+      </div>
+
+      <div class="row d-flex justify-content-center align-items-center mt-5">
+        <app-alertas
+          *ngIf="correct"
+          [message]="'Se exportó la tabla con éxito'"
+          [type]="'alert alert-success'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+
+        <app-alertas
+          *ngIf="errorMessage"
+          [message]="'Error al generar el reporte'"
+          [type]="'alert alert-danger'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="searchHasBeenTriggered && tableData.length === 0">
+    <p class="ml-5 text-lg font-weight-bold">
+      No se encontraron resultados. Realizá una nueva búsqueda.
+    </p>
+  </ng-container></ng-template
+>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>

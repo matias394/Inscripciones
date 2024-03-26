@@ -1,0 +1,91 @@
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.tr-head-table-expanded > th {
+  color: #38485c;
+  opacity: 0.5;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.t-head {
+  text-transform: capitalize;
+}
+
+.td-detail {
+  padding: 0px !important;
+  background-color: #23c16b0d;
+}
+
+.td-w25 {
+  width: 25%;
+}
+
+.td-w10 {
+  width: 10%;
+}
+
+.td-w11 {
+  width: 11.3%;
+}
+
+.td-w15 {
+  width: 15%;
+}
+
+.item-horaio {
+  display: block;
+}
+
+.action-btn-expand > i {
+  font-size: 26px;
+}
+
+.example-element-detail {
+  display: block;
+  width: 100%;
+}
+
+.bx-trash,
+.bx-edit-alt {
+  margin-top: 4px;
+}

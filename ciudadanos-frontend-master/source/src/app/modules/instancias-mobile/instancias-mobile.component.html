@@ -1,0 +1,38 @@
+<app-banner [image]="image" [description]="description"></app-banner>
+
+<ng-template #templateDesk> </ng-template>
+
+<ng-template #templateMob>
+  <div class="px-0 pt-3">
+    <div class="mt-4 mb-4">
+      <div class="d-flex align-items-center justify-content-start">
+        <img
+          src="./assets/icons/chevron-left.svg"
+          [routerLink]="['../../']"
+          role="button"
+          alt="flecha-atras"
+        />
+        <h4 class="mt-1 col-11">Cursos en {{ instanciaNombre }}</h4>
+      </div>
+    </div>
+    <tr *ngIf="showNoInstancesMessage()">
+      <td>No hay cursos activos en esta instancia</td>
+    </tr>
+  </div>
+
+  <card-inscripciones
+    [data]="listFiltered"
+    messageButton="Inscribíte"
+    (onClick)="$any(btnClickInscribite$.next($event))"
+  ></card-inscripciones>
+</ng-template>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>
+
+<app-pagination
+  [allPagesNumber]="allPages"
+  (changePage)="onPageChange($event)"
+  [_currentPage]="currentPage"
+></app-pagination>

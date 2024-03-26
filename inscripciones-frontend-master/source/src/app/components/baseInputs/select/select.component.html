@@ -1,0 +1,21 @@
+<div class="container-select-base">
+  <label [for]="id">{{ label }}</label>
+  <select
+    class="form-control mt-2"
+    [id]="id"
+    [formControl]="control"
+    [ngClass]="{ disabled: disabled }"
+    [disabled]="disabled"
+    [name]="name"
+  >
+    <option selected value="">Seleccionar</option>
+    <option *ngFor="let op of listaOptions" [value]="op.id">
+      {{ op.nombre }}
+    </option>
+  </select>
+  <error-input
+    [showError]="control.invalid && control.touched"
+    [message]="'Este Campo es requerido'"
+  >
+  </error-input>
+</div>

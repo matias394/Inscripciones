@@ -1,0 +1,6 @@
+<div class="display-error" *ngIf="showError">
+  <span class="text-danger ml-1" *ngFor="let error of errors | keyvalue">
+    <span class="text-danger ml-1">*</span>
+    {{ error.key | errorType : message }}
+  </span>
+</div>

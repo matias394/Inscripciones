@@ -1,0 +1,15 @@
+p{
+    line-height: 0.9rem;
+}
+p small{
+    font-size: 0.9rem!important;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+.btn-verde-claro{
+    margin-top: 0.625rem;
+}
+
+.text-right{
+    margin-top: inherit;
+}

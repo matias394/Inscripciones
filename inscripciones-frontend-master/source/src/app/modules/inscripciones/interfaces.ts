@@ -1,0 +1,305 @@
+export interface Options {
+  id: any;
+  nombre: string;
+}
+
+export interface Inscripcion {
+  nombre: string;
+  url: string;
+  organismo_responsable: string;
+  categoria: string;
+  sede: string;
+  cupos_inscripcion: string;
+  plantilla: string;
+  cupos_gurpales: boolean;
+  modalidad: string;
+  cant_max_inscripciones_ciudadano: string;
+  tipo_inscripcion: string;
+  login_miba: boolean;
+}
+
+export interface Form {
+  id: number;
+  feriado: number;
+  cuposGrupales: number;
+  loginMiba: number;
+  cantidadMaxima: number;
+  limiteInscripcion: number;
+  duracionSemana: number;
+  cuposInscripcion: number;
+  nombre: string;
+  url: string;
+  vigenciaDesde: string;
+  vigenciaHasta: string;
+  organismo: number;
+  sede: number;
+  correo: number;
+  notificacion: number;
+  modalidad: number;
+  tipo: number;
+  estado: number;
+  instancias: [
+    {
+      id: number;
+      inscripcion: number;
+      usuario: number;
+      lunes: number;
+      martes: number;
+      miercoles: number;
+      jueves: number;
+      viernes: number;
+      sabado: number;
+      domingo: number;
+      horaInicio: {
+        hour: number;
+        minute: number;
+        second: number;
+        nano: number;
+      };
+      horaFin: {
+        hour: number;
+        minute: number;
+        second: number;
+        nano: number;
+      };
+      fechaInicio: string;
+      fechaFin: string;
+      limiteInscripcion: string;
+      estado: number;
+    }
+  ];
+}
+
+export interface ClaseDTOList {
+  estado: number;
+  fechaFin: string;
+  fechaInicio: string;
+  id: number;
+  instanciaId: number;
+  nombre: string;
+  nombreProfesores: string;
+  sede: string;
+}
+
+export interface Formulario {
+  descripcion: string;
+  estado: number;
+  id: number;
+  idRefMongo: number;
+  nombre: string;
+  dirigido: string | number;
+}
+
+export interface Tipos {
+  id: number;
+  nombre: string;
+}
+
+export interface Modalidades {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  estado: number;
+}
+
+export interface Correos {
+  id: number;
+  nombre: string;
+  asunto: string;
+  descripcion: string;
+  html: string;
+  estado: number;
+}
+
+export interface Categorias {
+  id: string;
+  nombre: string;
+  nivel: string;
+  padreId: string;
+}
+
+export interface Notificaciones {
+  id: number;
+  nombre: string;
+  descripcion: string;
+  estado: number;
+}
+
+export interface Sedes {
+  id: number;
+  nombre: string;
+  direccion: string;
+  piso: string;
+  email: string;
+  telefono: string;
+}
+
+export interface Organismos {
+  id: number;
+  nombre: string;
+  estado: number;
+}
+
+export interface Mindate {
+  year: number;
+  month: number;
+  day: number;
+}
+
+/** Nueva estructura de data */
+
+export interface DataTableInstacias {
+  nombre: string;
+  // codigo: string;
+  duracionSemana: number;
+  estado: number;
+  id: number;
+  limiteInscripcion: number | string;
+  modalidad: number;
+  modalidadName: string;
+  vigenciaInicio: string;
+  vigenciaFin: string;
+  instanciaSedes: sedesDto[];
+  bloqueado: number;
+  // claseHorarios: Array<any>;
+  show: boolean;
+}
+
+// En desuso
+export interface InstanciaSedes {
+  id: number;
+  sede: number;
+  cupos: string;
+  horaInicio: string;
+  horaFin: string;
+  vigenciaInicio: string;
+  vigenciaFin: string;
+  dias: DiasInst;
+  claseDTOList: Array<ClasesSede>;
+}
+
+export interface ClasesSede {
+  nombre: string;
+  bloqueado: number;
+  dia: string;
+  fecha: string;
+  estado: number;
+  fechaFin: string;
+  fechaInicio: string;
+  horaInicio: string;
+  horaFin: string;
+  horario: Array<string>;
+  id: null;
+  instanciaSedeId: number;
+  nombreProfesores: string;
+}
+
+export interface clasesDto {
+  id: number;
+  sede: number;
+  urlSede: string;
+  cupos: string;
+  dias: DiasInst[];
+  dia: string;
+  horaInicio: string;
+  horaFin: string;
+  horario: string;
+  vigenciaInicio: string;
+  vigenciaFin: string;
+  claseDTOList: Array<ClasesSede>;
+  estado: number;
+}
+
+export interface sedesDto {
+  id: number;
+  sede: number;
+  urlSede: string;
+  cupos: string;
+  dias: DiasInst[];
+  dia: string;
+  horaInicio: string;
+  horaFin: string;
+  claseHorarios: Array<string>;
+  vigenciaInicio: string;
+  vigenciaFin: string;
+  claseDTOList: Array<ClasesSede>;
+  estado: number;
+}
+
+export interface formularioInscripcionDto {
+  formulario: number;
+  dirigido: string;
+  id: number;
+  incripcion: number;
+  estado: number;
+}
+
+export interface Formularios {
+  id: number;
+  nombre: string;
+  idRefMongo: number;
+  estado: number;
+  descripcion: string;
+  dirigido: string | number;
+}
+
+export interface DiasInst {
+  dia: string;
+  value: number;
+  label: string;
+}
+
+export const daysList = [
+  { dia: 'lunes', value: 0, label: 'Lunes' },
+  { dia: 'martes', value: 0, label: 'Martes' },
+  { dia: 'miercoles', value: 0, label: 'Miércoles' },
+  { dia: 'jueves', value: 0, label: 'Jueves' },
+  { dia: 'viernes', value: 0, label: 'Viernes' },
+  { dia: 'sabado', value: 0, label: 'Sábado' },
+  { dia: 'domingo', value: 0, label: 'Domingo' },
+];
+
+
+// Generated by https://quicktype.io
+
+export interface IncripcionView {
+  content:          Content[];
+  pageable:         Pageable;
+  last:             boolean;
+  totalElements:    number;
+  totalPages:       number;
+  size:             number;
+  number:           number;
+  sort:             Sort;
+  first:            boolean;
+  numberOfElements: number;
+  empty:            boolean;
+}
+
+export interface Content {
+  id:           number;
+  nombre:       string;
+  organismoId:  number;
+  organismo:    string;
+  categoria:    string;
+  tipo:         string;
+  periodo:      null;
+  profesor:     null;
+  notificacion: number;
+  correo:       number;
+}
+
+export interface Pageable {
+  sort:       Sort;
+  pageNumber: number;
+  offset:     number;
+  pageSize:   number;
+  paged:      boolean;
+  unpaged:    boolean;
+}
+
+export interface Sort {
+  empty:    boolean;
+  unsorted: boolean;
+  sorted:   boolean;
+}

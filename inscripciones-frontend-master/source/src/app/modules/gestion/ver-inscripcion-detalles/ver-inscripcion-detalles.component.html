@@ -1,0 +1,155 @@
+<div class="bg-light p-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center justify-content-center">
+      <img
+        src="./assets/icons/chevron-left.svg"
+        class="mr-2"
+        [routerLink]="['../../']"
+        role="button"
+      />
+      <h3 class="mt-2">Detalles de curso {{ nombreCurso }}</h3>
+    </div>
+  </div>
+  <div>
+    <div class="mt-4"></div>
+
+    <table class="table border-0 pl-5 text-left">
+      <tbody>
+        <!-- <tr *ngIf="tableData.length === 0">
+          <span class="text-md sin-cursos"
+            >No hay detalles para esta inscripción</span
+          >
+        </tr> -->
+        <ng-container *ngFor="let item of tableData">
+          <tr>
+            <td>
+              {{ item.categoria }}
+              <img
+                src="./assets/icons/chevron-down.svg"
+                alt="chevron_down"
+                role="button"
+                class="ml-2"
+                (click)="expandRowContent(item.id)"
+              />
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <!-- TABLA DOS -->
+          <ng-container *ngIf="expandContent && item.id === selectedId">
+            <thead *ngIf="item.categoria === 'Información general'">
+              <tr>
+                <th scope="col" class="text-center" style="width: 20%">Días</th>
+                <th scope="col" class="text-center" style="width: 25%">
+                  Horarios
+                </th>
+                <th scope="col" class="text-center" style="width: 20%">
+                  Sedes
+                </th>
+                <th scope="col" class="text-center" style="width: 20%">
+                  Cupos
+                </th>
+                <th scope="col" class="text-center" style="width: 25%">
+                  Profesor asignado
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let ita of tableData2">
+                <tr class="pl-5" [hidden]="ita.id !== selectedId">
+                  <td class="dias">
+                    <ng-container *ngFor="let horario of ita.horarios">
+                      <p>{{ horario.dias }}</p>
+                    </ng-container>
+                  </td>
+      
+                  <td class="horario">
+                    <table>
+                      <ng-container *ngFor="let horario of ita.horarios">
+                        <p class="horario">{{ horario.horario }}</p>
+                      </ng-container>
+                    </table>
+                  </td>
+
+                  <td class="text-center">
+                    {{ ita.sede }}
+                  </td>
+                  <td class="text-center">
+                    {{ ita.cupos }}
+                  </td>
+                  <td class="text-center">
+                    {{ ita.profesor }}
+                  </td>
+                </tr>
+
+                <tr
+                  class="cuestionario-row"
+                  *ngIf="item.categoria === 'Cuestionario'"
+                >
+                  <td class="cuestionario-row">
+                    <form class="mt-8 p-5 bg-white rounded" #formUser="ngForm">
+                      <div class="row flex-column">
+                        <app-previsualizando-formulario
+                          [formId]="formId"
+                          [activeStep]="activeStep"
+                          [preloadedResponse]="respuestaCiudadano"
+                          (saveFormResult)="getFormResult($event)"
+                        ></app-previsualizando-formulario>
+                        <div class="row col-9 ml-2 my-4">
+                          <div *ngIf="correct" class="form-group col-12">
+                            <app-alertas
+                              [message]="message"
+                              [type]="'alert alert-success'"
+                              (onClose)="closeAlert()"
+                            ></app-alertas>
+                          </div>
+
+                          <div class="row col-12">
+                            <div *ngIf="errorMessage" class="form-group col-12">
+                              <app-alertas
+                                [message]="message"
+                                [type]="'alert alert-danger'"
+                                (onClose)="closeAlert()"
+                              ></app-alertas>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row col-12">
+                          <div class="d-flex flex-direction-row">
+                            <button class="btn btn-primary" (click)="nextStep()"
+                            >Guardar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+
+                <tr
+                  class="cuestionario-row"
+                  *ngIf="item.categoria === 'Archivo'"
+                >
+                  <td class="cuestionario-row">
+                    <div *ngIf="archivoExists">
+                      <button
+                        class="btn btn-primary"
+                        (click)="downloadDocument()"
+                      >
+                        Descargar
+                      </button>
+                    </div>
+                    <div *ngIf="!archivoExists">
+                      <p>No tiene ningún archivo</p>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

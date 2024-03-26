@@ -1,0 +1,31 @@
+<div class="contenedor-grupo-iterativo" *ngIf="mostrarElemento">
+
+  <h4>{{to.label}}{{to.required ? ' *' : ''}}</h4>
+  <br>
+  <p>{{to.description}}</p>
+
+<!--  <div *ngIf="to.subsanacion">
+    <div class="mensajeSubsanacion">
+      <span class="icono-multilinea"><i class="fa fa-comments" aria-hidden="true"></i> </span>
+      <p [innerHTML]="to.subsanacion.comentario"></p>
+    </div>
+  </div>-->
+
+  <button type="button" *ngIf="habilidatoAgregar" class="btn btn-primary btn marginB25" title="Agregar" (click)="agregarItem()">
+    + Agregar
+  </button>
+
+  <div appClickEnTablaGrupoIterativo>
+    <div class="ancho-columnas" [hidden]="!hayResultados()">
+  <!--    <app-grilla-paginable [paginables]="itemsDeLaGrilla" [columns]="columasDeLaGrilla" [permiteSeleccionarFila]="false" [itemsPerPage]="5"
+                            [usarPaginacionSimple]="true" [cantPages]="cantPages">
+      </app-grilla-paginable>-->
+    </div>
+  </div>
+
+<!--  <app-modal-formulario #modalFormularioComponent [titulo]="to.label" [form]="formModal" [model]="modelModal"
+                        [fields]="fieldsModal" [options]="optionsModal" (nuevoItemEvent)="setNuevoItem($event)"
+                        (editarItemEvent)="setItemExistente($event)" class="modal-grupo-iterativo">
+  </app-modal-formulario>-->
+
+</div>

@@ -1,0 +1,82 @@
+<div class="cards-container mb-4">
+  <div class="cards-container bg-sky-2 rounded p-1">
+    <div
+      (click)="clickPanelAcordeon()"
+      [class.desplegado]="desplegado"
+      [class.plegado]="!desplegado"
+    >
+      <div class="row">
+        <div class="col-6 d-flex justify-content-start pt-2">
+          <h2><span class="nro-seccion ml-2"></span> Sección {{ numero }}</h2>
+        </div>
+
+        <div
+          *ngIf="usuarioPuedeEditar"
+          class="col-6 d-flex justify-content-end"
+        >
+          <button
+            class="btn btn-secondary mt-2 mb-2 mr-1 ml-2"
+            (click)="agregarSeccionDebajo($event)"
+          >
+            <i class="bx bx-add-to-queue" aria-hidden="true"></i>
+          </button>
+          <button
+            class="btn btn-danger mt-2 mb-2 mr-2 ml-1"
+            (click)="eliminarEstaSeccion($event)"
+          >
+            <i class="bx bxs-trash" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-outline-link mt-2 mb-2 mr-2 ml-1">
+            <i
+              class="bx"
+              [ngClass]="{
+                'bxs-chevron-up': desplegado,
+                'bxs-chevron-down': !desplegado
+              }"
+              aria-hidden="true"
+            ></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="" [hidden]="!desplegado">
+    <div class="cards-container bg-white rounded p-4">
+      <div
+        cdkDropList
+        [cdkDropListData]="seccion.fields"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div *ngFor="let field of seccion.fields" cdkDrag [cdkDragData]="field">
+          <app-campo-formulario
+            [usuarioPuedeEditar]="usuarioPuedeEditar"
+          ></app-campo-formulario>
+          <div *cdkDragPlaceholder appCampoPlaceholder></div>
+        </div>
+        <div
+          *ngIf="mostrarContenedorSeccionSinComponentes"
+          [ngClass]="{ active: contenedorSinComponentesActivo }"
+          class=""
+          (click)="clickEnSeccionSinComponentes()"
+          #contenedorSeccionSinComponentes
+        >
+          <div class="cards-container">
+            <a
+              class="card"
+              [ngClass]="{ focus: contenedorSinComponentesActivo }"
+            >
+              <p class="row justify-content-center mb-2">
+                No tenés componentes cargados en esta sección.<br />
+                <strong
+                  >Arrastrá componentes desde otras secciones hasta acá o crea
+                  uno nuevo desde la barra de la derecha.</strong
+                >
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

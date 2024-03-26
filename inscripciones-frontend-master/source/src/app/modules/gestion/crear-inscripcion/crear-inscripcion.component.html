@@ -1,0 +1,111 @@
+<div class="bg-light p-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center justify-content-center">
+      <img
+        src="./assets/icons/chevron-left.svg"
+        class="mr-2"
+        [routerLink]="['../../']"
+        role="button"
+      />
+      <h1>Crear inscripción</h1>
+    </div>
+    <button
+      class="btn btn-primary"
+      [disabled]="!selectedRow"
+      (click)="goNewInscription(selectedRow)"
+    >
+      Inscribir
+    </button>
+  </div>
+  <div>
+    <div class="mt-4">
+      <app-search-bar
+        [placeholder]="'Buscar inscripciones'"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+
+    <div class="table mt-4 px-5 py-3 bg-white">
+      <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+        <h4>Lista de inscripciones</h4>
+        <div
+          class="d-flex align-items-center justify-content-between mr-2 mt-2"
+        >
+          <div class="dropdown mr-3">
+            <button
+              type="button"
+              class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <img
+                src="./assets/icons/organizar.svg"
+                class="mr-2"
+                alt="organizar"
+              />
+              Organizar
+            </button>
+            <div class="dropdown-menu dropdown-menu-right w-auto">
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="sortByName()"
+              >
+                Por nombre
+              </button>
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="sortByCategoria()"
+              >
+                Por categoría
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table border-0">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Organismo</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Tipo de inscripción</th>
+            <th scope="col">Estado de inscripción</th>
+          </tr>
+        </thead>
+        <span class="border-bottom"></span>
+        <tbody>
+          <tr
+            *ngFor="let data of tableData"
+            (click)="selectRow(data)"
+            [class.selected]="data === selectedRow"
+          >
+            <td>{{ data?.nombre }}</td>
+            <td>{{ data?.organismo }}</td>
+            <td>{{ data?.categoria }}</td>
+            <td>
+              {{ data?.tipo }}
+            </td>
+            <td>
+              <div>
+                {{
+                  getEstado(data?.estado)
+                }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-container *ngIf="tableData.length > 0">
+      <app-pagination
+        [allPagesNumber]="allInscripcionesPages"
+        (changePage)="onInscripcionesPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</div>

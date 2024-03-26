@@ -1,0 +1,3 @@
+<label [for]="vista.nombre">{{vista.etiqueta}}</label>
+<p *ngIf="vista.descripcion"><small class="descripcion">{{vista.descripcion}}</small></p>
+<textarea class="form-control" [value]="vista.valorPorDefecto" [placeholder]="vista.placeholder" [id]="vista.nombre" rows="5" readonly></textarea>

@@ -1,0 +1,155 @@
+<app-modal-tipo-campo-formulario>
+  <div class="app-tipo-campo-formulario-header text-center">
+    <h3>Teléfono</h3>
+  </div>
+
+  <div class="app-tipo-campo-formulario-general">
+    <form [formGroup]="formGeneral">
+      <div class="form-wrapper bg-light p-4">
+        <div class="form-group" [ngClass]="getCssClases('nombre')">
+          <label for="nombre">Nombre único *
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true" title="El nombre debe ser único."></i>
+            </span>
+          </label>
+          <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre" maxlength="100" />
+        </div>
+        <div class="invalid-msg" *ngIf="nombre.invalid && (nombre.touched || nombre.dirty )">
+          <span class="danger" *ngIf="nombre.errors">*</span>
+          Nombre es requerido
+        </div>
+        <!-- <div class="form-group" [ngClass]="getCssClases('nombre')">
+          <label for="nombre" class="marginT10">
+            Nombre único *
+            <span class="icon">
+              <i class="fa fa-question-circle" aria-hidden="true" title="El nombre debe ser único."></i>
+            </span>
+          </label>
+          <input type="text" id="nombre" name="nombre" formControlName="nombre" maxlength="100"
+            [disabled]="modoEdicion" />
+          <app-validador-campo-formulario [mostrarError]="hasErrors('nombre')" [mensajeError]="errores.nombre">
+          </app-validador-campo-formulario>
+          <app-validador-campo-formulario [mostrarError]="nombreCampoExistente" [mensajeError]="errores.nombreUnico">
+          </app-validador-campo-formulario>
+        </div> -->
+        <div class="form-group" [ngClass]="getCssClases('etiqueta')">
+          <label for="etiqueta" class="marginT10">
+            Etiqueta *
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="La etiqueta es el texto que identificará al campo en el formulario durante la creación del trámite"></i>
+            </span>
+          </label>
+          <input type="text" class="form-control" id="etiqueta" name="etiqueta" formControlName="etiqueta"
+            maxlength="200" />
+        </div>
+        <div class="invalid-msg" *ngIf="etiqueta.invalid && (etiqueta.touched || etiqueta.dirty )">
+          <span class="danger" *ngIf="etiqueta.errors">*</span>
+          Etiqueta es requerido
+        </div>
+        <!-- <div class="form-group" [ngClass]="getCssClases('etiqueta')">
+          <label for="etiqueta" class="marginT10">
+            Etiqueta *
+            <span class="icon">
+              <i class="fa fa-question-circle" aria-hidden="true"
+                title="La etiqueta es el texto que identificará al campo en el formulario durante la creación del trámite"></i>
+            </span>
+          </label>
+          <input type="text" id="etiqueta" name="etiqueta" formControlName="etiqueta" maxlength="200" />
+          <app-validador-campo-formulario [mostrarError]="hasErrors('etiqueta')" [mensajeError]="errores.etiqueta">
+          </app-validador-campo-formulario>
+        </div> -->
+        <div class="form-group" [ngClass]="getCssClases('descripcion')">
+          <label for="descripcion">Descripción
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Texto de ayuda que se mostrará debajo de la etiqueta del campo"></i>
+            </span>
+          </label>
+          <textarea class="form-control" id="descripcion" name="descripcion" formControlName="descripcion" rows="3"
+            maxlength="800"></textarea>
+        </div>
+        <!-- <div class="form-group" [ngClass]="getCssClases('descripcion')">
+          <label for="descripcion" class="marginT10">
+            Descripción
+            <span class="icon">
+              <i class="fa fa-question-circle" aria-hidden="true"
+                title="Texto de ayuda que se mostrará debajo de la etiqueta del campo"></i>
+            </span>
+          </label>
+          <textarea id="descripcion" name="descripcion" formControlName="descripcion" rows="3"
+            maxlength="800"></textarea>
+        </div> -->
+
+        <!-- MiBA -->
+        <hr>
+        <div class="form-group custom-control custom-switch" [ngClass]="getCssClases('integracionMiba')">
+          <input type="checkbox" class="custom-control-input" id="integracionMiba" name="integracionMiba"
+            formControlName="integracionMiba" (change)="onIntegracionMibaChange()">
+          <label class="custom-control-label" for="integracionMiba">
+            Integración con miBA
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Utilizar si el campo debe autocompletarse con algún dato del perfil de miBA del usuario. Tener en cuenta que se deshabilitarán las validaciones en el formulario del trámite"></i>
+            </span>
+          </label>
+        </div>
+        <div class="form-group" [ngClass]="getCssClases('valorMiba')"
+          *ngIf="this.formGeneral.get('integracionMiba').value">
+          <label for="valorMiba" class="marginT10">
+            Valor de miBA *
+          </label>
+          <ng-select name="valorMiba" id="valorMiba" formControlName="valorMiba" bindValue="valor"
+            bindLabel="descripcion" [items]="camposMiba"></ng-select>
+        </div>
+
+        <!-- Subsanable -->
+        <hr class="marginT15">
+        <div class="form-group custom-control custom-switch" [ngClass]="getCssClases('esSubsanable')">
+          <input type="checkbox" class="custom-control-input" id="esSubsanable" name="esSubsanable"
+            formControlName="esSubsanable">
+          <label class="custom-control-label" for="esSubsanable">Es subsanable
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Indica que el campo podrá ser seleccionado para la solicitud de correcciones de un trámite creado con errores"></i>
+            </span>
+          </label>
+        </div>
+
+        <!-- Grupo iterativo -->
+        <app-seccion-modal-campo-grupo-iterativo [modelo]="modelo" formControlName="seMuestraEnGrilla">
+        </app-seccion-modal-campo-grupo-iterativo>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-tipo-campo-formulario-validaciones">
+    <form [formGroup]="formValidaciones">
+      <div class="form-wrapper bg-light p-4">
+        <div class="form-group custom-control custom-switch" [ngClass]="getCssClases('campoObligatorio')">
+          <input type="checkbox" class="custom-control-input" id="campoObligatorio" name="campoObligatorio"
+            formControlName="campoObligatorio">
+          <label class="custom-control-label" for="campoObligatorio">Campo obligatorio
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Los campos obligatorios se validarán automáticamente en el formulario o en el perfil de miBA en caso que corresponda."></i>
+            </span>
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-tipo-campo-formulario-visibilidad">
+    <app-tipo-campo-formulario-visibilidad [modoEdicion]="modoEdicion"></app-tipo-campo-formulario-visibilidad>
+  </div>
+
+  <div class="app-tipo-campo-formulario-footer">
+    <button type="button" class="btn btn-secondary mr-2" (click)="cerrar()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary" (click)="guardar()">
+      Aceptar
+    </button>
+  </div>
+</app-modal-tipo-campo-formulario>

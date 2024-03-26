@@ -1,0 +1,110 @@
+<div class="bg-light p-4">
+    <div class="flex-column" style="margin: 0 auto;">
+      <h3>Confirmación de Asistencia</h3>
+    </div>
+    <form
+      class="p-4 bg-white mt-5 rounded-3 row col-15 flex-column"
+    >
+      <div class="p-1">
+        <table class="table table-bordered table-striped w-100">
+          <tbody>
+            <tr>
+              <td>Curso</td>
+              <td>
+                {{information.instancia}}
+              </td>
+            </tr>
+            <tr>
+              <td>Clases</td>
+              <td>
+                <select class="custom-select mt-2" id="class" name="class" [(ngModel)]="classId">
+                  <option *ngFor="let s of information.clase" [ngValue]="s.id">
+                    {{s.nombre}}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>Estudiante</td>
+              <td>{{information.nombre}} {{information.apellido}}</td>
+            </tr>
+            <tr>
+              <td>Sede</td>
+              <td>{{information.sede}}</td>
+            </tr>
+            <tr>
+              <td>Fecha de inicio</td>
+              <td>{{information.clase[0].fecha}}</td>
+            </tr>
+            <tr>
+              <td>Días</td>
+              <td>{{information.dias}}</td>
+            </tr>
+            <tr>
+              <td>Horario</td>
+              <td>{{information.horario}}</td>
+            </tr>
+            <tr>
+              <td>Modalidad</td>
+              <td>{{information.modalidad}}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <div class="row col-12 mt-5" style="margin: 0 auto;">
+          <div class="d-flex flex-direction-row">
+            <button
+              class="btn btn-secondary mr-3"
+              (click)="close()"
+              >
+              Cancelar
+            </button>
+            <button class="btn btn-primary" (click)="confirmAssitance()"
+            >Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div *ngIf="modal">
+      <div class="modal d-block mt-8" tabindex="-1" role="dialog">
+         <div class="modal-dialog modal-sm" role="document" style="margin-top: 70%">
+           <div class="modal-content">
+             <div class="modal-body" style="text-align: center">
+               <p>{{message}}</p>
+             </div>
+             <div class="modal-footer" style="justify-content:center">
+              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 40 40">
+                <path fill="#bae0bd" d="M20,38.5C9.799,38.5,1.5,30.201,1.5,20S9.799,1.5,20,1.5S38.5,9.799,38.5,20S30.201,38.5,20,38.5z"></path><path fill="#5e9c76" d="M20,2c9.925,0,18,8.075,18,18s-8.075,18-18,18S2,29.925,2,20S10.075,2,20,2 M20,1 C9.507,1,1,9.507,1,20s8.507,19,19,19s19-8.507,19-19S30.493,1,20,1L20,1z"></path><path fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="2" d="M11 20L17 26 30 13"></path>
+                </svg>
+             </div>
+           </div>
+         </div>
+       </div>
+       <div data-dismiss="modal" class="modal-backdrop show"></div>
+      </div>
+
+      <div *ngIf="error">
+        <div class="modal d-block mt-8" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-sm" role="document" style="margin-top: 70%">
+             <div class="modal-content">
+               <div class="modal-body" style="text-align: center">
+                 <p>{{message}}</p>
+               </div>
+               <div class="modal-footer" style="justify-content:center">
+                 <button
+                   style="background-color: red; border-color: red"
+                   type="button"
+                   class="btn btn-secondary"
+                   data-dismiss="modal"
+                   (click)="closeModal()"
+                 >
+                   Cerrar
+                 </button>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div data-dismiss="modal" class="modal-backdrop show"></div>
+      </div>
+  </div>

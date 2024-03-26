@@ -1,0 +1,15 @@
+.redondo {
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  left: 92%;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+#botones{
+  top: 30px;
+}

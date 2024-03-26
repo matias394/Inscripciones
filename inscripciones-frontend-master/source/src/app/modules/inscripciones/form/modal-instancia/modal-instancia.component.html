@@ -1,0 +1,223 @@
+<div id="form-sedes" class="modal d-block mt-5" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Sedes, cupos, días y horario</h3>
+      </div>
+      <div class="modal-body mt-4">
+        <form
+          [formGroup]="formInstSedes"
+          #formIns="ngForm"
+          (submit)="
+            isEdit ? addSedeInstancia(formIns) : addSedeInstancia(formIns)
+          "
+          id="events-form"
+          name="eventos"
+        >
+          <div class="d-flex align-items-center">
+            <!--SEDE-->
+            <div
+              class="form-group col-6"
+              *ngIf="this.modalidadIns === MODALIDAD_PRESENCIAL"
+            >
+              <app-select-input
+                [id]="'sede'"
+                [control]="formInstSedes.controls.sede"
+                [label]="'Sede'"
+                [listaOptions]="listaSedes"
+                [disabled]="this.isEdit"
+              ></app-select-input>
+            </div>
+
+            <!--URL-->
+            <div
+              class="form-group col-6"
+              *ngIf="this.modalidadIns === MODALIDAD_VIRTUAL"
+            >
+              <app-text-input
+                [id]="'url-sede'"
+                [control]="formInstSedes.controls.urlSede"
+                [label]="'URL de redirección'"
+                [placeholder]="'ejemplo.com/url'"
+                [type]="'url'"
+                [messageError]="''"
+              ></app-text-input>
+            </div>
+
+            <!--CUPOS-->
+            <div class="form-group col-6">
+              <app-text-input
+                [id]="'cupos'"
+                [control]="formInstSedes.controls.cupos"
+                [label]="'Cupo de Inscripción'"
+                [placeholder]="'Cupo de Inscripción'"
+                [disabled]="true"
+                [messageError]="'El cupo debe ser mayor a 0'"
+                [disabled]="this.isEdit"
+              ></app-text-input>
+            </div>
+          </div>
+
+          <!--DIAS-->
+          <div class="d-flex align-items-center">
+            <div class="form-group col-12">
+              <label>Días</label>
+              <div class="container-dias">
+                <div
+                  *ngFor="
+                    let item of formInstSedes.get('dias').controls;
+                    let i = index
+                  "
+                  class="dias-item"
+                >
+                  <mat-checkbox
+                    (change)="onCheckChangeDay(i, $event)"
+                    class="custom-check"
+                    [checked]="valueChangeBoolean(item.value.value)"
+                    ><span class="label-check">{{
+                      item.value.label
+                    }}</span></mat-checkbox
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--HORAS-->
+          <div>
+            <div class="form-group col-12 mb-2">
+              <label class="label-horas">Selecionar horas</label>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="form-group col-6">
+                <div class="d-flex flex-column">
+                  <div class="d-flex align-items-center gap-1">
+                    <span>Desde</span>
+                    <input
+                      class="form-control hora-piker"
+                      id="horaInicio"
+                      name="horaInicio"
+                      formControlName="horaInicio"
+                      placeholder="00:00:00"
+                      type="time"
+                      step="1"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-6">
+                <div class="d-flex flex-column">
+                  <div class="d-flex align-items-center gap-1">
+                    <span>Hasta</span>
+                    <input
+                      class="form-control hora-piker"
+                      id="horaFin"
+                      name="horaFin"
+                      formControlName="horaFin"
+                      placeholder="00:00:00"
+                      type="time"
+                      step="1"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-start mt-4 mb-4">
+            <button
+              type="button"
+              class="btn btn-link ml-3 mr-3"
+              data-dismiss="modal"
+              (click)="canselEdit()"
+              *ngIf="isEdit"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary float-left"
+              [disabled]="formInstSedes.submitted || formInstSedes.invalid"
+            >
+              {{ isEdit ? "Guardar" : "Generar" }}
+            </button>
+          </div>
+        </form>
+
+        <!--TABLA DE SEDES-->
+        <div class="d-flex" *ngIf="listaInstSedes.length > 0">
+          <div class="col-12">
+            <table
+              class="table border-0 table-hover"
+              [ngClass]="isEdit && 'table-disabled'"
+            >
+              <thead>
+                <tr>
+                  <th scope="col" class="column-dia">Días</th>
+                  <th scope="col" class="column-hrs d-none">Fecha</th>
+                  <th scope="col" class="column-hrs">Horario</th>
+                  <th scope="col" class="column-acciones">Acciones</th>
+                </tr>
+              </thead>
+              <span class="border-bottom"></span>
+              <tbody>
+                <tr *ngFor="let item of listaInstSedes; let i = index">
+                  <td>
+                    {{ item.dia | titlecase }}
+                  </td>
+                  <td class="d-none">
+                    {{ item.fecha | formatDateES }}
+                  </td>
+                  <td>
+                    <!-- <span class="horario" *ngFor="let h of item.horario">{{
+                      h
+                    }}</span> -->
+                    {{ item.horario }}
+                  </td>
+                  <td>
+                    <div class="d-flex justify-content-center gap-2">
+                      <div
+                        alt="plus_icon"
+                        class="action-btn"
+                        role="button"
+                        (click)="setDataEdit(i)"
+                        *ngIf="1 > 1"
+                      >
+                        <i class="bx bx-edit-alt bx-grey btn-icon-font"></i>
+                      </div>
+                      <div alt="plus_icon" class="action-btn" role="button">
+                        <i class="bx bx-trash bx-grey btn-icon-font"></i>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer justify-content-start">
+        <button
+          type="button"
+          class="btn btn-link"
+          data-dismiss="modal"
+          (click)="this.eventModalSede.emit()"
+          [disabled]="isEdit"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="isEdit || listaInstSedes.length === 0"
+          (click)="[this.updateDataSource(), this.eventModalSede.emit()]"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div data-dismiss="modal" class="modal-backdrop show"></div>

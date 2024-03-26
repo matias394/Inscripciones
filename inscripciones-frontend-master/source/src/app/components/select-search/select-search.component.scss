@@ -1,0 +1,46 @@
+.container-search {
+  display: block;
+  position: relative;
+  label {
+    font-weight: 500;
+  }
+}
+.list-options {
+  background: #ffffff;
+  border: solid 1px #e0e0e0;
+  border-radius: 10px;
+  display: flex !important;
+  flex-direction: row;
+  position: absolute;
+  margin: 5px 0;
+  min-width: 100%;
+  min-height: 80px;
+  z-index: 1;
+  box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 10%);
+  .list-filter {
+    width: 90%;
+    margin: 20px auto;
+    height: 40px;
+  }
+  ul {
+    margin: 5px 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    li {
+      padding: 5px 15px;
+      &:hover {
+        background: #f9f9f9;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.rounded {
+  border-radius: 25px !important;
+}
+
+.sin-resultado {
+  margin: auto;
+  font-size: 18px;
+}

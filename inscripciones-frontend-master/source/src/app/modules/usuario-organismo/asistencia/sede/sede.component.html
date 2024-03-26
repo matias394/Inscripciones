@@ -1,0 +1,271 @@
+<ng-template #templateDesk>
+  <div class="bg-light p-4">
+    <div class="table mt-4 px-3 py-3 bg-white rounded-1">
+      <div
+        class="d-flex align-items-center justify-content-between px-3 mt-4 mb-4"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <img
+            src="./assets/icons/chevron-left.svg"
+            class="mr-1"
+            role="button"
+            [routerLink]="['../../']"
+            alt="flecha-atras"
+          />
+          <h4 class="mt-1">Tus cursos en {{ sedeNombre }}</h4>
+        </div>
+        <div
+          class="d-flex align-items-center justify-content-between mt-2 mr-2"
+        >
+          <div class="dropdown mr-3">
+            <button
+              type="button"
+              class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <img
+                src="./assets/icons/organizar.svg"
+                class="mr-2"
+                alt="organizar"
+              />
+              Organizar
+            </button>
+            <div class="dropdown-menu dropdown-menu-right w-auto">
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="sortByName()"
+              >
+                Por nombre del curso
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table
+        class="table border-0 pl-5"
+        aria-label="tabla con cursos disponibles en la sede"
+      >
+        <thead>
+          <tr class="w-100">
+            <th scope="col" class="w-25">Nombre del curso</th>
+            <th scope="col">Fecha</th>
+            <th scope="col" class="text-center">Clase</th>
+            <th scope="col" class="text-center">Horario</th>
+            <th scope="col" class="text-center">Link</th>
+            <th scope="col" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="tableData.length === 0">
+            <td colspan="5" class="text-md sin-cursos">
+              No hay cursos asignados en esta sede
+            </td>
+          </tr>
+          <ng-container *ngFor="let item of tableData">
+            <tr>
+              <td>
+                {{ item.nombre === null ? "Curso sin Nombre" : item.nombre }}
+                <img
+                  src="./assets/icons/chevron-down.svg"
+                  alt="chevron_down"
+                  role="button"
+                  class="ml-2"
+                  (click)="expandRowContent(item.id)"
+                />
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <!-- TABLA DOS -->
+            <ng-container *ngIf="expandContent && item.id === selectedId">
+              <tr *ngIf="instanciasList === []">
+                <td colspan="5" class="text-md sin-cursos">
+                  No hay instancias activas en este curso
+                </td>
+              </tr>
+              <ng-container *ngFor="let ita of instanciasList">
+                <tr>
+                  <td style="padding-left: 125px">
+                    {{
+                      ita.nombre === null ? "Instancia sin nombre" : ita.nombre
+                    }}
+                    - {{ ita.id }}
+                    <img
+                      src="./assets/icons/chevron-down.svg"
+                      alt="chevron_down"
+                      role="button"
+                      class="ml-2"
+                      (click)="expandRowContentTwo(ita.id)"
+                    />
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <!-- TABLA TRES -->
+                <ng-container
+                  *ngFor="let it of ita.instanciaSedes; let i = index"
+                >
+                  <tr *ngIf="expandSecondContent && ita.id === selectedIdTwo">
+                    <td style="padding-left: 185px" class="materia text-center">
+                      {{
+                        it.sedeNomnbre + " - " + it.sede === null
+                          ? "Sede sin nombre"
+                          : it.sedeNomnbre + " - " + it.id
+                      }}
+                      <img
+                        src="./assets/icons/chevron-down.svg"
+                        alt="chevron_down"
+                        role="button"
+                        class="ml-2"
+                        (click)="expandRowContentInstancy(it.id, i)"
+                      />
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center">
+                      <a *ngIf="it.urlSede" [href]="it.urlSede" target="_blank"
+                        >Link</a
+                      >
+                    </td>
+                  </tr>
+                  <ng-container
+                    *ngFor="let c of fechaClasesList; let idx = index"
+                  >
+                    <ng-container
+                      *ngIf="
+                        expandInstancyContent[i] &&
+                        it.id === selectedInstancyThree
+                      "
+                    >
+                      <tr>
+                        <td></td>
+                        <td class="materia text-left">
+                          {{
+                            c.fecha === null
+                              ? "Sin Fecha"
+                              : (c.fecha | date : "dd/MM/yyyy")
+                          }}
+                          <img
+                            src="./assets/icons/chevron-down.svg"
+                            alt="chevron_down"
+                            role="button"
+                            class="ml-2"
+                            (click)="expandRowContentDate(c.fecha, idx)"
+                          />
+                        </td>
+                      </tr>
+                      <ng-container *ngFor="let a of c.clases">
+                        <tr
+                          *ngIf="expandedState[idx] && c.fecha === selectedDate"
+                        >
+                          <td></td>
+                          <td></td>
+                          <td class="text-center">
+                            {{ a.nombre ? a.nombre : "Sin nombre" }}
+                          </td>
+                          <td
+                            class="text-center"
+                            *ngIf="a.horaInicio && a.horaFin"
+                          >
+                            {{ a.horaInicio }} - {{ a.horaFin }}
+                          </td>
+                          <td
+                            class="text-center"
+                            *ngIf="!a.horaInicio && !a.horaFin"
+                          >
+                            <span>Sin Horarios</span>
+                          </td>
+                          <td class="text-center">
+                            <span *ngIf="!it.urlSede">-</span>
+                          </td>
+                          <td class="action text-center">
+                            <div>
+                              <img
+                                src="./assets/icons/ver.svg"
+                                alt="unlock_icon"
+                                role="button"
+                                [routerLink]="[
+                                  './asistencia',
+                                  selectedInstancyThree,
+                                  selectedIdTwo,
+                                  a.id
+                                ]"
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateMob>
+  <div class="px-0 pt-5">
+    <div class="mt-4 mb-4">
+      <div class="d-flex align-items-center justify-content-start">
+        <img
+          src="./assets/icons/chevron-left.svg"
+          class=""
+          role="button"
+          [routerLink]="['../../']"
+          alt="flecha-atras"
+        />
+        <h4 class="mt-1 col-11">
+          Tus cursos en
+          {{ sedeNombre }}
+        </h4>
+      </div>
+      <div class="d-flex align-items-center mt-3">
+        <div class="dropdown mr-3">
+          <button
+            type="button"
+            class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              src="./assets/icons/organizar.svg"
+              class="mr-2"
+              alt="organizar"
+            />
+          </button>
+          <div class="dropdown-menu w-auto">
+            <button class="dropdown-item" type="button" (click)="sortByName()">
+              Por nombre del curso
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <tr *ngIf="tableData?.length === 0">
+      <td>Sin cursos asignados</td>
+    </tr>
+  </div>
+
+  <card-inscripciones
+    [data]="tableData"
+    messageButton="Ver Instancias"
+    (onClick)="$any(btnClickInscribite$.next($event))"
+  ></card-inscripciones>
+</ng-template>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>

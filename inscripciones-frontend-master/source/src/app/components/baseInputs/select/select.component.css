@@ -1,0 +1,14 @@
+.container-select-base label {
+  font-weight: 500;
+}
+
+select:disabled {
+  pointer-events: none;
+}
+
+.disabled {
+  color: #999;
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

@@ -1,0 +1,13 @@
+.contenedor {
+  width: 20px;
+}
+
+.ubicador {
+  width: 100%;
+  transition: height 0.15s ease-out;
+}
+
+.barrita {
+  position: relative;
+  width: 100%;
+}

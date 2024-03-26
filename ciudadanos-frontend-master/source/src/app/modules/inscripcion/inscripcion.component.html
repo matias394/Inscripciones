@@ -1,0 +1,337 @@
+<app-banner [image]="image" [description]="description"></app-banner>
+<div class="container py-4 px-0">
+  <!-- <div class="mt-3">
+    <app-alertas
+      [message]="
+        'Para realizar la inscripción al curso ' +
+        infoInscripcion?.nombre +
+        ' completa los siguientes pasos.'
+      "
+      *ngIf="infoInscripcion"
+      [type]="'alert alert-info'"
+      [showCloseButton]="true"
+      (onClose)="closeAlert()"
+    ></app-alertas>
+  </div> -->
+  <ng-stepper #cdkStepper [linear]="true">
+    <!-- STEP ONE -->
+    <cdk-step [optional]="false">
+      <ng-template cdkStepLabel>
+        <div
+          [ngClass]="
+            activeStep === 2 || activeStep === 3 ? 'step-bullet-done' : ''
+          "
+          class="step-bullet"
+        >
+          {{ activeStep === 2 || activeStep === 3 ? "✓" : "1" }}
+        </div>
+        <!-- <div class="step-title" >¿A quién vas a inscribir?</div> -->
+        <div class="step-title text-sm-center">Cargá tus datos</div>
+      </ng-template>
+
+      <div class="row p-4 stepper-divider"></div>
+      <!-- Hidden Form -->
+      <form
+        (ngSubmit)="submit($event)"
+        #formCurso="ngForm"
+        class="p-4 bg-white rounded row flex-column gap-4"
+        id="stepOne"
+        *ngIf="false"
+      >
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>Paso 1: ¿A quién vas a inscribir?</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <app-alertas
+              [message]="'Por favor seleccioná a quien vas a inscribir.'"
+              [type]="'alert alert-info'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="custom-control custom-radio">
+              <input
+                class="custom-control-input"
+                type="radio"
+                name="radio"
+                id="ami"
+                value="ami"
+                checked
+              />
+              <label class="custom-control-label" for="ami"> A mi </label>
+            </div>
+            <!-- <div class="custom-control custom-radio mb-5">
+              <input
+                class="custom-control-input"
+                type="radio"
+                name="radio"
+                id="aotro"
+                value="aotro"
+                disabled
+              />
+              <label class="custom-control-label" for="aotro"> A otro </label>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="row step-one-buttons">
+          <div class="col-12">
+            <div class="btn-wrapper d-flex flex-direction-row">
+              <button class="btn btn-link mr-4" (click)="openModal()">
+                Cancelar
+              </button>
+              <button
+                class="btn btn-primary"
+                cdkStepperNext
+                (click)="changeStep()"
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- Hidden Form -->
+
+      <form
+        (ngSubmit)="submit($event)"
+        #formCurso="ngForm"
+        class="p-4 bg-white rounded row flex-column"
+        id="stepTwo"
+      >
+        <div class="row">
+          <div class="col-12 col-lg-12">
+            <h2>Paso 1: Cargá tus datos</h2>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-12 col-lg-12">
+            <app-alertas
+              [message]="'Por favor completá el siguiente formulario'"
+              [type]="'alert alert-info'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+        </div>
+        <div class="row flex-column">
+          <app-previsualizando-formulario
+            *ngIf="activeStep >= 1 && formId != ''"
+            [formId]="formId"
+            [activeStep]="activeStep"
+            [inscripcionId]="this.infoInscripcion.id"
+            (saveFormResult)="getFormResult($event)"
+          ></app-previsualizando-formulario>
+        </div>
+
+        <div class="row step-three-buttons mt-4">
+          <div class="col-12">
+            <div class="d-flex flex-direction-row">
+              <button
+                [disabled]="resultSaved"
+                class="btn btn-link btn-cancelar-desktop"
+                (click)="openModal()"
+              >
+                Cancelar
+              </button>
+              <!-- <button
+                type="button"
+                class="btn btn-secondary mr-4"
+                cdkStepperPrevious
+                (click)="stepDown()"
+              >
+                Volver
+              </button> -->
+              <button
+                class="btn btn-primary"
+                cdkStepperNext
+                (click)="changeStep()"
+                id="buttonStep2"
+              >
+                Continuar
+              </button>
+            </div>
+            <div class="container-cancelar-mobile">
+              <button
+                [disabled]="resultSaved"
+                class="btn btn-link"
+                (click)="openModal()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </cdk-step>
+
+    <!-- STEP TWO -->
+    <cdk-step [optional]="false">
+      <ng-template cdkStepLabel>
+        <div
+          [ngClass]="
+            activeStep === 2 ? 'step-bullet-active' : 'step-bullet-disabled'
+          "
+          class="step-bullet"
+        >
+          2
+        </div>
+        <div class="step-title">Confirmación</div>
+      </ng-template>
+
+      <div class="row p-4 stepper-divider"></div>
+
+      <form
+        (ngSubmit)="submit($event)"
+        #formCurso="ngForm"
+        class="p-4 bg-white rounded row flex-column"
+        id="stepThree"
+      >
+        <div class="row col-lg-12">
+          <h2>Paso 2: Confirmación</h2>
+        </div>
+        <div class="row">
+          <div class="col-lg-10 mb-3 mt-2">
+            <app-alertas
+              [message]="
+                'Tu inscripción quedará registrada con los siguientes datos, verificá antes de confirmar.'
+              "
+              [type]="'alert alert-info'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+        </div>
+
+        <div class="">
+          <table
+            class="table table-bordered table-striped w-100 col-lg-6 p-0 table-confirm"
+            *ngIf="activeStep === 2"
+          >
+            <tbody>
+              <tr>
+                <td>Curso</td>
+                <td>{{ infoInscripcion?.nombre }}</td>
+              </tr>
+              <tr>
+                <td>Cantidad de cupos</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Para</td>
+                <td>
+                  {{ formResult.nombre ?? "" }} {{ formResult.apellido ?? "" }}
+                </td>
+              </tr>
+              <tr>
+                <td>Sede</td>
+                <td>{{ instanciaSedeInfo.nombreSede }}</td>
+              </tr>
+              <tr>
+                <td>Fecha de inicio</td>
+                <td>
+                  {{ instanciaSedeInfo.fechaInicio | date : "dd/MM/yyyy" }}
+                </td>
+              </tr>
+              <tr>
+                <td>Horarios</td>
+                <td>
+                  {{ instanciaSedeInfo.horarioFormateado }}
+                </td>
+              </tr>
+              <tr>
+                <td>Modalidad</td>
+                <td>{{ instanciaSedeInfo.modalidad }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row step-three-buttons">
+          <div class="col-12">
+            <div class="d-flex flex-direction-row">
+              <button
+                [disabled]="resultSaved"
+                class="btn btn-link btn-cancelar-desktop"
+                (click)="openModal()"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                cdkStepperPrevious
+                (click)="stepDown()"
+                [disabled]="resultSaved"
+              >
+                Volver
+              </button>
+              <button
+                [disabled]="resultSaved"
+                (click)="saveResult()"
+                class="btn btn-primary"
+              >
+                Confirmar
+              </button>
+            </div>
+            <div class="container-cancelar-mobile">
+              <button
+                [disabled]="resultSaved"
+                class="btn btn-link"
+                (click)="openModal()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-start flex-column">
+          <div class="form-group col-12" *ngIf="resultSaved">
+            <app-alertas
+              [message]="'Tu inscripción fue exitosa. Gracias.'"
+              [showCloseButton]="true"
+              [type]="'alert alert-success'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+
+          <div *ngIf="error" class="form-group col-12">
+            <app-alertas
+              [message]="message"
+              [showCloseButton]="true"
+              [type]="'alert alert-danger'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+        </div>
+      </form>
+    </cdk-step>
+
+    <!-- STEP THREE -->
+    <cdk-step [optional]="false" *ngIf="false">
+      <ng-template cdkStepLabel>
+        <div
+          [ngClass]="
+            activeStep === 2 ? 'step-bullet-active' : 'step-bullet-disabled'
+          "
+          class="step-bullet"
+        >
+          3
+        </div>
+      </ng-template>
+      <div class="row p-4 stepper-divider"></div>
+    </cdk-step>
+  </ng-stepper>
+
+  <app-modals
+    *ngIf="modalSwitch === true"
+    [title]="modalTitle"
+    [message]="modalMessage"
+    (triggerCancel)="closeModal()"
+    (triggerConfirm)="redirectToPage()"
+  ></app-modals>
+</div>

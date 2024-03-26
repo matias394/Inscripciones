@@ -1,0 +1,16 @@
+<div *ngIf="subsanacion">
+  <div class="mensajeSubsanacion"><p><i class="fa fa-comments" aria-hidden="true"></i></p></div>
+</div>
+<!--<div class="alert alert-danger" *ngIf="noEsCaba()">
+  {{mensajeDomicilio}}
+</div>-->
+<div class="form-group" *ngIf="mostrarElemento">
+  <form [formGroup]="form">
+    <formly-form
+      [form]="form"
+      [model]="model"
+      [fields]="fields"
+      [options]="options">
+    </formly-form>
+  </form>
+</div>

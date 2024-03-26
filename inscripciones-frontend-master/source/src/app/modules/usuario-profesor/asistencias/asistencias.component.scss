@@ -1,0 +1,53 @@
+table{
+ width:100%;
+ margin-top:45px;
+}
+
+thead {
+ background-color: #ffffff;
+ color: #141920;
+ font-weight: 600;
+ font-size: 15px;
+ line-height: 22px;
+}
+
+tbody{
+ color: #6A7685;
+ line-height: 20px;
+ letter-spacing: 0.2px;
+}
+
+td {
+ padding: 20px;
+}
+
+table th:first-child{
+ padding-left:30px;
+}
+
+table td:first-child{
+ width: 88%;
+ padding-left:30px;
+}
+
+.round-button {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    background-color: #ffdb2e;
+    border-color: black; /* Cambia el color de fondo según tus preferencias */
+    color: white; /* Cambia el color del icono según tus preferencias */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Agrega sombra si lo deseas */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .round-button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo en el hover */
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño en el hover */
+  }
+

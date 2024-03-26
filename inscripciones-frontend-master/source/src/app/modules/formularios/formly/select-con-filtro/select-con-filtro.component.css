@@ -1,0 +1,18 @@
+label{
+    font-weight: 700!important;
+}
+
+.select-con-filtro.ng-select .ng-clear-wrapper .ng-clear{
+    font-size: 25px!important;
+    font-weight: 700!important;
+}
+
+.ng-select.custom {
+    border:0px;
+    min-height: 0px;
+    border-radius: 0;
+}
+.ng-select.custom .ng-control  {            
+    min-height: 0px;
+    border-radius: 0;
+}

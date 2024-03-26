@@ -1,0 +1,56 @@
+<div>
+  <ng-container *ngIf="listaVacia && !currentSearchTerm">
+    <tr>
+      <td colspan="6" class="mt-5 pt-4">No hay cursos asignados</td>
+    </tr>
+  </ng-container>
+
+  <ng-container *ngIf="sinResultados && currentSearchTerm">
+    <tr>
+      <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold text-break">
+        Sin resultados. Realizá una nueva búsqueda.
+      </td>
+    </tr>
+  </ng-container>
+
+  <ng-container *ngIf="!listaVacia && data.length > 0">
+    <div *ngFor="let item of data" class="card-ins mt-4">
+      <h2 class="card-title">{{ item?.nombre }}</h2>
+      <div class="card-body" *ngIf="messageButton === 'Ver'">
+        <span class="fechaInicio">{{ item?.categoria }}</span>
+        <span class="fechaInicio">{{
+          item?.periodo === null ? "Sin Periodo" : item?.periodo
+        }}</span>
+        <span class="fechaInicio"
+          >Profesores:
+          {{ item.profesor === "" ? "Sin Profesores" : item?.profesor }}</span
+        >
+      </div>
+
+      <div class="card-body" *ngIf="messageButton === 'Ir a clases'">
+        <ng-container *ngFor="let it of item.fechaDiasList">
+          <h5>{{ item?.sedeNomnbre }}</h5>
+          <span>{{ it.dias }}</span>
+          <ng-container *ngFor="let hora of it.horas">
+            <span>{{ hora }}</span>
+          </ng-container>
+        </ng-container>
+      </div>
+      <button
+        *ngIf="messageButton === 'Ver'"
+        class="card-btn btn btn-primary"
+        [routerLink]="['./inscripcion', item.id]"
+      >
+        {{ messageButton }}
+      </button>
+
+      <button
+        *ngIf="messageButton === 'Ir a clases'"
+        class="card-btn btn btn-primary"
+        [routerLink]="['./clases', item.id]"
+      >
+        {{ messageButton }}
+      </button>
+    </div>
+  </ng-container>
+</div>

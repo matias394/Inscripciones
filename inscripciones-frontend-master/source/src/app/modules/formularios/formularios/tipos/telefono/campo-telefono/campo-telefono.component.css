@@ -1,0 +1,13 @@
+.col-short{
+    display: inline-block;
+    width: 20%;
+    margin-right: 1rem;
+}
+.col-long{
+    display: inline-block;
+    width: calc(60% - 2rem);
+}
+
+div.row > div {
+    padding: 1;
+  }

@@ -1,0 +1,20 @@
+<div class="form-group">
+  <label>{{vista.etiqueta}}</label>
+  <span *ngIf="vista.descripcion" class="form-text">{{vista.descripcion}}</span>
+</div>
+<hr>
+<div class="custom-control custom-radio" *ngFor="let valor of vista.valores; let i = index">
+  <input
+    class="custom-control-input"
+    type="radio"
+    [name]="vista.nombre"
+    id="{{vista.nombre}}_{{i}}"
+    value={{valor}}
+    [(ngModel)]="vista.valorPorDefecto"
+    readonly
+    checked=""
+  />
+  <label class="custom-control-label" for="profession-designer">
+    {{valor}}
+  </label>
+</div>

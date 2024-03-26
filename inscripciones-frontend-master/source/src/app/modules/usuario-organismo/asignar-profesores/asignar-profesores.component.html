@@ -1,0 +1,185 @@
+<ng-template #templateDesk>
+  <div class="bg-light mt-5 ml-4">
+    <app-search-bar
+      [placeholder]="'Buscar inscripciones o categorías'"
+      (searchEnter)="onSearchEnter($event)"
+      (searchInput)="onSearchInput($event)"
+    ></app-search-bar>
+  </div>
+
+  <div class="p-4">
+    <div class="table mt-4 px-3 py-3 bg-white">
+      <div
+        class="d-flex align-items-center justify-content-between px-3 mt-3 mb-4"
+      >
+        <h4>Lista de Inscripciones</h4>
+        <div
+          class="d-flex align-items-center justify-content-between mr-2 mt-2"
+        >
+          <div class="dropdown mr-3">
+            <button
+              type="button"
+              class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <img
+                src="./assets/icons/organizar.svg"
+                class="mr-2"
+                alt="organizar"
+              />
+              Organizar
+            </button>
+            <div class="dropdown-menu dropdown-menu-right w-auto">
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="sortByName()"
+              >
+                Por nombre
+              </button>
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="sortByCategoria()"
+              >
+                Por categoría
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table
+        class="table pl-4 pr-0 border-0 text-left"
+        aria-label="tabla con lista de inscripciones"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Inscripciones</th>
+            <th scope="col">Categorías</th>
+            <th scope="col">Periodo</th>
+            <th scope="col">Profesor Asignado</th>
+            <th scope="col" class="text-center">Acción</th>
+          </tr>
+        </thead>
+        <span class="border-bottom"></span>
+        <tbody>
+          <ng-container *ngIf="listaVacia && !currentSearchTerm">
+            <tr>
+              <td colspan="6" class="mt-5 pt-4">No hay cursos asignados</td>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="sinResultados && currentSearchTerm">
+            <tr>
+              <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold">
+                Sin resultados. Realizá una nueva búsqueda.
+              </td>
+            </tr>
+          </ng-container>
+
+          <ng-container
+            *ngIf="!listaVacia && listaPaginableInscripciones.length > 0"
+          >
+            <tr *ngFor="let item of listaPaginableInscripciones">
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.categoria }}</td>
+              <td>
+                {{
+                  item.periodo === "" || item.periodo === null
+                    ? "Sin Periodo"
+                    : (item?.periodo | formatDate)
+                }}
+              </td>
+              <td>
+                {{ item.profesor === "" ? "Sin Profesor" : item.profesor }}
+              </td>
+              <td>
+                <div class="d-flex justify-content-center cursorPointer">
+                  <img
+                    src="./assets/icons/ver.svg"
+                    alt="check_circle_icon"
+                    role="button"
+                    (click)="goToAssits(item.id, item.nombre)"
+                  />
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <app-pagination
+      *ngIf="listaPaginableInscripciones.length > 0"
+      [allPagesNumber]="allInscripcionesPages"
+      (changePage)="onInscripcionesPageChange($event)"
+      [_currentPage]="currentPage"
+    ></app-pagination>
+  </div>
+</ng-template>
+
+<ng-template #templateMob>
+  <div class="bg-light pt-5">
+    <h4>Lista de inscripciones</h4>
+    <div class="d-flex align-items-center justify-content-start mt-3">
+      <div class="dropdown mr-3">
+        <button
+          type="button"
+          class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <img
+            src="./assets/icons/organizar.svg"
+            class="mr-2"
+            alt="organizar"
+          />
+        </button>
+        <div class="dropdown-menu w-auto">
+          <button class="dropdown-item" type="button" (click)="sortByName()">
+            Por nombre
+          </button>
+          <button
+            class="dropdown-item"
+            type="button"
+            (click)="sortByCategoria()"
+          >
+            Por categoría
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 mb-4">
+      <app-search-bar
+        [placeholder]="'Buscar cursos por nombre o categoría'"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+  </div>
+
+  <app-card-responsive-asignar
+    [data]="listaPaginableInscripciones"
+    [listaVacia]="listaVacia"
+    [sinResultados]="sinResultados"
+    [currentSearchTerm]="currentSearchTerm"
+    messageButton="Ver"
+    (onClick)="$any(btnClickInscribite$.next($event))"
+  ></app-card-responsive-asignar>
+
+  <ng-container *ngIf="listaPaginableInscripciones.length > 0">
+    <app-pagination
+      *ngIf="listaPaginableInscripciones.length > 0"
+      [allPagesNumber]="allInscripcionesPages"
+      (changePage)="onInscripcionesPageChange($event)"
+      [_currentPage]="currentPage"
+    ></app-pagination>
+  </ng-container>
+</ng-template>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>

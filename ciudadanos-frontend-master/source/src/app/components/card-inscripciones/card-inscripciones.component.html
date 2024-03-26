@@ -1,0 +1,75 @@
+<div class="container">
+  <h4 class="px-1 py-4">
+    Seleccioná la inscripción que se ajuste a tu necesidad
+  </h4>
+  <span class="px-1">Seleccioná un lugar</span>
+  <div class="mt-4">
+    <div class="navbar-search d-responsive ml-auto">
+      <form class="form-search form-search-sm">
+        <div class="form-group">
+          <input
+            type="search"
+            class="form-control form-control-sm col-12 bg-white input-search"
+            id="searchInput"
+            name="header-search"
+            [(ngModel)]="searchValue"
+            (keyup.enter)="onInputKeyUp($event)"
+            (input)="onInputChanged($event)"
+            placeholder="Buscar sede o dirección"
+          />
+          <button
+            class="reset"
+            type="reset"
+            (click)="onInputKeyUp($event)"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div
+    *ngIf="data.length === 0"
+    class="mt-4 d-flex px-3 py-0 justify-content-center align-items-center bg-white"
+  >
+    <p class="d-flex justify-content-center align-items-center mt-3">
+      Sin resultados. Por favor realize una nueva búsqueda.
+    </p>
+  </div>
+
+  <div *ngFor="let item of data" class="card-ins mt-4">
+    <h2 class="card-title">{{ item.nombreInstancia }}</h2>
+    <div class="card-body" *ngIf="messageButton === 'Ver Inscripciones'">
+      <span class="sede">#{{ item.id }}</span>
+    </div>
+    <div class="card-body" *ngIf="messageButton === 'Inscribíte'">
+      <h2 class="card-title">{{ item.nombreSede }}</h2>
+      <span class="sede"
+        >Inicio: {{ item.fechaInicio | date : "dd/MM/yyyy" }}</span
+      >
+
+      <ng-container *ngFor="let horario of item.horarios">
+        <span class="sede pl-2">{{ horario.dias }}</span>
+        <p class="pl-2 horario">{{ horario.horario }}</p>
+      </ng-container>
+
+      <span class="sede">{{ item.modalidad }}</span>
+    </div>
+    <button
+      *ngIf="messageButton === 'Ver Inscripciones'"
+      class="card-btn btn btn-primary"
+      (click)="onClickEvent(item)"
+      [routerLink]="['inscripciones', item.id]"
+    >
+      {{ messageButton }}
+    </button>
+
+    <button
+      *ngIf="messageButton === 'Inscribíte'"
+      [routerLink]="['../../inscripcion', item.id]"
+      class="card-btn btn btn-primary"
+      (click)="goToInscriptionPage(item)"
+    >
+      {{ messageButton }}
+    </button>
+  </div>
+</div>

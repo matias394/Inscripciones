@@ -1,0 +1,26 @@
+.category__title{
+  color: #54595e;
+  font-size: 21px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 28px; /* 93.333% */
+}
+
+.second-content .text-second {
+  color: #393739;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 137.5% */
+}
+
+@media (max-width: 768px) {
+  .content-page {
+    margin-top: 120px;
+  }
+
+  .title {
+    font-size: 20px;
+    margin-top: 20px;  
+  }
+}

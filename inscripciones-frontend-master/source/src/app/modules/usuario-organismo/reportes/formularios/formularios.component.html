@@ -1,0 +1,10 @@
+<div class="row flex-column">
+  <form class="mt-8 bg-white rounded" #formUser="ngForm">
+    <app-previsualizando-formulario
+      *ngIf="respuestaCiudadano"
+      [formId]="mongoID"
+      [activeStep]="2"
+      [preloadedResponse]="respuestaCiudadano"
+    ></app-previsualizando-formulario>
+  </form>
+</div>

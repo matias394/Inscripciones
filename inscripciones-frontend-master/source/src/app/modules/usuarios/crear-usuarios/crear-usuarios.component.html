@@ -1,0 +1,229 @@
+<div class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">Crear nuevo usuario</h1>
+    <p>
+      Para agregar un Nuevo Usuario al sistema complete el formulario a
+      continuación.
+    </p>
+  </div>
+  <form
+    class="mt-8 p-5 bg-white rounded"
+    (ngSubmit)="createUser(formUser)"
+    #formUser="ngForm"
+  >
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="name-input">CUIL</label>
+        <div class="form-search position-relative">
+          <input
+            type="search"
+            class="form-control input-search mt-2"
+            id="cuil"
+            name="cuil"
+            placeholder="Buscar..."
+            ngModel
+            required
+            (keypress)="validateFormat($event)"
+          />
+
+          <img
+            src="./assets/icons/search.svg"
+            alt="search"
+            class="search-icon"
+            (click)="getUsuarioByCuil(formUser)"
+          />
+          <button class="reset" type="reset"></button>
+        </div>
+        <span
+          class="text-danger ml-1"
+          *ngIf="
+            formControl.invalid && (formControl.touched || formControl.dirty)
+          "
+        >
+          <span class="text-danger ml-1" *ngIf="formControl.errors">*</span>
+          El texto no puede tener menos de 11 caracteres.
+        </span>
+      </div>
+      <div class="form-group col-6">
+        <select-search
+          [label]="'Organismo'"
+          [placeholder]="'Seleccione un organismo'"
+          [name]="'organismo'"
+          [listOptions]="listaOrganismos"
+          (changeValue)="$any(organismoSelect$.next($event))"
+          [optionSelected]="optionSelected"
+          [inputControl]="organismo"
+          [typeSearch]="'inputForm'"
+        ></select-search>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center">
+      <div class="form-group col-6 d-flex justify-content-between">
+        <div class="d-flex flex-column name-input">
+          <label for="name-input">Nombre</label>
+          <input
+            type="text"
+            class="form-control mt-2"
+            name="nombre"
+            id="nombre"
+            placeholder="Tu nombre"
+            [ngModel]="nombre"
+            ngModel
+            [disabled]="true"
+          />
+        </div>
+
+        <div class="d-flex flex-column name-input">
+          <label for="name-input">Apellido</label>
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="nombre"
+            name="nombre"
+            placeholder="Tu apellido"
+            [ngModel]="apellido"
+            name="apellido"
+            [disabled]="true"
+            ngModel
+          />
+        </div>
+      </div>
+
+      <div class="form-group col-6 d-flex flex-column mt-1">
+        <label for="categoria" class="mb-1">Categoría</label>
+        <select
+          class="form-control mt-2"
+          name="categoria"
+          id="categoria"
+          required
+          [disabled]="organismoId === undefined || categoriaName === []"
+          [ngClass]="{
+            disabled: organismoId === undefined || categoriaName === []
+          }"
+          [formControl]="categoria"
+          (change)="getOrgaCateByCategoria($event.target.value)"
+        >
+          <option value="" selected hidden>Seleccionar</option>
+          <option *ngFor="let cat of listaCategorias" [value]="cat.id">
+            {{ cat.nombre }}
+          </option>
+        </select>
+        <ul class="list-categories">
+          <ng-container *ngFor="let item of categoriaName">
+            <li (click)="removeItem(item)">
+              {{ item }}
+              <i class="bx bx-x" aria-hidden="true"></i>
+            </li>
+          </ng-container>
+        </ul>
+        <span
+          class="text-danger ml-1"
+          *ngIf="categoria.invalid && (categoria.touched || categoria.dirty)"
+        >
+          <span class="text-danger ml-1" *ngIf="categoria.errors">*</span>
+          Categoria es requerido.
+        </span>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-6 d-flex flex-column">
+        <label for="name-input">Correo electrónico</label>
+        <input
+          type="text"
+          class="form-control mt-2"
+          id="email"
+          name="email"
+          placeholder="ejemplo@correo.com"
+          [ngModel]="email"
+          [disabled]="true"
+          ngModel
+          required
+        />
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="perfil">Rol</label>
+        <select class="custom-select mt-2" id="rol" name="rol" ngModel required>
+          <option>Seleccionar</option>
+          <option *ngFor="let s of selectRoles" [ngValue]="s.id">
+            {{ s.nombre }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-12">
+        <div class="btn-wrapper d-flex justify-content-start mt-5">
+          <button
+            type="button"
+            class="btn btn-link mr-4"
+            [routerLink]="['../']"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            [disabled]="formUser.invalid || disableButton"
+            class="btn btn-primary"
+          >
+            Crear
+          </button>
+        </div>
+        <div class="row">
+          <div class="form-group col-6 mt-5">
+            <div *ngIf="confirm">
+              <app-alertas
+                [message]="'Usuario creado exitosamente'"
+                [type]="'alert alert-success'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+
+            <div *ngIf="error">
+              <app-alertas
+                [message]="'Usuario ya existente'"
+                [type]="'alert alert-danger'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+
+            <div *ngIf="errorDatos">
+              <app-alertas
+                [message]="'Todos los campos deben estar completos'"
+                [type]="'alert alert-danger'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+
+            <div *ngIf="errorUserNotExisting">
+              <app-alertas
+                [message]="'No existe un usuario con ese CUIL'"
+                [type]="'alert alert-danger'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+
+            <div *ngIf="errorCuilData">
+              <app-alertas
+                [message]="'CUIL no concuerda con los datos del usuario'"
+                [type]="'alert alert-danger'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  $(function () {
+    $(".selectpicker").selectpicker();
+  });
+</script>

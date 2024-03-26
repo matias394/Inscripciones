@@ -1,0 +1,9 @@
+.copy-action-input {
+  position: absolute;
+  right: 20px;
+  top: 36px;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1;
+}

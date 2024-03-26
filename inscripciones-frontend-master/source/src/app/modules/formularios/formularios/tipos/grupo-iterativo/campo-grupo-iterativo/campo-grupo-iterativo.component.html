@@ -1,0 +1,16 @@
+<label [for]="vista.nombre">{{vista.etiqueta}}</label>
+<p *ngIf="vista.descripcion" class="margin0 padding0"><small class="descripcion">{{vista.descripcion}}</small></p>
+
+<!-- Grilla -->
+<table class="table-grupo-iterativo">
+  <thead>
+    <tr>
+      <th *ngFor="let campo of camposEnGrilla" scope="col">{{ campo }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td *ngFor="let campo of camposEnGrilla">Ejemplo</td>
+    </tr>
+  </tbody>
+</table>

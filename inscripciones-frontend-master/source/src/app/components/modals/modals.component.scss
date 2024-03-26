@@ -1,0 +1,18 @@
+.modal-content{
+  width: 420px;
+}
+
+.modal-header-table{
+  width: 100%;
+  min-height: 100%;
+}
+
+.modal-backdrop{
+  opacity: 0.3 !important;
+}
+
+@media screen and (max-width: 768px) {
+  .modal-content{
+    width: 100%;
+  }
+}

@@ -1,0 +1,25 @@
+<div class="form-group" *ngIf="mostrarElemento">
+    <label>{{to.label}}{{to.required ? ' *' : ''}}</label>
+    <br>
+    <p><small>{{descripciones}}</small></p>
+    <!--<div *ngIf="to.subsanacion">
+        <div class="mensajeSubsanacion">
+            <p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p>
+        </div>
+    </div>-->
+        <input class="form-control" [disabled]="isReadOnly()" *ngIf="flag" type="text" [(ngModel)]="nombredireccionselecionada" (keyup)="normalizar(nombredireccionselecionada)" autocomplete="off" [placeholder]="to.placeholder ? to.placeholder : ''" />
+        <input class="form-control" [(ngModel)]="nombredireccionselecionada" disabled *ngIf="!flag" type="text" />
+
+        <div class="search-result" *ngIf="flag">
+            <ul>
+                <li *ngFor="let direccion of direcciones">
+                    <a (click)="onselectCalle(direccion)">{{direccion.data.nombre}}</a>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="errorCalle">
+            <span class="form-control-feedback is-invalid"></span>
+            <span class="sr-only">(error)</span>
+            <div class="invalid-feedback">{{errorCalleMensaje}}</div>
+          </div>
+</div>

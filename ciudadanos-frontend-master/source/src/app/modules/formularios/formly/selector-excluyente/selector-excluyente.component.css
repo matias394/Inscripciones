@@ -1,0 +1,11 @@
+.separation {
+  padding-bottom: 2.24rem;
+}
+
+.custom-control-input:not(:disabled) ~ .custom-control-label {
+  font-weight: normal;
+}
+
+.card {
+  box-shadow: 0 0 0 2px #e6ebf0 !important;
+}

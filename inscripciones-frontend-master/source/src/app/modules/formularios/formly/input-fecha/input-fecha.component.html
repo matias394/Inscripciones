@@ -1,0 +1,21 @@
+<!-- <div class="form-group form-group-fecha" *ngIf="mostrarElemento">
+  <label for="inputFecha" class="{{to.labelClass}}">{{to.label}}{{to.required ? ' *' : ''}}</label>
+  <small class="descripcion">{{to.descripcion}}</small>
+  <div *ngIf="to.subsanacion">
+      <div class="mensajeSubsanacion"><p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p></div>
+  </div>
+  <app-selector-fecha style="display: inline-block;" id="inputFecha"
+    [formControl]="formControl"
+    [formlyAttributes]="field"></app-selector-fecha>
+</div> -->
+
+<div class="form-wrapper" *ngIf="mostrarElemento">
+  <div class="form-group">
+    <label for="inputFecha">{{to.label}}{{to.required ? ' *': ''}}</label>
+    <br>
+    <span id="date-help" class="form-text">{{to.description}}</span>
+<!--    <div class="mensajeSubsanacion" *ngIf="to.subsanacion"><i class='bx bx-chat'></i><p> {{to.subsanacion.comentario}}</p></div>-->
+    <input type="date" class="form-control" id="inputFecha" [formControl]="formControl"
+           [formlyAttributes]="field"/>
+  </div>
+</div>

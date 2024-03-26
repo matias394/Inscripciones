@@ -1,0 +1,13 @@
+.table-grupo-iterativo{
+    margin: 1.5rem 0;
+    width: 100%;
+}
+.table-grupo-iterativo thead th{
+    background: white;
+    font-size: 0.9rem;
+    border-bottom: solid #BABAB9 2px;
+    padding: 0.5rem;
+}
+.table-grupo-iterativo th{
+    font-size: 0.9rem;
+}

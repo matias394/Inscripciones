@@ -1,0 +1,101 @@
+.popover-components {
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.3);
+    padding: 0.25rem 0 0;
+    position: absolute;
+    top: 0;
+    background: white;
+    margin-left: -5px;
+}
+
+
+.btn-group-vertical li{
+    padding: 0.25rem 0.5rem;
+    list-style: none;
+}
+
+.btn-redondo{
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 50%;
+    padding: 0;
+    border: none;
+}
+
+.btn-redondo:hover,
+.btn-redondo:focus{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.3);
+    background-color: #eee;
+}
+
+.btn-redondo:disabled {
+  box-shadow: none;
+  background-color: #f5f5f5;
+}
+
+
+.btn-add-component{
+    background: rgba(46, 188, 152, 0.15);
+}
+    .btn-add-component .btn-redondo{
+        background: #2EBC98;
+        color: white;
+    }
+.lista-componentes{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+.lista-componentes li{
+    width: calc(100% - 1rem);
+    color: white;
+    background-color: #19C3E3;
+    font-size: 0.9rem;
+    border-radius:3px;
+    margin-bottom: 1rem;
+    padding: 0 1rem 0 2.5rem;
+    line-height: 1rem;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.lista-componentes li:hover,
+.lista-componentes li:focus{
+    opacity: 0.7;
+}
+.lista-componentes li:nth-child(2n+1){
+    margin-right: 1rem;
+}
+
+:host > .popover{
+    max-width: 515px!important;
+    left: -525px!important;
+    top: 22px;
+    padding: 1.5rem 1.5rem 0.5rem;
+    transform: none!important;
+}
+
+:host > .popover h4{
+    font-size: 18px;
+    margin-bottom: 1.3rem;
+}
+
+:host > .popover.left > .arrow{
+    top: 159px!important;
+    border: none;
+    border-left-color: #fff;
+}
+
+
+.fontsize{
+  font-size: 13px;
+  vertical-align: top;
+  text-align:left;
+}
+
+
+

@@ -1,0 +1,19 @@
+<div class="container-home" *ngIf="userRol === 1">
+  <img
+    src="assets/img/logo-principal-gris.svg"
+    alt="Logo BA"
+    class="logo-home"
+  />
+</div>
+
+<div *ngIf="userRol === 2">
+  <app-cursos-inicio></app-cursos-inicio>
+</div>
+
+<div *ngIf="userRol === 3">
+  <app-profesores></app-profesores>
+</div>
+
+<div *ngIf="userRol === 4">
+  <app-eventos-inicio></app-eventos-inicio>
+</div>

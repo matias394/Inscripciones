@@ -1,0 +1,41 @@
+<!-- <label [for]="vista.nombre">{{vista.etiqueta}}</label>
+<p *ngIf="vista.descripcion" class="margin0 padding0"><small class="descripcion">{{vista.descripcion}}</small></p>
+
+
+<div class="contenedor-radio contenedor-radio-archivo marginT15">
+  <label class="custom-control custom-radio contenedor-subir-pc">
+    <input type="radio" aria-label="Radio button for following text input">
+    <span class="label-file-selector">
+      <strong>Cargar nuevo archivo</strong>
+    </span>
+  </label>
+</div>
+
+<div *ngIf="!vista.archivoNuevo" class="contenedor-radio contenedor-radio-archivo marginT15">
+  <label class="custom-control custom-radio">
+    <input type="radio" aria-label="Radio button for following text input">
+    <span class="label-file-selector">
+      <strong>Elegir un archivo ya cargado</strong>
+    </span>
+  </label>
+</div> -->
+
+<div class="form-wrapper">
+  <div class="form-group">
+    <label [for]="vista.nombre">{{vista.etiqueta}}</label>
+  </div>
+
+  <div class="custom-control custom-radio">
+    <input type="radio" class="custom-control-input" name="cargar-archivo" id="cargar-nuevo">
+    <label for="cargar-nuevo" class="custom-control-label">
+      Cargar nuevo archivo
+    </label>
+  </div>
+
+  <div class="custom-control custom-radio" *ngIf="!vista.archivoNuevo">
+    <input type="radio" class="custom-control-input" name="cargar-archivo" id="archivo-cargado" />
+    <label for="archivo-cargado" class="custom-control-label">
+      Elegir un archivo ya cargado
+    </label>
+  </div>
+</div>

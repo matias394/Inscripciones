@@ -1,0 +1,32 @@
+.dropdown-menu {
+  display: block !important;
+}
+.dropdown-toggle.selectpicker {
+  display: none !important;
+}
+
+.mh .dropdown-menu {
+  max-height: 100px;
+}
+
+.alert-message{
+  color: black;
+}
+
+.search-icon{
+  position: absolute;
+  display: block;
+  top: 6px;
+  right: 2px;  
+  z-index:2;
+  cursor: pointer;
+}
+
+.organismos-bottom{
+    margin-top:100px;
+}
+
+.invalid-msg{
+  color:red;
+  margin-left:12px;
+}

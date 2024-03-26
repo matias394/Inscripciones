@@ -1,0 +1,42 @@
+<hr />
+<div class="form-wrapper bg-light p-4">
+  <div class="form-group">
+    <label for="descripcion" aria-label="descripcion">
+      Grupo iterativo al que pertenece
+      <i
+        class="bx bxs-help-circle ml-2"
+        aria-hidden="true"
+        title="Para que el campo pertenezca a un grupo iterativo, el mismo debe crearse en el interior del mismo desde el editor de componentes."
+      ></i>
+    </label>
+    <p>{{ nombreGrupoIterativo }}</p>
+  </div>
+  <div
+    *ngIf="grupoIterativoActual !== null"
+    class="form-group custom-control custom-switch"
+  >
+    <ng-container
+      *ngIf="modelo.sePuedeMostrarEnGrilla; else noSePuedeMostrarEnGrilla"
+    >
+      <input
+        type="checkbox"
+        class="custom-control-input"
+        id="esDatoImportante"
+        name="esDatoImportante"
+        [(ngModel)]="esDatoImportante"
+        (ngModelChange)="cambioEnModelo()"
+      />
+    </ng-container>
+    <ng-template #noSePuedeMostrarEnGrilla>
+      <input type="checkbox" disabled class="custom-control-input" />
+    </ng-template>
+    <label class="custom-control-label" for="esDatoImportante">
+      Es dato importante (se muestra en tabla)
+      <i
+        class="fa fa-question-circle ml-2"
+        aria-hidden="true"
+        title="Es posible mostrar hasta tres columnas en la tabla del grupo iterativo."
+      ></i>
+    </label>
+  </div>
+</div>

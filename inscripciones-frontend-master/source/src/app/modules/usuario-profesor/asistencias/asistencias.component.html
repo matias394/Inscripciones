@@ -1,0 +1,231 @@
+<ng-template #templateDesk>
+  <div class="bg-light mt-5 ml-4">
+    <app-search-bar
+      [placeholder]="'Buscar cursos por sede'"
+      (searchEnter)="onSearchEnter($event)"
+      (searchInput)="onSearchInput($event)"
+    ></app-search-bar>
+  </div>
+  <div class="bg-light p-4">
+    <div class="table mt-4 px-3 py-3 bg-white rounded-1">
+      <div
+        class="d-flex align-items-center justify-content-between px-3 mt-4 mb-4"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <h4 class="mt-1">Sedes asignadas</h4>
+        </div>
+
+        <div
+          class="d-flex align-items-center justify-content-between mr-2 mt-2"
+        >
+          <div class="dropdown mr-3">
+            <button
+              type="button"
+              class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <img
+                src="./assets/icons/organizar.svg"
+                class="mr-2"
+                alt="organizar"
+              />
+              Organizar
+            </button>
+            <div class="dropdown-menu dropdown-menu-right w-auto">
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="sortByName()"
+              >
+                Por nombre
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table
+        class="table pl-4 pr-0 border-0 text-left"
+        aria-label="tabla con sedes asignadas"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Sede</th>
+            <th scope="col" class="text-center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="listaVacia && !currentSearchTerm">
+            <tr>
+              <td colspan="6" class="mt-5 pt-4">No hay sedes asignadas</td>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="sinResultados && currentSearchTerm">
+            <tr>
+              <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold">
+                Sin resultados. Realizá una nueva búsqueda.
+              </td>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="!listaVacia && tableData.length > 0">
+            <tr *ngFor="let item of tableData">
+              <td role="button" [routerLink]="['./sede', item.id]">
+                {{ item.nombre }}
+              </td>
+              <td>
+                <div class="d-flex justify-content-center">
+                  <img
+                    src="./assets/icons/ver.svg"
+                    alt="unlock_icon"
+                    role="button"
+                    [routerLink]="['./sede', item.id]"
+                  />
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <ng-container *ngIf="tableData.length > 0">
+      <app-pagination
+        [allPagesNumber]="allPages"
+        (changePage)="onPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #templateMob>
+  <div class="bg-light">
+    <div class="mt-4 px-2 py-3 rounded-1">
+      <div class="d-flex align-items-center justify-content-between mt-4">
+        <div class="d-flex align-items-center justify-content-center">
+          <img
+            src="./assets/icons/chevron-left.svg"
+            class="mr-1"
+            [routerLink]="['../']"
+            role="button"
+            alt="flecha-atras"
+          />
+          <h5 class="mt-2">Sedes asignadas</h5>
+        </div>
+
+        <button
+          class="round-button"
+          (click)="qrActivated()"
+          title="Escanear QR"
+        >
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="24"
+            height="24"
+            viewBox="0 0 16 16"
+          >
+            <path fill="#444444" d="M6 0h-6v6h6v-6zM5 5h-4v-4h4v4z"></path>
+            <path fill="#444444" d="M2 2h2v2h-2v-2z"></path>
+            <path fill="#444444" d="M0 16h6v-6h-6v6zM1 11h4v4h-4v-4z"></path>
+            <path fill="#444444" d="M2 12h2v2h-2v-2z"></path>
+            <path fill="#444444" d="M10 0v6h6v-6h-6zM15 5h-4v-4h4v4z"></path>
+            <path fill="#444444" d="M12 2h2v2h-2v-2z"></path>
+            <path fill="#444444" d="M2 7h-2v2h3v-1h-1z"></path>
+            <path fill="#444444" d="M7 9h2v2h-2v-2z"></path>
+            <path fill="#444444" d="M3 7h2v1h-2v-1z"></path>
+            <path fill="#444444" d="M9 12h-2v1h1v1h1v-1z"></path>
+            <path fill="#444444" d="M6 7v1h-1v1h2v-2z"></path>
+            <path fill="#444444" d="M8 4h1v2h-1v-2z"></path>
+            <path fill="#444444" d="M9 8v1h2v-2h-3v1z"></path>
+            <path fill="#444444" d="M7 6h1v1h-1v-1z"></path>
+            <path fill="#444444" d="M9 14h2v2h-2v-2z"></path>
+            <path fill="#444444" d="M7 14h1v2h-1v-2z"></path>
+            <path fill="#444444" d="M9 11h1v1h-1v-1z"></path>
+            <path fill="#444444" d="M9 3v-2h-1v-1h-1v4h1v-1z"></path>
+            <path fill="#444444" d="M12 14h1v2h-1v-2z"></path>
+            <path fill="#444444" d="M12 12h2v1h-2v-1z"></path>
+            <path fill="#444444" d="M11 13h1v1h-1v-1z"></path>
+            <path fill="#444444" d="M10 12h1v1h-1v-1z"></path>
+            <path fill="#444444" d="M14 10v1h1v1h1v-2h-1z"></path>
+            <path fill="#444444" d="M15 13h-1v3h2v-2h-1z"></path>
+            <path fill="#444444" d="M10 10v1h3v-2h-2v1z"></path>
+            <path fill="#444444" d="M12 7v1h2v1h2v-2h-2z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-start mt-3">
+        <div class="dropdown">
+          <button
+            type="button"
+            class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              src="./assets/icons/organizar.svg"
+              class="mr-2"
+              alt="organizar"
+            />
+          </button>
+          <div class="dropdown-menu w-auto">
+            <button class="dropdown-item" type="button" (click)="sortByName()">
+              Por nombre
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 mb-4">
+        <app-search-bar
+          [placeholder]="'Buscar cursos por sede'"
+          (searchEnter)="onSearchEnter($event)"
+          (searchInput)="onSearchInput($event)"
+        ></app-search-bar>
+      </div>
+
+      <table
+        class="table pl-1 mt-2 pr-0 border-0 text-left bg-white"
+        aria-label="tabla con sedes asignadas"
+      >
+        <thead>
+          <tr>
+            <th scope="col" class="d-none"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="tableData.length === 0">
+            <td>Sin sedes asignadas</td>
+          </tr>
+          <tr *ngFor="let item of tableData">
+            <td role="button" [routerLink]="['./sede', item.id]">
+              {{ item.nombre }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-container *ngIf="tableData.length > 0">
+      <app-pagination
+        [allPagesNumber]="allPages"
+        (changePage)="onPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</ng-template>
+
+<app-qr-modal
+  *ngIf="qrValidate"
+  (triggerCancel)="closeModalQR()"
+></app-qr-modal>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>

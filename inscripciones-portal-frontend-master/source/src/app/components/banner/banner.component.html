@@ -1,0 +1,13 @@
+<div class="banner-container">
+  <img src="{{ image }}" alt="" />
+  <div class="container">
+    <div class="banner-description-container">
+      <p class="banner-description">{{ description }}</p>
+      <app-search-bar
+        [placeholder]="searchPlaceholder"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+  </div>
+</div>

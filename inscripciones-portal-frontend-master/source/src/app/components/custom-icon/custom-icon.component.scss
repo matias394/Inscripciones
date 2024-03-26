@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+svg {
+  &.active {
+    fill: #007bff;
+  }
+}
+
+.container {
+  display: flex;
+
+  &__icon {
+    flex: 1;
+
+    &--active {
+      fill: #007bff;
+    }
+
+    &--default {
+      color: #343330;
+    }
+  }
+}

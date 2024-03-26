@@ -1,0 +1,35 @@
+<form [formGroup]="form">
+  <div class="form-wrapper bg-light p-4">
+    <div class="form-group">
+      <h4 class="marginT40">
+        Visibilidad de los valores
+        <span class="icon">
+        <i class='bx bxs-help-circle' aria-hidden="true"
+          title="Permite indicar si la visualización de los valores en el componente depende del valor seleccionado en otro componente"></i>
+        </span>
+      </h4>
+    </div>
+    <div class="form-group">
+      <label class="marginT10">Depende del componente:</label>
+      <ng-select [items]="listaDependencias" bindLabel="nombre" formControlName="dependencia" notFoundText=""
+        (change)="changeDependencia()">
+      </ng-select>
+    </div>
+  </div>
+  <ng-container *ngIf="dependencias">
+    <div class="form-group">
+      <label class="marginT10">{{dependenciaTexto}}</label>
+      <ng-select [items]="dependencias.valores" (ngModelChange)="cambioEnValorDependencia()" bindLabel="descripcion"
+        formControlName="valor" notFoundText="">
+      </ng-select>
+    </div>
+    <div class="form-group">
+      <label class="marginT10">{{opcionesTexto}}</label>
+      <app-selector-multiples [opciones]="opciones" formControlName="opciones"
+        (ngModelChange)="cambioEnOpcionesDependencia()"></app-selector-multiples>
+      <!-- <ng-select [items]="dependencias.valores" bindLabel="descripcion" formControlName="opciones" notFoundText="">
+      </ng-select> -->
+    </div>
+  </ng-container>
+
+</form>

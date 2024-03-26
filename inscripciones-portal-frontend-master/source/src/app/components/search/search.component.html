@@ -1,0 +1,23 @@
+<div class="navbar-search">
+  <form class="form-search form-search-sm row" (submit)="onFormSubmit($event)">
+    <div class="form-group col-md-5 col-sm-12">
+      <input
+        type="search"
+        class="form-control form-control-sm input-search w-100"
+        id="search-input"
+        name="search-input"
+        [placeholder]="placeholder"
+        aria-label="Ingrese su búsqueda"
+        #searchInputRef
+        (keyup.enter)="onInputKeyUp($event)"
+        (input)="onInputChanged(searchInputRef.value)"
+      />
+      <button
+        class="reset"
+        type="reset"
+        (input)="onInputChanged(searchInputRef.value)"
+        (click)="onClearSearch()"
+      ></button>
+    </div>
+  </form>
+</div>

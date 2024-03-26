@@ -1,0 +1,145 @@
+thead {
+ background-color: #ffffff;
+}
+
+td {
+ padding: 18px;
+ color: #6A7685;
+}
+
+.card-ins {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+  gap: 11px;
+  min-height: 156px;
+  background: #ffffff;
+  border-radius: 12px;
+ }
+ .card-title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  color: #141920;
+  margin: 0;
+ }
+ .card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  gap: 6px;
+  font-size: 12px;
+ }
+ .card-btn {
+  box-sizing: border-box;
+  padding: 5px 40px;
+  background: #ffdb2e;
+  border: 1px solid #ffdb2e;
+  border-radius: 6px;
+ }
+ 
+ .fechaInicio, .horaInicio{
+  color: #6A7685;
+  font-size: 16px;
+  line-height: 16px;
+ }
+ 
+
+.modal-dialog {
+ display: flex !important;
+ justify-content: center !important;
+ align-items: center !important;
+}
+
+.modal-content {
+ margin-top: 100px;
+ min-width: 564px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 50px !important;
+  background-color: #fdd306; 
+}
+
+.modal-title {
+ font-size: 38px;
+ color: #212529;
+ font-weight: 700;
+ line-height: 42px;
+ letter-spacing: -0.03em;
+}
+
+.modal-prof-container {
+ padding-left: 50px;
+ padding-right: 50px;
+}
+
+.modal-prof-title {
+ margin-top: 29px;
+ font-weight: 600;
+ color: #000000;
+ font-size: 15px;
+ line-height: 22px;
+ margin-left: 10px;
+}
+
+.slc-option {
+ color: #424242;
+}
+.slc {
+ background: #f5f3f3;
+ color: #424242;
+}
+
+.list-categories {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  flex-wrap: wrap;
+  margin-top:-40px;
+  width: 100%;
+  li {
+    padding: 5px 10px;
+    background: #fdd306 !important;
+    margin: 10px 5px;
+    font-size: 12px;
+    border-radius: 15px;
+    color: #4c5a6c;
+    cursor: pointer;
+    .bx {
+      position: relative;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .modal-dialog{
+    max-width: 100% !important;
+  }
+  .modal-content{
+    max-width: 330px !important;
+    min-width: 0px !important;
+  }
+  .modal-header{
+    justify-content:flex-start;
+    float: left;
+  }
+  .modal-title {
+    font-size: 24px;
+    float: left;
+    padding: 0px;
+    justify-content: flex-start !important;
+    align-items: start;
+  }
+
+  .modal-prof-container{
+    padding-left:40px;
+    padding-right:40px;
+  }
+}

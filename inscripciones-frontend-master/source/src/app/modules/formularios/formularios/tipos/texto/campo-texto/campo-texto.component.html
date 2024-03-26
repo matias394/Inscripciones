@@ -1,0 +1,4 @@
+<label [for]="vista.nombre">{{vista.etiqueta}}</label>
+<p *ngIf="vista.descripcion"><small class="descripcion">{{vista.descripcion}}</small></p>
+<!-- <input type="text" [value]="vista.valorPorDefecto" [placeholder]="vista.placeholder" [id]="vista.nombre" readonly /> -->
+<input type="text" class="form-control" [value]="vista.valorPorDefecto" [placeholder]="vista.placeholder" [id]="vista.nombre" readonly />

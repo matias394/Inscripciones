@@ -1,0 +1,21 @@
+<div class="navbar-search">
+  <form class="form-search form-search-sm row">
+    <div class="form-group col-md-5 col-sm-12">
+      <input
+        type="search"
+        class="form-control form-control-sm input-search w-100"
+        id="search-input"
+        name="search-input"
+        placeholder="{{ placeholder }}"
+        aria-label="Ingrese su búsqueda"
+        (keyup.enter)="onInputKeyUp($event)"
+        (input)="onInputChanged($event)"
+      />
+      <button
+        class="reset"
+        type="reset"
+        (click)="onInputChanged($event)"
+      ></button>
+    </div>
+  </form>
+</div>

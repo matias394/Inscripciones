@@ -1,0 +1,35 @@
+thead {
+ background-color: #ffffff;
+}
+
+input {
+ width: 90%;
+ position: absolute;
+ left: 0;
+}
+
+td {
+ padding: 18px;
+ color: #6A7685;
+}
+
+tr:hover{
+ background-color: rgba(170, 170, 170, 0.2);
+ cursor:pointer;
+}
+
+tr.selected {
+ background-color: #eee;
+}
+
+tr::selection{
+ background-color: rgba(170, 170, 170, 0.2);
+}
+
+.modal-content{
+ width: 420px;
+}
+
+.reset{
+ visibility: hidden !important;
+}

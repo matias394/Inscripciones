@@ -1,0 +1,17 @@
+{
+  "mibaURL": "https://mibalogin-dev.gcba.gob.ar/auth/realms/",
+  "redirectUri": "https://inscripciones-dev.gcba.gob.ar/ciudadanos/auth",
+  "redirectLogout": "https://inscripciones-dev.gcba.gob.ar/ciudadanos/logout",
+  "backendClient": "https://inscripciones-back-dev.gcba.gob.ar/cliente",
+  "backendCiudadanoLectura": "https://ciudadano-lectura-inscripciones-dev.gcba.gob.ar",
+  "backendCiudadanoEscritura": "https://ciudadano-escritura-inscripciones-dev.gcba.gob.ar",
+  "backendServiciosExternos": "https://servicios-externos-inscripciones-dev.gcba.gob.ar",
+  "botiToken": "eyJhbGciOiJIUzUxMiJ9.eyJidXNpbmVzc0lkIjoiUExCV1g1WFlHUTJCM0dQN0lOOFEiLCJuYW1lIjoiTWF0w61hcyBGYXJpw7FhIiwiYXBpIjp0cnVlLCJpZCI6Inc3TUdYNmhJNlBkb0tFd0Z6VWRzdHM2QTRvODIiLCJleHAiOjE4MjY5NzgwODMsImp0aSI6Inc3TUdYNmhJNlBkb0tFd0Z6VWRzdHM2QTRvODIifQ.3SG7dqZj7Sc6dLmHivJsELo0ETeGITl4pNig091boL80VZdzxyXV6k_s9NwzsOcT95Oj3FKQmlAhunVBqMHckw",
+  "botiIntent": "https://go.botmaker.com/api/v1.0/intent/v2",
+  "botiMultiple": "https://go.botmaker.com/api/v1.0/intent/v2Multiple",
+  "dopplerToken": "w6t9buae309ekusgv32feuce4xri96",
+  "realm": "miba",
+  "client_id": "inscripciones",
+  "response_type": "code",
+  "scope": "openid+profile+contact"
+}

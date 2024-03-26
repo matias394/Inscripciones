@@ -1,0 +1,58 @@
+<div data-backdrop="static" class="modal fade" tabindex="-1" [ngClass]="{ show: visibleAnimate }"
+     [ngStyle]="{
+    display: visible ? 'block' : 'none',
+    opacity: visibleAnimate ? 1 : 0
+  }">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <ng-content select=".app-tipo-campo-formulario-header"></ng-content>
+      </div>
+      <div class="modal-body">
+        <!-- Alert -->
+     <!--   <div class="alert alert-danger" *ngIf="mostrarAdvertenciaDependencia">
+          {{ mensajeAdvertencia }}
+        </div>-->
+
+        <div class="container ml-3 mb-2">
+          <nav>
+            <ul class="nav flex-row nav-pills" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link" [ngClass]="getNavitemClases('general')" (click)="setCurrentTab('general')"
+                   data-toggle="tab" id="tabGeneral">General</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" [ngClass]="getNavitemClases('validaciones')"
+                   (click)="setCurrentTab('validaciones')" data-toggle="tab"
+                   id="tabValidaciones">Validaciones</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" [ngClass]="getNavitemClases('visibilidad')"
+                   (click)="setCurrentTab('visibilidad')" data-toggle="tab"
+                   id="tabVisibilidad">Visibilidad</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="row">
+          <div class="tab-content col-12">
+            <div role="tabpanel" #general id="general" class="tab-pane fade" [ngClass]="getTabPaneClases('general')">
+              <ng-content select=".app-tipo-campo-formulario-general"></ng-content>
+            </div>
+            <div role="tabpanel" #validaciones id="validaciones" class="tab-pane fade"
+                 [ngClass]="getTabPaneClases('validaciones')">
+              <ng-content select=".app-tipo-campo-formulario-validaciones"></ng-content>
+            </div>
+            <div role="tabpanel" #visibilidad id="visibilidad" class="tab-pane fade show active"
+                 [ngClass]="getTabPaneClases('visibilidad')">
+              <ng-content select=".app-tipo-campo-formulario-visibilidad"></ng-content>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <ng-content select=".app-tipo-campo-formulario-footer"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="modal d-block mt-5" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ colony.nombre }}</h4>
+      </div>
+      <div class="modal-body mt-2 mb-2">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Sede</th>
+              <!-- <th scope="col">Barrio</th> -->
+              <th scope="col">Dirección</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of colony.sedes">
+              <td>{{ item.nombre }}</td>
+              <!-- <td>{{ item.piso }}</td> -->
+              <td>
+                {{
+                  item.direccion === "" || null
+                    ? "Sin dirección"
+                    : item.direccion
+                }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="closeModal()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div data-dismiss="modal" class="modal-backdrop show"></div>

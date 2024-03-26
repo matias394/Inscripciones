@@ -1,0 +1,22 @@
+
+
+<div class="form-wrapper bg-light p-4">
+    <div class="form-group">
+      <label [for]="vista.nombreCuit">CUIT{{vista.esObligatorio}}</label>
+      <input
+        type="text"
+        class="form-control"
+        [id]="vista.nombreCuit"
+        readonly
+      />
+    </div>
+    <div class="form-group">
+        <label [for]="vista.nombreRazonSocial">Razón social{{vista.esObligatorio}}</label>
+        <input
+          type="text"
+          class="form-control"
+          [id]="vista.nombreRazonSocial"
+          readonly
+        />
+      </div>
+</div>

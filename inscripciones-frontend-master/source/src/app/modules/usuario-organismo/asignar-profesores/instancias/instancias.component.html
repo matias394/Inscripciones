@@ -1,0 +1,318 @@
+<ng-template #templateDesk>
+  <div class="bg-light p-4">
+    <div class="table mt-4 px-3 py-3 bg-white rounded-1">
+      <div
+        class="d-flex align-items-center justify-content-between px-3 mt-4 mb-4"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <img
+            src="./assets/icons/chevron-left.svg"
+            class="mr-1"
+            [routerLink]="['../../']"
+            role="button"
+            alt="flecha-atras"
+          />
+          <h4 class="mt-1">
+            {{ nombreInscripcion }}
+          </h4>
+        </div>
+        <div class="d-flex align-items-center">
+          <button
+            *ngIf="instanciasData && instanciasData.length > 0"
+            class="btn btn-lg btn-primary"
+            (click)="openModal(idInscripcion)"
+          >
+            Asignar a todas las instancias
+          </button>
+        </div>
+      </div>
+      <table
+        class="table pl-4 pr-0 border-0 text-left"
+        aria-label="tabla con instancias del curso y profesores asignados"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Instancias del curso</th>
+            <th scope="col">Profesores asignados</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="instanciasData && instanciasData.length === 0">
+            <td>No hay instancias asignadas a este curso</td>
+          </tr>
+          <ng-container *ngFor="let item of instanciasData">
+            <tr>
+              <td role="button" [routerLink]="['./sedes', item.id]">
+                {{ item.nombreInstancia }}
+                - {{ item.id }}
+              </td>
+              <td>
+                {{
+                  item.nombreProfesores === null ||
+                  item.nombreProfesores === "" ||
+                  item.nombreProfesores === undefined
+                    ? "Sin Profesor"
+                    : item.nombreProfesores
+                }}
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="isModalOpen" class="modal d-block" tabindex="-1" role="dialog">
+    <form
+      (ngSubmit)="asignarInstancia(formAsignarInstancia)"
+      #formAsignarInstancia="ngForm"
+    >
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Asignar profesor</h2>
+          </div>
+          <div class="modal-prof-container">
+            <div class="form-group row d-flex flex-column mt-2">
+              <label for="categoria" class="mb-5">Profesores</label>
+              <ul class="list-categories">
+                <ng-container *ngFor="let item of listOrganismosProfesores">
+                  <li (click)="removeItem(item.id)">
+                    {{ item.nombre }}
+                    <i class="bx bx-x" aria-hidden="true"></i>
+                  </li>
+                </ng-container>
+              </ul>
+              <select
+                #selectElement
+                required
+                class="form-control slc-categorias"
+                (change)="onChangeSlc($event.target.value)"
+                [disabled]="disableSelects"
+              >
+                <option [selected]="selectValue">{{ selectValue }}</option>
+                <option
+                  *ngFor="let op of organismosProfesorData"
+                  [ngClass]="itemIsSelected ? 'slc' : ''"
+                  value="{{ op.id }}"
+                >
+                  {{ op.nombre }} {{ op.apellido }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-start mt-5">
+            <button
+              type="button"
+              data-dismiss="modal"
+              class="btn btn-link d-flex"
+              (click)="openCancelarModal()"
+            >
+              Cancelar
+            </button>
+
+            <button
+              type="submit"
+              data-dismiss="modal"
+              class="btn btn-primary d-flex"
+              [disabled]="
+                listOrganismosProfesores.length === 0 ||
+                !formAsignarInstancia.valid ||
+                disableButton
+              "
+            >
+              Guardar
+            </button>
+
+            <app-modals
+              *ngIf="modalSwitch === true"
+              [title]="modalTitle"
+              [message]="modalMessage"
+              (triggerCancel)="closeCancelarModal()"
+              (triggerConfirm)="redirectToPage()"
+            ></app-modals>
+          </div>
+        </div>
+        <!-- <div data-dismiss="modal" class="modal-backdrop show"></div> -->
+      </div>
+    </form>
+    <div class="row mt-5">
+      <div
+        *ngIf="correct"
+        class="form-group m-auto d-flex justify-content-center col-4 mt-5"
+      >
+        <app-alertas
+          [message]="'Se ha asignado profesor exitosamente'"
+          [type]="'alert alert-success'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+
+      <div
+        *ngIf="errorMessage"
+        class="form-group m-auto d-flex justify-content-center col-4 mt-5"
+      >
+        <app-alertas
+          [message]="'Error al guardar los cambios'"
+          [type]="'alert alert-danger'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateMob>
+  <div class="bg-light">
+    <div class="d-flex align-items-center justify-content-between mt-4 mb-4">
+      <div class="d-flex align-items-center justify-content-center">
+        <img
+          src="./assets/icons/chevron-left.svg"
+          class="mr-1"
+          [routerLink]="['../../']"
+          role="button"
+          alt="flecha-atras"
+        />
+        <h4 class="mt-2">
+          {{ nombreInscripcion }}
+        </h4>
+      </div>
+    </div>
+    <div class="d-flex align-items-center -mt-2 justify-content-center">
+      <button
+        *ngIf="instanciasData && instanciasData.length > 0"
+        class="btn btn-md btn-primary text-sm"
+        (click)="openModal(idInscripcion)"
+      >
+        Asignar a todas las instancias
+      </button>
+    </div>
+    <table
+      class="table pl-4 pr-0 border-0 text-left bg-white mt-5"
+      aria-label="tabla con instancias del curso y profesores asignados"
+    >
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="instanciasData && instanciasData.length === 0">
+          <td>No hay instancias asignadas a este curso</td>
+        </tr>
+        <ng-container *ngFor="let item of instanciasData">
+          <tr>
+            <td role="button" [routerLink]="['./sedes', item.id]">
+              {{ nombreInscripcion }},
+              {{ item.nombreInstancia }}
+            </td>
+            <hr />
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="isModalOpen" class="modal d-block" tabindex="-1" role="dialog">
+    <form
+      (ngSubmit)="asignarInstancia(formAsignarInstancia)"
+      #formAsignarInstancia="ngForm"
+    >
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Asignar profesor</h2>
+          </div>
+          <div class="modal-prof-container">
+            <div class="form-group row d-flex flex-column mt-2">
+              <label for="categoria" class="mb-5 mt-3">Profesores</label>
+              <ul class="list-categories">
+                <ng-container *ngFor="let item of listOrganismosProfesores">
+                  <li (click)="removeItem(item.id)">
+                    {{ item.nombre }}
+                    <i class="bx bx-x" aria-hidden="true"></i>
+                  </li>
+                </ng-container>
+              </ul>
+              <select
+                #selectElement
+                required
+                class="form-control slc-categorias"
+                (change)="onChangeSlc($event.target.value)"
+                [disabled]="disableSelects"
+              >
+                <option [selected]="selectValue">{{ selectValue }}</option>
+                <option
+                  *ngFor="let op of organismosProfesorData"
+                  [ngClass]="itemIsSelected ? 'slc' : ''"
+                  value="{{ op.id }}"
+                >
+                  {{ op.nombre }} {{ op.apellido }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-start mt-5">
+            <button
+              type="button"
+              data-dismiss="modal"
+              class="btn btn-link d-flex"
+              (click)="openCancelarModal()"
+            >
+              Cancelar
+            </button>
+
+            <button
+              type="submit"
+              data-dismiss="modal"
+              class="btn btn-primary d-flex"
+              [disabled]="
+                listOrganismosProfesores.length === 0 ||
+                !formAsignarInstancia.valid ||
+                disableButton
+              "
+            >
+              Guardar
+            </button>
+
+            <app-modals
+              *ngIf="modalSwitch === true"
+              [title]="modalTitle"
+              [message]="modalMessage"
+              (triggerCancel)="closeCancelarModal()"
+              (triggerConfirm)="redirectToPage()"
+            ></app-modals>
+          </div>
+        </div>
+        <!-- <div data-dismiss="modal" class="modal-backdrop show"></div> -->
+      </div>
+    </form>
+    <div class="row mt-5">
+      <div
+        *ngIf="correct"
+        class="form-group d-flex justify-content-center col-12 mt-5"
+      >
+        <app-alertas
+          [message]="'Se ha asignado profesor exitosamente'"
+          [type]="'alert alert-success'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+
+      <div
+        *ngIf="errorMessage"
+        class="form-group d-flex justify-content-center m-auto col-12 mt-5"
+      >
+        <app-alertas
+          [message]="'Error al guardar los cambios'"
+          [type]="'alert alert-danger'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+    </div></div
+></ng-template>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>

@@ -1,0 +1,34 @@
+<div>
+  <ng-container *ngFor="let item of data">
+    <ng-container>
+      <ng-container>
+        <div class="card-ins">
+          <h2 class="card-title">{{ item?.nombreApellido }}</h2>
+          <div class="card-body">
+            <span class="horaInicio">DNI: {{ item.dni }}</span>
+            <span class="horaInicio">{{ item.email }}</span>
+            <span class="horaInicio"
+              >Inscripción: {{ item.inscripcion.nombre }}</span
+            >
+            <span class="horaInicio">Sede: {{ item.sede.nombre }}</span>
+            <span class="horaInicio"
+              >Instancia: {{ item.instancia.nombre }}</span
+            >
+          </div>
+          <ng-container>
+            <button
+              class="card-btn btn btn-primary"
+              [routerLink]="[
+                './formularios',
+                item.respuestaIdRefMongo,
+                item.formularioIdRefMongo
+              ]"
+            >
+              Ver detalle
+            </button>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

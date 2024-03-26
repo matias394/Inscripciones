@@ -1,0 +1,30 @@
+h4 {
+  font-size: 1.1rem;
+}
+
+.titulo-grilla-conceptos-pago {
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.item-grilla-conceptos-pago div {
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+.item-grilla-conceptos-pago div:not(:last-child) {
+  border-bottom: 1px solid #ececec;
+}
+
+.contenedor-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-text{
+  color: #5b5b5b;
+}
+
+.icon i {
+  margin-left: 10px;
+}

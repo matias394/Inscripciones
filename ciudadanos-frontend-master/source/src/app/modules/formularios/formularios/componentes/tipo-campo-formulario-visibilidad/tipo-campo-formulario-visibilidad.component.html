@@ -1,0 +1,30 @@
+<div class="app-tipo-campo-formulario-visibilidad">
+  <form [formGroup]="form">
+    <div class="form-wrapper bg-light p-4">
+      <div class="form-group">
+        <h4>
+          Visibilidad del componente
+          <i class='bx bxs-help-circle ml-2' aria-hidden="true"
+            title="Permite indicar si la visualización del componente en el formulario depende del valor seleccionado en otro componente"></i>
+        </h4>
+      </div>
+      <div class="form-group">
+        <label>Depende del componente:</label>
+        <ng-select [items]="listaDependencias" bindLabel="nombre" formControlName="dependencia" notFoundText=""
+          (change)="changeDependencia()">
+        </ng-select>
+      </div>
+      <div class="form-group" *ngIf="dependencias">
+        <label>Valores del componente del que depende*:</label>
+        <app-valores-dependencia-campo-formulario [items]="dependencias" bindLabel="descripcion"
+          formControlName="valores"></app-valores-dependencia-campo-formulario>
+        <!-- <ng-select [items]="dependencias.valores"
+        multiple="true"
+        bindLabel="descripcion"
+        formControlName="valor"
+        notFoundText="">
+      </ng-select> -->
+      </div>
+    </div>
+  </form>
+</div>

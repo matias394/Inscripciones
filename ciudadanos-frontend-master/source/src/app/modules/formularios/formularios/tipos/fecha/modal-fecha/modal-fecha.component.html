@@ -1,0 +1,202 @@
+<app-modal-tipo-campo-formulario>
+  <div class="app-tipo-campo-formulario-header text-center">
+    <h3>Fecha</h3>
+  </div>
+
+  <!-- Formulario general -->
+  <div class="app-tipo-campo-formulario-general">
+    <form [formGroup]="formGeneral">
+      <div class="form-wrapper bg-light p-4">
+        <div class="form-group" [ngClass]="getCssClases('nombre')">
+          <label for="nombre">
+            Nombre único *
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="El nombre debe ser único y será utilizado para identificar al campo en los buscadores."></i>
+            </span>
+          </label>
+          <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre" maxlength="100">
+        </div>
+        <div class="invalid-msg" *ngIf="nombre.invalid && (nombre.touched || nombre.dirty )">
+          <span class="danger" *ngIf="nombre.errors">*</span>
+          Nombre es requerido
+        </div>
+        <div class="form-group" [ngClass]="getCssClases('etiqueta')">
+          <label for="etiqueta">
+            Etiqueta *
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="La etiqueta es el texto que identificará al campo en el formulario durante la creación del trámite"></i>
+            </span>
+          </label>
+          <input type="text" class="form-control" id="etiqueta" name="etiqueta" formControlName="etiqueta"
+            maxlength="200" />
+        </div>
+        <div class="invalid-msg" *ngIf="etiqueta.invalid && (etiqueta.touched || etiqueta.dirty )">
+          <span class="danger" *ngIf="etiqueta.errors">*</span>
+          Etiqueta es requerido
+        </div>
+        <div class="form-group" [ngClass]="getCssClases('descripcion')">
+          <label for="descripcion">
+            Descripción
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Texto de ayuda que se mostrará debajo de la etiqueta del campo"></i>
+            </span>
+          </label>
+          <textarea id="descripcion" class="form-control" name="descripcion" formControlName="descripcion" rows="3"
+            maxlength="800"></textarea>
+        </div>
+        <div class="invalid-msg" *ngIf="descripcion.invalid && (descripcion.touched || descripcion.dirty )">
+          <span class="danger" *ngIf="descripcion.errors">*</span>
+          Descripción es requerido
+        </div>
+        <div class="form-group" [ngClass]="getCssClases('valorPorDefecto')">
+          <label for="valorPorDefecto">
+            Valor por defecto
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Texto para precargar el campo y agilizar la carga del formulario cuando sea necesario"></i>
+            </span>
+          </label>
+          <input type="date" class="form-control" id="valorPorDefecto" name="valorPorDefecto"
+            formControlName="valorPorDefecto" />
+        </div>
+
+        <!-- Subsanable -->
+        <hr>
+        <div class="form-group custom-control custom-switch" [ngClass]="getCssClases('esSubsanable')">
+          <input type="checkbox" class="custom-control-input" id="esSubsanable" name="esSubsanable"
+            formControlName="esSubsanable">
+          <label class="custom-control-label" for="esSubsanable">
+            Es subsanable
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Indica que el campo podrá ser seleccionado para la solicitud de correcciones de un trámite creado con errores."></i>
+            </span>
+          </label>
+        </div>
+
+        <!-- Editable por el operador -->
+        <hr>
+        <div class="form-group custom-control custom-switch" [ngClass]="getCssClases('esEditableOperador')">
+          <input type="checkbox" class="custom-control-input" id="esEditableOperador" name="esEditableOperador"
+            formControlName="esEditableOperador">
+          <label class="custom-control-label" for="esEditableOperador">
+            Es editable por el operador
+          </label>
+        </div>
+
+        <!-- Grupo iterativo -->
+        <app-seccion-modal-campo-grupo-iterativo [modelo]="modelo" formControlName="seMuestraEnGrilla">
+        </app-seccion-modal-campo-grupo-iterativo>
+      </div>
+    </form>
+  </div>
+
+  <!-- Formulario validaciones -->
+  <div class="app-tipo-campo-formulario-validaciones">
+    <form [formGroup]="formValidaciones">
+      <div class="form-wrapper bg-light p-4">
+        <div class="form-group custom-control custom-switch" [ngClass]="getCssClases('campoObligatorio')">
+          <input type="checkbox" class="custom-control-input" id="campoObligatorio" name="campoObligatorio"
+            formControlName="campoObligatorio">
+          <label class="custom-control-label" for="campoObligatorio">
+            Campo obligatorio
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Los campos obligatorios se validarán automáticamente en el formulario"></i>
+            </span>
+          </label>
+        </div>
+
+        <hr>
+        <div class="form-group">
+          <h4>
+            Fecha máxima
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Fecha máxima permitida en el campo. Se calcula como la fecha actual más el valor Hasta ingresado en su correspondiente unidad."></i>
+            </span>
+          </h4>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [ngClass]="getFechaCssClases('hasta')">
+              <label for="hasta">
+                Hasta
+                <span class="icon">
+                  <i class='bx bxs-help-circle' aria-hidden="true"
+                    title="Si se ingresa un valor negativo, la fecha máxima permitida va a ser una fecha del pasado."></i>
+                </span>
+              </label>
+              <input type="text" class="form-control" id="hasta" name="hasta" formControlName="hasta" maxlength="4"
+                (blur)="toggleValidation('hasta','unidadTiempoMaxima')" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group" [ngClass]="getFechaCssClases('unidadTiempoMaxima')">
+              <label for="unidadTiempoMaxima">
+                Unidad de tiempo
+              </label>
+              <select class="custom-select" id="unidadTiempoMaxima" name="unidadTiempoMaxima" formControlName="unidadTiempoMaxima"
+                (blur)="toggleValidation('unidadTiempoMaxima', 'hasta')">
+                <option *ngFor="let opt of unidadesDeTiempo" [value]="opt">{{opt}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        <div class="form-group">
+          <h4>
+            Fecha mínima
+            <span class="icon">
+              <i class='bx bxs-help-circle' aria-hidden="true"
+                title="Fecha mínima permitida en el campo. Se calcula como la fecha actual más el valor Desde ingresado en su correspondiente unidad"></i>
+            </span>
+          </h4>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [ngClass]="getCssClases('desde')">
+              <label for="desde">
+                Desde
+                <span class="icon">
+                  <i class='bx bxs-help-circle' aria-hidden="true"
+                    title="Si se ingresa un valor negativo, la fecha mínima permitida va a ser una fecha del pasado"></i>
+                </span>
+              </label>
+              <input type="text" class="form-control" id="desde" name="desde" formControlName="desde" maxlength="4"
+                (blur)="toggleValidation('desde','unidadTiempoMinima')" />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group" [ngClass]="getCssClases('unidadTiempoMinima')">
+              <label for="unidadTiempoMinima">
+                Unidad de tiempo
+              </label>
+              <select class="custom-select" id="unidadTiempoMinima" name="unidadTiempoMinima" formControlName="unidadTiempoMinima"
+                (blur)="toggleValidation('unidadTiempoMinima','desde')">
+                <option *ngFor="let opt of unidadesDeTiempo" [value]="opt">{{opt}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-tipo-campo-formulario-visibilidad">
+    <app-tipo-campo-formulario-visibilidad [modoEdicion]="modoEdicion"></app-tipo-campo-formulario-visibilidad>
+  </div>
+
+  <div class="app-tipo-campo-formulario-footer">
+    <button type="button" class="btn btn-secondary mr-2" (click)="cerrar()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary" (click)="guardar()">
+      Aceptar
+    </button>
+  </div>
+</app-modal-tipo-campo-formulario>

@@ -1,0 +1,8 @@
+<input type="file" [accept]="validTypes" class="input-file" [id]="inputId" (change)="uploadFile($event)" />
+<label [for]="inputId" class="input-file-trigger btn btn-primary">{{buttonText}}</label>
+<ng-container *ngIf="isErrorPresent; else noError">
+  <p class="file-return-error">{{errorMsg}}</p>
+</ng-container>
+<ng-template #noError>
+  <p class="file-return">{{selectedFile?.nombre}}</p>
+</ng-template>

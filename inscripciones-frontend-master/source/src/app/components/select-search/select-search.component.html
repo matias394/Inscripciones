@@ -1,0 +1,68 @@
+<div class="container-search">
+  <label for="organismo" class="mb-2" *ngIf="label !== ''">
+    {{ label }}
+  </label>
+  <input
+    *ngIf="typeSearch === 'inputForm'"
+    type="text"
+    class="form-control"
+    id="input-search"
+    [name]="name"
+    [placeholder]="placeholder"
+    [value]="optionSelected.nombre"
+    [required]="required"
+    [formControl]="inputControl"
+    autocomplete="off"
+  />
+  <input
+    *ngIf="typeSearch === 'searchFilter'"
+    type="text"
+    class="form-control rounded"
+    id="input-search"
+    [name]="name"
+    [placeholder]="placeholder"
+    [value]="optionSelected.nombre"
+    [required]="required"
+    (keyup)="searchList$.next($event.target.value)"
+    autocomplete="off"
+  />
+  <span *ngIf="required && optionSelected.nombre === ''"> Error </span>
+  <div
+    class="list-options"
+    [ngStyle]="
+      typeSearch === 'inputForm'
+        ? {
+            visibility: !listActive ? 'hidden' : 'visible',
+            flexDirection: 'column'
+          }
+        : {
+            visibility: !listActive ? 'hidden' : 'visible',
+            flexDirection: 'row'
+          }
+    "
+  >
+    <input
+      *ngIf="typeSearch === 'inputForm'"
+      id="input-filter-list"
+      type="text"
+      class="form-control list-filter"
+      placeholder="Buscar ..."
+      (keyup)="searchList$.next($event.target.value)"
+      autocomplete="off"
+    />
+    <ul *ngIf="filterOptions.length > 0">
+      <li (click)="slcOrganismo(or)" *ngFor="let or of filterOptions">
+        {{ or.nombre }}
+      </li>
+    </ul>
+    <span *ngIf="filterOptions.length === 0" class="sin-resultado">
+      Sin Resultado
+    </span>
+  </div>
+  <error-input
+    [showError]="inputControl.invalid && inputControl.touched"
+    [errors]="inputControl.errors"
+    [message]="'Este Campo es requerido'"
+  >
+  </error-input>
+</div>

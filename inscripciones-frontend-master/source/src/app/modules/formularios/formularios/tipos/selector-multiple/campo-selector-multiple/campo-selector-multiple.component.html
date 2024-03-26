@@ -1,0 +1,18 @@
+<div class="form-group">
+  <label [for]="vista.nombre">{{vista.etiqueta}}</label>
+  <span class="form-text" *ngIf="vista.descripcion">{{vista.descripcion}}</span>
+</div>
+<div class="custom-control custom-checkbox" *ngFor="let valor of vista.valores">
+  <input
+    class="custom-control-input"
+    type="checkbox"
+    id="method_0"
+    name="method"
+    value={{valor.descripcion}}
+    [checked]="valor.seleccionado"
+    readonly
+  />
+  <label class="custom-control-label" for="method_0">
+    {{valor.descripcion}}
+  </label>
+</div>

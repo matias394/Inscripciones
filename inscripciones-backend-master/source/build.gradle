@@ -1,0 +1,130 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.5-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'io.freefair.lombok' version '6.5.1'
+}
+
+group = 'com.asi.inscripciones.mvp'
+version = '2.0.0-RC1'
+sourceCompatibility = '17'
+
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+
+ext {
+	springdocVersion ='1.6.9'
+	lombokVersion = '1.18.24'
+	h2Version ='2.1.214'
+	junitVersion='5.9.1'
+	mapstructVersion='1.5.3.Final'
+	mapBindingVersion ='0.2.0'
+	springfoxVersion='3.0.0'
+	swaggerVersion='1.6.8'
+	hibernateVersion='6.0.13.Final'
+	log4jVersion='2.17.0'
+	supercsvVersion ='2.0.0-beta-1'
+	auth0Version='3.18.2'
+	auth0JWVersion='0.20.0'
+	nimbusVersion='9.25.5'
+	tokenVersion='0.11.5'
+	awsVersion = '1.12.90'
+	fileUploadVersion = '1.4'
+	tikaVersion = '1.4'
+	apachePoiVersion = '4.0.1'
+	qrGenVersion = '2.0'
+}
+
+
+
+sourceSets {
+    main.java.srcDirs += "build/generated/sources/annotationProcessor/java"
+}
+
+dependencies {
+
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.springframework.boot:spring-boot-starter-security"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+
+	//REDIS
+	implementation "org.springframework.boot:spring-boot-starter-data-redis"
+	implementation 'redis.clients:jedis'
+
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+	implementation "org.apache.logging.log4j:log4j-core:$log4jVersion"
+	implementation "org.springdoc:springdoc-openapi-ui:$springdocVersion"
+	implementation group: "net.sf.supercsv", name: "super-csv", version: "$supercsvVersion"
+	implementation "com.auth0:java-jwt:$auth0Version"
+	implementation "com.auth0:jwks-rsa:$auth0JWVersion"
+	implementation "org.hibernate:hibernate-validator:$hibernateVersion"
+	implementation "org.mapstruct:mapstruct:$mapstructVersion"
+	implementation "org.projectlombok:lombok:$lombokVersion"
+	implementation "io.jsonwebtoken:jjwt-api:$tokenVersion"
+	implementation "io.jsonwebtoken:jjwt-gson:$tokenVersion"
+	implementation "com.konghq:unirest-java:3.11.09"
+
+	implementation 'org.apache.commons:commons-compress:1.22'
+
+	// Amazon S3
+    implementation "com.amazonaws:aws-java-sdk-s3:$awsVersion"
+	implementation "commons-fileupload:commons-fileupload:$fileUploadVersion"
+	implementation "org.apache.tika:tika-core:$tikaVersion"
+	implementation "org.apache.poi:poi:$apachePoiVersion"
+
+	runtimeOnly "io.jsonwebtoken:jjwt-impl:$tokenVersion"
+	runtimeOnly "com.oracle.database.jdbc:ojdbc8"
+
+	annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:$mapBindingVersion"
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+
+	// swagger documentacion API
+	implementation "io.swagger:swagger-annotations:$swaggerVersion"
+	implementation "io.springfox:springfox-swagger2:$springfoxVersion"
+	implementation "io.springfox:springfox-swagger-ui:$springfoxVersion"
+
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testImplementation 'io.projectreactor:reactor-test'
+
+	testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junitVersion"
+    
+	testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+	
+	testCompileOnly "org.mapstruct:mapstruct:$mapstructVersion"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+	
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+	testImplementation "com.h2database:h2:$h2Version"
+
+	implementation "net.glxn.qrgen:javase:$qrGenVersion"
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'com.google.code.gson:gson:2.8.9'
+	implementation 'org.springframework.data:spring-data-elasticsearch'
+	//KAFKA
+	implementation 'org.springframework.kafka:spring-kafka'
+}
+
+
+compileJava {
+	options.setAnnotationProcessorGeneratedSourcesDirectory( file("$buildDir/generated/sources/annotationProcessor/java"))
+    options.compilerArgs << '-Amapstruct.defaultComponentModel=spring' 
+}
+
+test {
+	useJUnitPlatform()
+	maxParallelForks 3
+}

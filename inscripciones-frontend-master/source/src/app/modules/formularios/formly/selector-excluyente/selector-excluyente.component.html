@@ -1,0 +1,34 @@
+
+<fieldset *ngIf="mostrarElemento" class="cards-container">
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group">
+        <label>{{to.label}}{{to.required ? ' *' : ''}}</label>
+        <br>
+        <small class="form-text">{{descripciones}}</small>
+      </div>
+<!--      <div *ngIf="to.subsanacion">
+        <div class="mensajeSubsanacion">
+          <p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p>
+        </div>
+      </div>-->
+      <hr>
+      <div class="custom-control custom-radio" *ngFor="let option of opciones">
+        <label>
+          <input
+            class="custom-control-input"
+            type="radio"
+            [name]="field.name"
+            [value]="option.value"
+            [formControl]="formControl"
+            [formlyAttributes]="field"
+            (change)="cambiarOpcion(option)"
+          />
+          <p class="custom-control-label">
+            {{option.label}}
+          </p>
+        </label>
+      </div>
+    </div>
+  </div>
+</fieldset>

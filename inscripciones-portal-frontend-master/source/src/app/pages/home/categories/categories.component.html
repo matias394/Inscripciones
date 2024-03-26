@@ -1,0 +1,51 @@
+<div class="content-page">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="title">{{ organization?.nombre | titlecase }}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div
+      class="col-12 col-xs-6 col-md-4 mb-3 p-lg-4 p-md-2"
+      *ngFor="let item of listCategories; index as i"
+    >
+      <div
+        [id]="'cart-' + item.id"
+        class="cart category"
+        (click)="handleFocusActive(item.id, i)"
+        [ngClass]="cartActive === 'cart-' + item.id ? 'active' : ''"
+      >
+        <div class="first-content">
+          <div
+            class="d-flex justify-content-center align-content-center align-items-center"
+          >
+            <app-custom-icon
+              class="container__icon mt-2"
+              [iconName]="item.icon"
+              [color]="cartActive === 'cart-' + item.id ? '#007bff' : '#343330'"
+            ></app-custom-icon>
+          </div>
+          <div>
+            <p class="category__title">{{ item.nombre | titlecase }}</p>
+          </div>
+        </div>
+        <div class="second-content">
+          <!-- <p class="text-second">Texto corto a revisar</p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!this.allItemsLoaded && listCategories.length >= 9">
+    <div class="col-12 col-xs-12 col-md-12 mb-3">
+      <app-button
+        [text]="'Cargar más'"
+        [customClass]="['fullscreen']"
+        (click)="changePage()"
+      ></app-button>
+    </div>
+  </div>
+
+  <div *ngIf="listCategories && listCategories.length === 0" class="mt-3">
+    <p>No se encontraron resultados en la búsqueda</p>
+  </div>
+</div>

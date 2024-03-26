@@ -1,0 +1,94 @@
+.login-body {
+  height: 100vh;
+  min-width: 100vw;
+  background-color: #fff;
+}
+
+.login-body-mobile {
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+
+.left-panel {
+  background-color: #f5f5f5;
+  border-right: 1px solid black;
+}
+
+.right-panel {
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.login-logo {
+  height: 520px;
+  margin-top: -100px;
+}
+
+.login-logo-mobile {
+  height: 250px;
+  margin-top: -32px;
+}
+
+.login-title {
+  color: #141920;
+  font-weight: 700;
+  margin-top: -18rem;
+}
+
+.login-title-mobile {
+  color: #141920;
+  font-weight: 700;
+  font-size: 21px;
+  margin-top: -6rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.login-subtitle {
+  font-weight: 600;
+  color: #6a7685;
+}
+
+.login-subtitle-mobile {
+  font-weight: 600;
+  color: #6a7685;
+  font-size: 15px;
+}
+
+.title-bienvenidos {
+  font-weight: 700;
+  color: #343434;
+}
+
+.title-bienvenidos-mobile {
+  font-weight: 700;
+  color: #343434;
+  font-size: 1.5rem;
+}
+
+.input-group-text {
+  padding: 1.07rem !important;
+}
+
+.login-btn {
+  padding-left: 5rem;
+  padding-right: 5rem;
+  font-weight: 400;
+}
+
+.login-btn-mobile{
+  width: 80%;
+}
+
+input-mobile{
+  width: 100%;
+}
+
+.invalid-msg {
+  font-size: 12px;
+}
+
+.danger {
+  color: red;
+}

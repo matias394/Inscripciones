@@ -1,0 +1,118 @@
+<div class="bg-light p-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>Formularios</h1>
+    <button class="btn btn-primary" (click)="goCreate()">
+      Crear formulario
+    </button>
+  </div>
+  <div>
+    <div class="mt-4">
+      <app-search-bar
+        [placeholder]="'Buscar formularios'"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+
+    <div class="table mt-4 px-5 py-3 bg-white">
+      <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+        <h4>Formularios Registrados</h4>
+      </div>
+      <table
+        class="table border-0"
+        aria-label="tabla con formularios disponibles"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Nombre</th>
+            <th scope="col" class="float-right mr-5">Acciones</th>
+          </tr>
+        </thead>
+        <span class="border-bottom"></span>
+        <tbody>
+          <ng-container *ngIf="tableData.length > 0; else noResults">
+            <tr *ngFor="let data of tableData">
+              <td>{{ data.id }}</td>
+              <td>{{ data.nombre }}</td>
+              <td>
+                <div class="d-flex justify-content-center float-right mr-4">
+                  <img
+                    src="./assets/icons/ver.svg"
+                    alt="prev_icon"
+                    (click)="goPrevisualizar(data.idRefMongo)"
+                    class="mr-3"
+                  />
+                  <img
+                    src="./assets/icons/edit.svg"
+                    alt="edit_icon"
+                    (click)="goEdit(data.idRefMongo, data.id)"
+                    class="mr-3"
+                  />
+                  <img
+                    src="./assets/icons/delete.svg"
+                    alt="delete_icon"
+                    (click)="openModal(data.id)"
+                    class="img-disabled"
+                  />
+                  <div *ngIf="modalSwitch === true">
+                    <div class="modal d-block mt-5" tabindex="-1" role="dialog">
+                      <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">
+                              ¿Desea eliminar el formulario?
+                            </h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>
+                              Si eliminas este Formulario no podremos recuperar
+                              sus datos.
+                            </p>
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-dismiss="modal"
+                              (click)="closeModal()"
+                            >
+                              Cancelar
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-danger"
+                              (click)="deleteUsuarioById(idNumber)"
+                              (click)="closeModal()"
+                            >
+                              Confirmar
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div data-dismiss="modal" class="modal-backdrop show"></div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <ng-template #noResults>
+          <tr>
+            <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold">
+              Sin resultados. Realizá una nueva búsqueda.
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+    <ng-container *ngIf="tableData.length > 0">
+      <app-pagination
+        [allPagesNumber]="allPages"
+        (changePage)="onPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</div>

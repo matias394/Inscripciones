@@ -1,0 +1,36 @@
+.card-ins {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 13px 30px;
+  gap: 11px;
+  min-height: 136px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+.card-title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  color: #141920;
+  margin: 0;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  gap: 5px;
+  font-size: 12px;
+}
+.card-btn {
+  box-sizing: border-box;
+  padding: 5px 20px;
+  background: #ffdb2e;
+  border: 1px solid #ffdb2e;
+  border-radius: 6px;
+}
+
+.horario {
+  white-space: pre-line;
+}

@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-sm-4 valor-del-componente">
+    {{ item.valorDelComponente }}
+  </div>
+  <ng-container [formGroup]="form">
+    <div class="col-sm-5">
+      <ng-select
+        class="selector-concepto-pago"
+        [items]="conceptosPago"
+        bindLabel="descripcionCompleta"
+        bindValue="codigo"
+        formControlName="conceptoPago"
+        notFoundText=""
+      >
+      </ng-select>
+    </div>
+    <div class="col-sm-3">
+      <input class="input-item-concepto-pago" type="text" formControlName="cantidad" maxlength="15" appDigitOnly/>
+    </div>
+  </ng-container>
+</div>

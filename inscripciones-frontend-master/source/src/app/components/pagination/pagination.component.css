@@ -1,0 +1,4 @@
+.pagination {
+  white-space: nowrap; /* Evitar que los números de página se dividan en varias líneas */
+  max-width: 100%; /* Limitar el ancho del contenedor de paginación */
+}

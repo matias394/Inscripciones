@@ -1,0 +1,26 @@
+<div class="form-group" *ngIf="mostrarElemento">
+  <label for="selectDependienteFormly" >{{to.label}}{{to.required ? ' *' : ''}}</label>
+  <br>
+  <small class="descripcion">{{to.description}}</small>
+ <!-- <div *ngIf="to.subsanacion">
+    <div class="mensajeSubsanacion"><p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p></div>
+  </div>-->
+  <div *ngIf="!isReadOnly()">
+    <ng-select
+      class="select-con-filtro" id="selectDependienteFormly" aria-describedby="descripcion"
+      [(ngModel)]="valor"
+      formControl="formControl"
+      [formlyAttributes]="field"
+      [items]="opcionesFiltradas"
+      [clearable]="true"
+      [searchable]="false"
+      bindLabel="descripcion"
+      [placeholder]="to.placeholder ? to.placeholder : ''"
+      (change)="onSelectChange($event)">
+    </ng-select>
+  </div>
+  <div *ngIf="isReadOnly()">
+    <input formControl="formControl" [formlyAttributes]="field" class="form-control" [(ngModel)]="valor" type="text"
+           [readonly]="true" class="input-read-only">
+  </div>
+</div>

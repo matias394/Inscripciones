@@ -1,0 +1,9 @@
+<div class="container text-right m-2" [hidden]="!mostrar">
+  <button class="btn btn-link btn-sm mr-1" (click)="mostrarModal('general')" ><i class='bx bxs-pencil' ></i> General</button>
+  <button class="btn btn-link btn-sm mr-1" [hidden]="deshabilitarValidaciones" (click)="mostrarModal('validaciones')" >Validaciones</button>
+  <button class="btn btn-link btn-sm mr-1" [hidden]="deshabilitarVisibilidad" (click)="mostrarModal('visibilidad')" >Visibilidad</button>
+  <button class="btn btn-link btn-sm mr-1" [hidden]="deshabilitarConceptos" (click)="mostrarModal('conceptos')" >Conceptos</button>
+  <button class="btn btn-danger btn-sm" title="Eliminar componente" (click)="eliminar($event)">
+    <i class='bx bxs-trash' ></i>
+  </button>
+</div>

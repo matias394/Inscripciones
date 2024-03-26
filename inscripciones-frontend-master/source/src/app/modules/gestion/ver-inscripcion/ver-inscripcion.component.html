@@ -1,0 +1,139 @@
+<div class="bg-light p-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center justify-content-center">
+      <img
+        src="./assets/icons/chevron-left.svg"
+        class="mr-2"
+        [routerLink]="['../../']"
+        role="button"
+      />
+      <h3 class="mt-2">Inscripciones de {{ name }} {{ lastname }}</h3>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      routerLink="crear"
+      [disabled]="!selectedRow"
+      [routerLink]="['detalles', selectedRow?.id]"
+    >
+      Ver detalles
+    </button>
+  </div>
+  <div>
+    <div class="mt-4">
+      <app-search-bar
+        [placeholder]="'Buscar inscripciones'"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+
+    <div class="table mt-4 px-5 py-3 bg-white">
+      <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+        <h4>Lista de inscripciones</h4>
+        <div
+          class="d-flex align-items-center justify-content-between mr-2 mt-2"
+        >
+          <div class="dropdown mr-3">
+            <button
+              type="button"
+              class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <img
+                src="./assets/icons/organizar.svg"
+                class="mr-2"
+                alt="organizar"
+              />
+              Organizar
+            </button>
+            <div class="dropdown-menu dropdown-menu-right w-auto">
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="sortByName()"
+              >
+                Por nombre
+              </button>
+              <button
+                class="dropdown-item"
+                type="button"
+                (click)="sortByCategoria()"
+              >
+                Por categoría
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table border-0">
+        <thead>
+          <tr>
+            <th scope="col">Fecha de inscripción</th>
+            <th scope="col">Nombre del curso</th>
+            <th scope="col" class="text-center">Instancia</th>
+            <th scope="col" class="text-center">Estado de la instancia</th>
+            <th scope="col" class="text-center">Sede</th>
+            <th scope="col" class="text-center">Estado del ciudadano</th>
+            <th scope="col" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <span class="border-bottom"></span>
+        <tbody>
+          <ng-container *ngIf="listFiltered.length > 0; else noResults">
+            <tr
+              *ngFor="let data of listFiltered"
+              [class.selected]="data === selectedRow"
+              (click)="selectRow(data)"
+            >
+              <td>{{ data?.createdAt }}</td>
+              <td>{{ data?.nombreCurso }}</td>
+              <td class="text-center">{{ data?.instancia }}</td>
+              <td class="text-center">
+                {{ data?.estadoInstancia }}
+              </td>
+              <td>
+                <div class="text-center">
+                  {{ data?.sede }}
+                </div>
+              </td>
+              <td class="text-center">
+                {{ data?.estadoCiudadano }}
+              </td>
+              <td class="text-center">
+                <img
+                  src="./assets/icons/delete.svg"
+                  alt="delete_icon"
+                  (click)="openModal(data.id)"
+                />
+                <app-modals
+                  *ngIf="modalSwitch === true"
+                  [title]="modalTitle"
+                  [message]="modalMessage"
+                  (triggerCancel)="closeModal()"
+                  (triggerConfirm)="deleteInscripcionById(mongoID)"
+                ></app-modals>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <ng-template #noResults>
+          <tr>
+            <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold">
+              Sin resultados. Realizá una nueva búsqueda.
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+    <ng-container *ngIf="listFiltered.length > 0">
+      <app-pagination
+        [allPagesNumber]="allInscripcionesPages"
+        (changePage)="onInscripcionesPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</div>

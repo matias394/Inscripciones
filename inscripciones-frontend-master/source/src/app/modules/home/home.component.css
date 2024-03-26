@@ -1,0 +1,12 @@
+.container-home {
+  display: flex;
+  justify-content: center;
+  max-height: 100vh;
+  align-items: center;
+  background-attachment: #f4f6f9;
+}
+.logo-home {
+  width: 60%;
+  height: 500px;
+  opacity: 0.08;
+}

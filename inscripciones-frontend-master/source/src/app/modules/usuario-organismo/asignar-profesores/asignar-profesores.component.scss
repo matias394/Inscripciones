@@ -1,0 +1,13 @@
+thead {
+ background-color: #ffffff;
+}
+
+td {
+ padding: 18px;
+ color: #6A7685;
+}
+
+
+table td:nth-child(2) {
+ max-width: 200px;
+}

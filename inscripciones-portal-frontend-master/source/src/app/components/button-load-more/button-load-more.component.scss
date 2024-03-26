@@ -1,0 +1,50 @@
+button {
+  border-radius: 6px;
+  border: 1px solid var(--amarillo-obelisco, #ffdb2e);
+  background: var(--amarillo-obelisco, #ffdb2e);
+  display: flex;
+
+  height: 40px;
+  padding: 2px 7px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  margin: auto;
+  span {
+    color: var(--boton-primario-grisulado-texto, #38485c);
+    /* Table Head text */
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px; /* 146.667% */
+  }
+  &.schedule {
+    width: 150px;
+  }
+  &.fullscreen {
+    width: 500px;
+  }
+  &.w-10 {
+    width: 100%;
+  }
+  &.load-more {
+    width: 500px;
+  }
+  &:hover {
+    background: #f5cb00;
+    border-color: #f5cb00;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  
+    &.fullscreen {
+      width: 280px;
+      margin-top: 50px;
+    }
+    
+    
+  }
+  
+}

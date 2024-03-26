@@ -1,0 +1,13 @@
+<!-- <label [for]="vista.nombre">{{vista.etiqueta}}</label>
+<p *ngIf="vista.descripcion" class="margin0 padding0"><small class="descripcion">{{vista.descripcion}}</small></p>
+<div class="form-group-fecha">
+<input type="date" [value]="vista.valorPorDefecto"/>
+</div> -->
+
+<div class="form-wrapper">
+  <div class="from-group">
+    <label [for]="vista.nombre" class="form-text">{{vista.etiqueta}}</label>
+    <p *ngIf="vista.descripcion"><small class="descripcion">{{vista.descripcion}}</small></p>
+  </div>
+  <input type="date" class="form-control" [id]="vista.nombre" [value]="vista.valorPorDefecto">
+</div>

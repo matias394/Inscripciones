@@ -1,0 +1,58 @@
+<div class="card" *ngIf="mostrarElemento">
+  <div class="card-body">
+    <div class="form-group">
+      <label>{{etiqueta}}</label>
+      <br>
+      <p class="descripcion">{{descripciones}}</p>
+      <hr>
+  <!--    <div *ngIf="to.subsanacion">
+        <div class="mensajeSubsanacion">
+          <p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p>
+        </div>
+      </div>-->
+      <div class="custom-control custom-radio">
+        <label>
+          <input class="custom-control-input" type="radio" name="upload{{field.key}}" id="upload{{field.key}}"
+                 value="upload" [(ngModel)]="selected" (ngModelChange)="changeSelected($event)" />
+          <p class="custom-control-label">
+            Cargar archivo
+          </p>
+        </label>
+      </div>
+      <div class="bg-light mb-3">
+        <div *ngIf="selected == 'upload'" class="contenedor-input-file">
+
+          <app-button-file-uploader [(ngModel)]="selectedFile" (ngModelChange)="onUploadFile($event)"
+                                    [inputId]="field.key" [acceptTypes]="acceptTypes" [maxSizeMB]="tamanioMaximoArchivoEnMB"
+                                    [errorMsgs]="errorMsgs" (hasError)="changeSelected($event)">
+
+          </app-button-file-uploader>
+        </div>
+      </div>
+
+      <!--Contenedor para archivos elegibles desde Ciudadano-->
+     <div *ngIf="!archivoNuevo" class="contenedor-radio contenedor-radio-archivo">
+ <!--      <div class="custom-control custom-radio">
+         <label>
+           <input class="custom-control-input" type="radio" name="fromserver{{field.key}}" id="fromserver{{field.key}}"
+                  value="fromserver" [(ngModel)]="selected" (ngModelChange)="changeSelected($event)" />
+           <p class="custom-control-label">
+             Elegir un archivo ya cargado
+           </p>
+         </label>
+       </div>
+      <div class="bg-light rounded contenedor-select-archivo" [hidden]="selected != 'fromserver'">
+         <select (change)="validarArchivo()" class="custom-select" id="select{{field.key}}" [(ngModel)]="selectedFile"
+                 [formControl]="formControl" [compareWith]="compareFn" [formlyAttributes]="field">
+           <option *ngFor="let file of files" [ngValue]="file">
+             {{file.nombre}}
+           </option>
+         </select>
+         <ng-container *ngIf="isErrorFilePresent">
+           <p class="file-return-error">{{errorFileMsg}}</p>
+         </ng-container>
+       </div>-->
+      </div>
+    </div>
+  </div>
+</div>

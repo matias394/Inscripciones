@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlertasComponent AlertasComponent snapshot 1`] = `
+<div
+  id="root1"
+>
+  <div
+    class="alert-wrapper"
+  >
+    <div
+      class="alert-div"
+      role="alert"
+    >
+      <p
+        class="alert-text"
+      >
+        
+      </p>
+      <span>
+        Hola!
+      </span>
+      <button
+        class="close alert-close"
+        data-dismiss="alert"
+        type="button"
+      >
+         × 
+      </button>
+      
+    </div>
+  </div>
+</div>
+`;

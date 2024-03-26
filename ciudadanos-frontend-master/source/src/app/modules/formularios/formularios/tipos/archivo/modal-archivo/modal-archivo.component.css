@@ -1,0 +1,54 @@
+.ng2-tag-input {
+    padding: 0.25rem !important;
+}
+
+tag-input {
+    background-color: white !important;
+    height: 50px !important;
+    color: #333 !important;
+    background-color: #fff !important;
+    transition: none !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0 0 2px #e6ebf0 !important;
+    margin: 2px !important;
+    width: calc(100% - 4px) !important;
+}
+
+ /* Before */
+ .custom-switch{
+    padding-left: 2.5rem!important
+}
+.custom-switch .custom-control-label::before{
+    width: 2.1rem!important;
+    left: -2.5rem!important
+}
+.custom-control-label::before{
+    background-color: #ddd!important;
+    border-color: #ddd!important;
+}
+ .custom-control-input:checked~.custom-control-label::before{
+    border-color: rgba(242,211,51,0)!important;
+    background-color: rgba(242,211,51,0.3)!important;
+}
+
+/* After */
+.custom-switch .custom-control-input:checked~.custom-control-label::after{
+    background-color: #F2D333!important;
+}
+.custom-switch .custom-control-label::after{
+   left: calc(-2.5rem - 2px)!important;
+    width: 1.3rem!important;
+    height: 1.3rem!important;
+    border-radius: 50%!important;
+}
+.custom-switch .custom-control-input:checked~.custom-control-label::after{
+    transform: translateX(1rem)!important;
+    -webkit-transform: translateX(1rem)!important;
+}
+
+label {
+    margin:0 !important;
+    padding:0 !important;
+    line-height: 1.875rem;
+}

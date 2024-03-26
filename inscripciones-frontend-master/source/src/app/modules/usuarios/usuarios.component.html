@@ -1,0 +1,88 @@
+<div class="bg-light p-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>Usuarios</h1>
+    <button class="btn btn-primary" routerLink="crear">
+      Crear nuevo usuario
+    </button>
+  </div>
+  <div>
+    <div class="mt-4">
+      <app-search-bar
+        [placeholder]="'Buscar usuarios'"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+
+    <div class="table mt-4 px-5 py-3 bg-white">
+      <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+        <h4>Usuarios Registrados</h4>
+      </div>
+      <table
+        class="table border-0"
+        aria-label="tabla con información de los usuarios disponibles"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Usuario</th>
+            <th scope="col">CUIL</th>
+            <th scope="col">Organismo</th>
+            <th scope="col">Rol</th>
+            <th scope="col" class="float-right mr-2">Acciones</th>
+          </tr>
+        </thead>
+        <span class="border-bottom"></span>
+        <tbody>
+          <ng-container *ngIf="tableData.length > 0; else noResults">
+            <tr *ngFor="let data of tableData">
+              <td>{{ data?.nombre + " " + data?.apellido }}</td>
+              <td>{{ data?.cuil }}</td>
+              <td>{{ data?.organismo?.nombre }}</td>
+              <td>{{ data?.rol?.nombre }}</td>
+              <td>
+                <div class="float-right mr-2">
+                  <img
+                    src="./assets/icons/edit.svg"
+                    alt="edit_icon"
+                    (click)="goEdit(data.id)"
+                    class="mr-4"
+                    role="button"
+                  />
+                  <img
+                    src="./assets/icons/delete.svg"
+                    alt="delete_icon"
+                    class="img-disabled"
+                    (click)="openModal(data.id)"
+                    role="button"
+                  />
+                  <app-modals
+                    *ngIf="modalSwitch === true"
+                    [title]="modalTitle"
+                    [message]="modalMessage"
+                    (triggerCancel)="closeModal()"
+                    (triggerConfirm)="deleteUsuario(idNumber)"
+                  ></app-modals>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <ng-template #noResults>
+          <tr>
+            <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold">
+              Sin resultados. Realizá una nueva búsqueda.
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+
+    <ng-container *ngIf="tableData.length > 0">
+      <app-pagination
+        [allPagesNumber]="allPages"
+        (changePage)="onPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</div>

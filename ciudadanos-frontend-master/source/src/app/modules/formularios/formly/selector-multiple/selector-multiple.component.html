@@ -1,0 +1,47 @@
+<!--<fieldset class="form-group form-radio" *ngIf="mostrarElemento">
+  <legend>
+    <p class="label-input">{{to.label}}{{to.required ? ' *' : ''}}</p>
+    <small class="descripcion">{{to.descripcion}}</small>
+    <div *ngIf="to.subsanacion">
+      <div class="mensajeSubsanacion">
+        <p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p>
+      </div>
+    </div>
+  </legend>
+  <div class="contenedor-radio" *ngFor="let opcion of to.opciones">
+    <label class="">
+      <input type="checkbox" [name]="opcion.nombre" [formlyAttributes]="field"
+        class="form-check-input" [disabled]="isReadOnly()" (click)="clickCheckbox(opcion.nombre,opcion.descripcion)" [checked]="chequeado(opcion.nombre)">
+      <span>{{opcion.descripcion}}</span>
+    </label>
+  </div>
+</fieldset>-->
+
+<fieldset *ngIf="mostrarElemento" class="cards-container">
+  <div class="card">
+    <div class="card-body">
+      <div class="form-wrapper">
+        <div class="form-group">
+          <label>{{to.label}}{{to.required ? ' *' : ''}}</label>
+          <small class="form-text">{{to.description}}</small>
+        </div>
+<!--        <div *ngIf="to.subsanacion">
+          <div class="mensajeSubsanacion">
+            <p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p>
+          </div>
+        </div>-->
+        <hr>
+        <div class="custom-control custom-checkbox" *ngFor="let opcion of opciones">
+          <label>
+            <input class="custom-control-input" type="checkbox" [name]="opcion.nombre" [formlyAttributes]="field"
+                   [checked]="chequeado(opcion.nombre)" [disabled]="isReadOnly()"
+                   (click)="clickCheckbox(opcion.nombre,opcion.descripcion)" />
+            <p class="custom-control-label">
+              {{opcion.descripcion}}
+            </p>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</fieldset>

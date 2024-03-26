@@ -1,0 +1,120 @@
+<div class="form-wrapper">
+  <div class="form-group" [ngClass]="">
+    <label for="{{valores}}">
+      <span class="icon">
+        Valores *
+        <i class='bx bxs-help-circle' aria-hidden="true" title="{{textoAyuda}}"></i>
+      </span>
+    </label>
+    <p>Ingresá cada opción de respuesta en líneas separadas. Si la visibilidad de un valor
+      depende
+      de la opción seleccionada en otra lista del formulario, podes configurar dicha dependencia desde la pestaña
+      “Visibilidad”.</p>
+    <div [hidden]="!modoEdicion" class="contenedor-opciones-editar" [ngClass]="getCssClases()">
+      <textarea class="form-control" name="valor" [ngModel]="valores"
+        (ngModelChange)="valoresChange($event)" (blur)="onBlur()"></textarea>
+    </div>
+    <div [hidden]="modoEdicion" class="contenedor-opciones-seleccionar">
+      <ul>
+        <ng-container *ngIf="seleccionMultiple; else noEsSeleccionMultipleTemplate">
+          <li *ngFor="let opcion of valores; let i = index">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" id="valorPorDefecto_{{_uid}}_{{i}}"
+                name="valorPorDefecto_{{_uid}}_{{i}}" [value]="opcion" [(ngModel)]="_valoresPorDefecto[i]" />
+              <label class="custom-control-label" for="valorPorDefecto_{{_uid}}_{{i}}">
+                {{opcion}}
+              </label>
+            </div>
+            <!-- <label class="custom-control custom-radio">
+              <input type="checkbox" name="valorPorDefecto_{{_uid}}_{{i}}" [value]="opcion"
+                [(ngModel)]="_valoresPorDefecto[i]">
+              <span class="label-file-selector">
+                {{opcion}}
+              </span>
+            </label> -->
+          </li>
+        </ng-container>
+        <ng-template #noEsSeleccionMultipleTemplate>
+          <li *ngFor="let opcion of valores; let i = index">
+            <div class="custom-control custom-radio">
+              <input class="custom-control-input" type="radio" id="valorPorDefecto_{{_uid}}_{{i}}"
+                name="valorPorDefecto" [value]="opcion" [(ngModel)]="_valorPorDefecto">
+              <label class="custom-control-label" for="valorPorDefecto_{{_uid}}_{{i}}">
+                {{opcion}}
+              </label>
+            </div>
+            <!-- <label class="custom-control custom-radio">
+              <input type="radio" name="valorPorDefecto" [value]="opcion" [(ngModel)]="_valorPorDefecto">
+              <span class="label-file-selector">
+                {{opcion}}
+              </span>
+            </label> -->
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+    <div *ngIf="invalid">
+
+    </div>
+    <div class="text-right">
+      <div class="btn-wrapper">
+        <button type="button" class="btn btn-secondary" [disabled]="!hayValoresSeleccionables" *ngIf="modoEdicion"
+          (click)="seleccionarValorPorDefecto()">Seleccionar valor por
+          defecto</button>
+        <button type="button" *ngIf="!modoEdicion" class="btn btn-secondary"
+          (click)="registrarValoresPorDefecto()">Registrar valor por defecto</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <form class="form-group" [ngClass]="">
+  <label for="valores">
+    Valores *
+    <span class="icon">
+      <i class="fa fa-question-circle" aria-hidden="true" title="{{textoAyuda}}"></i>
+    </span>
+  </label>
+  <p class="margin0"><small>Ingresá cada opción de respuesta en líneas separadas. Si la visibilidad de un valor depende
+      de la opción seleccionada en otra lista del formulario, podes configurar dicha dependencia desde la pestaña
+      “Visibilidad”.</small></p>
+  <div [hidden]="!modoEdicion" class="contenedor-opciones-editar" [ngClass]="getCssClases()">
+    <textarea name="valor" [ngModel]="valores | listaString" (ngModelChange)="valoresChange($event)"
+      (blur)="onBlur()"></textarea>
+  </div>
+  <div [hidden]="modoEdicion" class="contenedor-opciones-seleccionar">
+    <ul>
+      <ng-container *ngIf="seleccionMultiple; else noEsSeleccionMultipleTemplate">
+        <li *ngFor="let opcion of valores; let i = index" id="valorPorDefecto_{{_uid}}_{{i}}">
+          <label class="custom-control custom-radio">
+            <input type="checkbox" name="valorPorDefecto_{{_uid}}_{{i}}" [value]="opcion"
+              [(ngModel)]="_valoresPorDefecto[i]">
+            <span class="label-file-selector">
+              {{opcion}}
+            </span>
+          </label>
+        </li>
+      </ng-container>
+      <ng-template #noEsSeleccionMultipleTemplate>
+        <li *ngFor="let opcion of valores; let i = index" id="valorPorDefecto_{{_uid}}_{{i}}">
+          <label class="custom-control custom-radio">
+            <input type="radio" name="valorPorDefecto" [value]="opcion" [(ngModel)]="_valorPorDefecto">
+            <span class="label-file-selector">
+              {{opcion}}
+            </span>
+          </label>
+        </li>
+      </ng-template>
+    </ul>
+  </div>
+  <div *ngIf="invalid">
+    <app-validador-campo-formulario [mostrarError]="invalid" [mensajeError]="mensajeDatoRequerido">
+    </app-validador-campo-formulario>
+  </div>
+  <div class="text-right">
+    <button type="button" *ngIf="modoEdicion" [disabled]="!hayValoresSeleccionables"
+      class="btn btn-default btn-verde-claro" (click)="seleccionarValorPorDefecto()">Seleccionar valor por
+      defecto</button>
+    <button type="button" *ngIf="!modoEdicion" class="btn btn-default btn-verde-claro"
+      (click)="registrarValoresPorDefecto()">Registrar valor por defecto</button>
+  </div>
+</form> -->

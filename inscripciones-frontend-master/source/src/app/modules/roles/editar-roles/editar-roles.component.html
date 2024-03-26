@@ -1,0 +1,205 @@
+<div class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">Modificar rol</h1>
+    <p>
+      Para modificar los roles en el sistema complete el formulario a
+      continuación
+    </p>
+  </div>
+
+  <form
+    class="mt-8 form-wrpper p-5 bg-white rounded"
+    (ngSubmit)="putRoles(formUser)"
+    #formUser="ngForm"
+  >
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="nombre">Nombre del rol</label>
+        <input
+          type="text"
+          class="form-control mt-2"
+          id="nombre"
+          name="nombre"
+          placeholder="Ingresá nombre del rol"
+          [ngModel]="nombre"
+          ngModel
+          required
+        />
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-wrapper col-12 p-3">
+        <div class="form-group">
+          <label for="descripcion">Descripción del rol</label>
+          <textarea
+            class="form-control mt-2"
+            id="descripcion"
+            name="descripcion"
+            rows="4"
+            placeholder="Describí el rol asignado"
+            [ngModel]="descripcion"
+            ngModel
+            required
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="row-fluid d-flex flex-column">
+        <h3>Seleccionar módulo(s)</h3>
+
+        <div class="custom-control-container">
+          <div class="custom-control custom-checkbox">
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              id="titulo1"
+              name="titulo1"
+              value="titulo1"
+              checked=""
+            />
+            <label class="custom-control-label" for="titulo1">
+              Título módulo 1
+            </label>
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              id="titulo2"
+              name="titulo2"
+              value="titulo2"
+            />
+            <label class="custom-control-label" for="titulo2"
+              >Título módulo 2</label
+            >
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              id="titulo3"
+              name="titulo3"
+              value="titulo3"
+            />
+            <label class="custom-control-label" for="titulo3">
+              Título módulo 3
+            </label>
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              id="titulo4"
+              name="titulo4"
+              value="titulo4"
+            />
+            <label class="custom-control-label" for="titulo4">
+              Título módulo 4
+            </label>
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              id="titulo5"
+              name="titulo5"
+              value="titulo5"
+            />
+            <label class="custom-control-label" for="titulo5">
+              Título módulo 5
+            </label>
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              id="titulo6"
+              name="titulo6"
+              value="titulo6"
+            />
+            <label class="custom-control-label" for="titulo6">
+              Título módulo 6
+            </label>
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              id="titulo7"
+              name="titulo7"
+              value="titulo7"
+            />
+            <label class="custom-control-label" for="titulo7">
+              Título módulo 7
+            </label>
+          </div>
+
+          <div class="custom-control custom-checkbox">
+            <input
+              class="custom-control-input"
+              type="checkbox"
+              id="titulo8"
+              name="titulo8"
+              value="titulo8"
+            />
+            <label class="custom-control-label" for="titulo8">
+              Título módulo 8
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex mt-5">
+      <div class="form-group col-12">
+        <div class="btn-wrapper d-flex justify-content-start mt-5">
+          <button type="button" class="btn btn-link mr-4" (click)="openModal()">
+            Cancelar
+          </button>
+          <app-modals
+            *ngIf="modalSwitch === true"
+            [title]="modalTitle"
+            [message]="modalMessage"
+            (triggerCancel)="closeModal()"
+            (triggerConfirm)="redirectToPage()"
+          ></app-modals>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="formUser.invalid"
+          >
+            Guardar
+          </button>
+        </div>
+        <!-- ALERTAS CONDICIONALES -->
+        <div class="row">
+          <div *ngIf="correct" class="form-group col-6 mt-5">
+            <app-alertas
+              [message]="'Nuevo rol editado exitosamente'"
+              [type]="'alert alert-success'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+
+          <div *ngIf="error" class="form-group col-6">
+            <app-alertas
+              [message]="'Error al modificar el rol'"
+              [type]="'alert alert-danger'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

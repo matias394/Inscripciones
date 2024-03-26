@@ -1,0 +1,168 @@
+<div id="content-ciudadanos-inscriptos" class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">Asistencia</h1>
+    <p>
+      Para filtrar las asistencias en el sistema complete el formulario a
+      continuación
+    </p>
+  </div>
+
+  <form class="p-5 bg-white rounded mt-3 table" id="config">
+    <div class="d-flex">
+      <div class="form-group col-6 mb-2">
+        <app-select-input
+          [id]="'organismo'"
+          [label]="'Organismo'"
+        ></app-select-input>
+      </div>
+      <div class="form-group col-6">
+        <app-select-input
+          [id]="'categoria'"
+          [label]="'Categoría'"
+        ></app-select-input>
+      </div>
+    </div>
+    <div class="d-flex align-items-center">
+      <div class="form-group col-6">
+        <app-select-input
+          [id]="'tipo'"
+          [label]="'Tipo de inscripción'"
+        ></app-select-input>
+      </div>
+      <div class="form-group col-6">
+        <app-select-input
+          [id]="'curso'"
+          [label]="'Curso / Evento'"
+        ></app-select-input>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <app-select-input
+          [id]="'nombre'"
+          [label]="'Nombre y apellidos del ciudadano'"
+        ></app-select-input>
+      </div>
+      <div class="form-group col-6">
+        <app-select-input [id]="'estado'" [label]="'Estado'"></app-select-input>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="name-input mt-3">Fecha</label>
+        <div class="flex-row d-flex mt-3 align-items-center">
+          <div class="d-flex align-items-center gap-1">
+            <span class="mr-2">Desde</span>
+            <date-piker
+              #datePikerVD
+              [name]="'fechaInicio'"
+              [placeholder]="'yyyy-mm-dd'"
+              [datepiker]="datePikerVD"
+            ></date-piker>
+          </div>
+          <div class="d-flex align-items-center gap-1">
+            <span class="ml-2 mr-2">Hasta</span>
+            <date-piker
+              #datePikerVH
+              [placeholder]="'yyyy-mm-dd'"
+              [name]="'fechaFin'"
+              [datepiker]="datePikerVH"
+            ></date-piker>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <toggle-switch
+          [label]="'Reporte detallado'"
+          [titleActive]="'Sí'"
+          [titleDisabled]="'No'"
+          [oneTitle]="true"
+          class="mt-2"
+          [name]="'reporteDetallado'"
+        >
+        </toggle-switch>
+      </div>
+    </div>
+
+    <div class="btn-wrapper d-flex justify-content-start ml-3 mt-5">
+      <button type="button" class="btn btn-link mr-4">Limpiar</button>
+      <button type="button" class="btn btn-primary">Generar</button>
+    </div>
+  </form>
+</div>
+
+<div class="bg-light p-4">
+  <div class="table mt-4 px-3 py-3 bg-white rounded-1">
+    <div
+      class="d-flex align-items-left justify-content-between flex-column px-3 mt-3 mb-4"
+    >
+      <h2>Nombre del reporte: DD/MM/AA</h2>
+      <p>Reporte generado el día xx del mes xx del año xxxx</p>
+    </div>
+    <table
+      class="table border-0 px-4"
+      aria-label="tabla de reportes de asistencias"
+    >
+      <thead>
+        <tr>
+          <th scope="col">Nombre y Apellido del ciudadano</th>
+          <th scope="col">CUIL/DNI/Pas</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Organismo</th>
+          <th scope="col">Categoría</th>
+          <th scope="col">Cursos</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Estado</th>
+        </tr>
+      </thead>
+      <span class="border-bottom"></span>
+      <tbody>
+        <tr *ngFor="let item of tableData">
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.cuil }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.organismo }}</td>
+          <td>{{ item.categoria }}</td>
+          <td>{{ item.cursos }}</td>
+          <td>{{ item.fecha }}</td>
+          <td>{{ item.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+      <span class="total_asistencias">Total presente #</span>
+    </div>
+  </div>
+  <div class="btn-wrapper d-flex justify-content-start ml-5 mt-5">
+    <button type="button" class="btn btn-link mr-4" (click)="openModal()">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-primary">Exportar</button>
+  </div>
+  <app-modals
+    *ngIf="modalSwitch === true"
+    [title]="modalTitle"
+    (triggerCancel)="closeModal()"
+    (triggerConfirm)="redirectToPage()"
+  ></app-modals>
+  <app-pagination
+    [allPagesNumber]="allPages"
+    (changePage)="onPageChange($event)"
+    [_currentPage]="currentPage"
+  ></app-pagination>
+  <div class="row d-flex justify-content-center align-items-center mt-5">
+    <app-alertas
+      *ngIf="correct"
+      [message]="'Su reporte ha sido generado exitosamente'"
+      [type]="'alert alert-success'"
+      (onClose)="closeAlert()"
+    ></app-alertas>
+
+    <app-alertas
+      *ngIf="errorMessage"
+      [message]="'Error al generar el reporte'"
+      [type]="'alert alert-danger'"
+      (onClose)="closeAlert()"
+    ></app-alertas>
+  </div>
+</div>

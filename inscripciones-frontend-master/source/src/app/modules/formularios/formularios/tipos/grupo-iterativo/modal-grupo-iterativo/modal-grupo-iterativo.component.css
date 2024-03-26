@@ -1,0 +1,43 @@
+/* Before */
+.custom-switch {
+  padding-left: 2.5rem !important;
+}
+.custom-switch .custom-control-label::before {
+  width: 2.1rem !important;
+  left: -2.5rem !important;
+}
+.custom-control-label::before {
+  background-color: #ddd !important;
+  border-color: #ddd !important;
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+  border-color: rgba(242, 211, 51, 0) !important;
+  background-color: rgba(242, 211, 51, 0.3) !important;
+}
+
+/* After */
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+  background-color: #f2d333 !important;
+  transform: translateX(1rem) !important;
+  -webkit-transform: translateX(1rem) !important;
+}
+.custom-switch .custom-control-label::after {
+  left: calc(-2.5rem - 2px) !important;
+  width: 1.3rem !important;
+  height: 1.3rem !important;
+  border-radius: 50% !important;
+}
+
+label {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.875rem;
+}
+
+.invalid-msg {
+  font-size: 12px;
+}
+
+.danger {
+  color: red;
+}

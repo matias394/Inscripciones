@@ -1,0 +1,47 @@
+<main class="form-wrapper bg-light p-4" role="main">
+            <div class="row d-flex justify-content-center">
+              <h1 class="col-xl-auto col-xl-4" *ngIf="previewOnly">Previsualizando {{nombre}}</h1>
+              <div *ngIf="secciones" class="col-9 col-sm-9 col-md-9 col-lg-9">
+                <form (keydown.enter)="$event.preventDefault()">
+                  <mat-horizontal-stepper  #stepper>
+                    <mat-step *ngFor="let seccion of secciones; let index = index" [completed]="false">
+                      <formly-form [form]="form.at(index)" [model]="model" [fields]="seccion.fields"
+                        [options]="options[index]">
+                      </formly-form>
+                      <div class="grid-wraper">
+                        <div class="row">
+                          <div class="col-6 row">
+                            <div>
+                              <button class="btn btn-secondary mx-1" type="button"
+                                      (click)="cerrarVentana()" *ngIf="previewOnly">
+                                Salir
+                              </button>
+                            </div>
+                            <div class="col-3">
+                              <button *ngIf="esPosibleRetrocederSeccion()" matStepperPrevious class="btn btn-secondary"
+                                type="button" (click)="seccionPrevia()">
+                                Atrás
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-6 text-right">
+                            <button *ngIf="esPosibleAvanzarSeccion()" class="btn btn-primary" type="button"
+                            (click)="siguienteSeccion()">
+                              Siguiente
+                            </button>
+                            <button *ngIf="!esPosibleAvanzarSeccion() && previewOnly" class="btn btn-primary" type="button"
+                            (click)="finalizarPrevisualizacion()">
+                              Finalizar previsualización
+                            </button>
+                          </div>
+                        </div>
+                        </div>
+                    </mat-step>
+                  </mat-horizontal-stepper>
+                </form>
+              </div>
+            </div>
+</main>
+
+
+

@@ -1,0 +1,172 @@
+<div class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">Editar usuario</h1>
+    <p>
+      Para editar el Usuario en el sistema complete el formulario a
+      continuación.
+    </p>
+  </div>
+  <form
+    class="mt-8 p-5 bg-white rounded"
+    (ngSubmit)="putUser(formUser)"
+    #formUser="ngForm"
+  >
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="name-input">CUIL</label>
+        <div class="form-search position-relative">
+          <input
+            type="search"
+            class="form-control input-search mt-2"
+            id="cuil"
+            name="cuil"
+            placeholder="Buscar..."
+            [ngModel]="cuil"
+            [disabled]="true"
+            ngModel
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <select-search
+          [label]="'Organismo'"
+          [placeholder]="'Seleccione un organismo'"
+          [name]="'organismo'"
+          [listOptions]="listaOrganismos"
+          (changeValue)="$any(organismoSelect$.next($event))"
+          [optionSelected]="optionSelected"
+        ></select-search>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-6 d-flex justify-content-between">
+        <div class="d-flex flex-column name-input">
+          <label for="name-input">Nombre</label>
+          <input
+            type="text"
+            class="form-control mt-2"
+            name="nombre"
+            id="nombre"
+            placeholder="Nombre"
+            [ngModel]="nombre"
+            [disabled]="true"
+            ngModel
+            required
+          />
+        </div>
+        <div class="d-flex flex-column name-input">
+          <label for="name-input">Apellido</label>
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="apellido"
+            name="apellido"
+            placeholder="Apellido"
+            name="apellido"
+            [ngModel]="apellido"
+            ngModel
+            required
+            [disabled]="true"
+          />
+        </div>
+      </div>
+      <div class="form-group col-6 d-flex flex-column">
+        <label for="categoria" class="mb-1">Categoría</label>
+        <select
+          class="form-control mt-2"
+          name="categoria"
+          id="categoria"
+          [formControl]="categoria"
+          (change)="getOrgaCateByCategoria($event.target.value)"
+        >
+          <option selected value="">Seleccionar</option>
+          <option *ngFor="let cat of listaCategorias" [value]="cat.id">
+            {{ cat.nombre }}
+          </option>
+        </select>
+        <ul class="list-categories">
+          <ng-container *ngFor="let item of categoriaName">
+            <li (click)="removeItem(item.id)">
+              {{ item.nombre }}
+              <i class="bx bx-x" aria-hidden="true"></i>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="form-group col-6 d-flex flex-column">
+        <label for="name-input">Correo electrónico</label>
+        <input
+          type="text"
+          class="form-control mt-2"
+          id="email"
+          name="email"
+          placeholder="ejemplo@correo.com"
+          [ngModel]="email"
+          [disabled]="true"
+          ngModel
+          required
+        />
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="perfil">Rol</label>
+        <select
+          class="custom-select mt-2"
+          id="rol"
+          name="rol"
+          [formControl]="rolEditing"
+          ngModel
+          required
+        >
+          <option>Seleccionar</option>
+          <option *ngFor="let s of selectRoles" [value]="s.id">
+            {{ s.nombre }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="form-group col-12">
+        <div class="btn-wrapper d-flex justify-content-start mt-5">
+          <button
+            type="button"
+            class="btn btn-link mr-4"
+            [routerLink]="['../']"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="formUser.invalid || categoriaName.length === 0"
+          >
+            Guardar
+          </button>
+        </div>
+        <div class="row">
+          <div class="form-group col-6 mt-5">
+            <div *ngIf="confirm">
+              <app-alertas
+                [message]="'Usuario editado exitosamente'"
+                [type]="'alert alert-success'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+            <div *ngIf="error">
+              <app-alertas
+                [message]="'Error al modificar el usuario'"
+                [type]="'alert alert-danger'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

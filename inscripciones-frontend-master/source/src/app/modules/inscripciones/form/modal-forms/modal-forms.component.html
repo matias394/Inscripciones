@@ -1,0 +1,51 @@
+<div id="form-sedes" class="modal d-block mt-5" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-m" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">¿A quién vas a inscribir?</h3>
+      </div>
+      <form [formGroup]="myForm" (submit)="submit()" id="forms" name="forms">
+        <div class="modal-body mt-4">
+          <div class="d-flex align-items-center">
+            <div class="form-group col-12">
+              <mat-radio-group
+                aria-label="Select an option"
+                class="radio-group"
+                formControlName="dirigido"
+              >
+                <mat-radio-button class="radio-button" [value]="1"
+                  ><span class="label-radio">A mí</span></mat-radio-button
+                >
+                <mat-radio-button class="radio-button" [value]="2"
+                  ><span class="label-radio">A otro</span></mat-radio-button
+                >
+                <mat-radio-button class="radio-button" [value]="3"
+                  ><span class="label-radio">A mi grupo</span></mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer justify-content-start">
+          <button
+            type="button"
+            class="btn btn-link"
+            data-dismiss="modal"
+            (click)="this.cancelForm(); this.eventModalIns.emit(false)"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="myForm.invalid"
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div data-dismiss="modal" class="modal-backdrop show"></div>

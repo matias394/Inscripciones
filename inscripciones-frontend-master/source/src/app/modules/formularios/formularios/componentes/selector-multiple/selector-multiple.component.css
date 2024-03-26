@@ -1,0 +1,21 @@
+.selector-multiple {
+    width: 100%;
+    padding: 0 1em;
+    color: #333;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.075);
+    outline: none;
+    font-size: 0.9rem !important;
+}
+
+.contenedor-boton {
+  margin-top: 10px;
+  display: flex !important;
+  justify-content: flex-end;
+}
+
+.selector-multiple .opcion-seleccionada {
+  background:#0ff3;
+}

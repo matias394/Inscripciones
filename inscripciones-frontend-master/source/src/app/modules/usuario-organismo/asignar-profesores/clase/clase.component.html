@@ -1,0 +1,332 @@
+<ng-template #templateDesk>
+  <div class="bg-light p-4">
+    <div class="table mt-4 px-3 py-3 bg-white rounded-1">
+      <div
+        class="d-flex align-items-center justify-content-between px-3 mt-4 mb-4"
+      >
+        <div class="d-flex align-items-center justify-content-center">
+          <img
+            src="./assets/icons/chevron-left.svg"
+            class="mr-1"
+            [routerLink]="['../../']"
+            role="button"
+            alt="flecha-atras"
+          />
+          <h4 class="mt-1">
+            {{ nombreInscripcion }},
+            {{
+              nombreInstancia === null
+                ? "Instancia sin nombre"
+                : nombreInstancia
+            }},
+            {{ claseNombre }}
+          </h4>
+        </div>
+        <div class="d-flex align-items-center">
+          <button class="btn btn-lg btn-primary" (click)="openModal(idNumber)">
+            Asignar a la clase
+          </button>
+        </div>
+      </div>
+      <table
+        class="table pl-4 pr-0 border-0 text-left"
+        aria-label="tabla con instancia y clase del curso"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Clase a asignar</th>
+            <th scope="col">Sede</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Profesores asignados</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{ nombreInscripcion }},
+              {{
+                nombreInstancia === null
+                  ? "Instancia sin nombre"
+                  : nombreInstancia
+              }}
+              - {{ idInstancia }},
+              {{ claseNombre }}
+            </td>
+            <td>{{ claseData?.sede }}</td>
+            <td>
+              {{
+                claseData?.fecha === null
+                  ? "Sin Fecha"
+                  : (claseData?.fecha | date : "dd-MM-yyyy")
+              }}
+            </td>
+            <td>
+              {{
+                nombreProfesores === null || nombreProfesores === ""
+                  ? "Sin Profesor"
+                  : nombreProfesores
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="isModalOpen" class="modal d-block" tabindex="-1" role="dialog">
+    <form
+      (ngSubmit)="asignarClase(formAsignarClaseIndividual)"
+      #formAsignarClaseIndividual="ngForm"
+    >
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Asignar profesor</h2>
+          </div>
+          <div class="modal-prof-container">
+            <div class="form-group row d-flex flex-column mt-2">
+              <label for="categoria" class="mb-5">Profesores</label>
+              <ul class="list-categories">
+                <ng-container *ngFor="let item of listOrganismosProfesores">
+                  <ng-container *ngIf="listOrganismosProfesores.length > 0">
+                    <li (click)="removeItem(item.id)">
+                      {{ item.nombre }}
+                      <i class="bx bx-x" aria-hidden="true"></i>
+                    </li>
+                  </ng-container>
+                </ng-container>
+              </ul>
+              <select
+                #selectElement
+                class="form-control slc-categorias"
+                (change)="onChangeSlc($event.target.value)"
+                [disabled]="disableSelects"
+              >
+                <option [selected]="selectValue">{{ selectValue }}</option>
+                <option
+                  *ngFor="let op of organismosProfesorData"
+                  [ngClass]="itemIsSelected ? 'slc' : ''"
+                  value="{{ op.id }}"
+                >
+                  {{ op.nombre }} {{ op.apellido }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-start mt-5">
+            <button
+              type="button"
+              data-dismiss="modal"
+              class="btn btn-link d-flex"
+              (click)="openCancelarModal()"
+            >
+              Cancelar
+            </button>
+            <app-modals
+              *ngIf="modalSwitch === true"
+              [title]="modalTitle"
+              [message]="modalMessage"
+              (triggerCancel)="closeCancelarModal()"
+              (triggerConfirm)="redirectToPage()"
+            ></app-modals>
+            <button
+              type="submit"
+              data-dismiss="modal"
+              class="btn btn-primary d-flex"
+              [disabled]="
+                listOrganismosProfesores.length === 0 ||
+                formAsignarClaseIndividual.invalid ||
+                disableButton
+              "
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+        <!-- <div data-dismiss="modal" class="modal-backdrop show"></div> -->
+      </div>
+    </form>
+    <div class="row mt-5">
+      <div
+        *ngIf="correct"
+        class="form-group m-auto d-flex justify-content-center col-4 mt-5"
+      >
+        <app-alertas
+          [message]="'Se ha asignado profesor exitosamente'"
+          [type]="'alert alert-success'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+
+      <div
+        *ngIf="errorMessage"
+        class="form-group m-auto d-flex justify-content-center col-4 mt-5"
+      >
+        <app-alertas
+          [message]="'Error al guardar los cambios'"
+          [type]="'alert alert-danger'"
+          (onClose)="closeAlert()"
+        ></app-alertas>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateMob>
+  <div class="bg-light px-0">
+    <div class="d-flex align-items-center justify-content-between mt-4 mb-4">
+      <div class="d-flex align-items-center justify-content-center">
+        <img
+          src="./assets/icons/chevron-left.svg"
+          class="mr-1"
+          [routerLink]="['../../']"
+          role="button"
+          alt="flecha-atras"
+        />
+        <h4 class="mt-1">
+          {{ nombreInscripcion }},
+          {{
+            nombreInstancia === null ? "Instancia sin nombre" : nombreInstancia
+          }},
+          {{ claseNombre }}
+        </h4>
+      </div>
+    </div>
+    <table
+      class="table pr-0 border-0 text-left"
+      aria-label="tabla con instancia y clase del curso"
+    >
+      <ng-container>
+        <div class="card-ins">
+          <h2 class="card-title">{{ nombreInscripcion }}</h2>
+          <div class="card-body">
+            <span class="fechaInicio">{{ nombreInstancia }}</span>
+            <span class="fechaInicio">{{ claseData?.sede }}</span>
+            <span class="fechaInicio">{{ claseNombre }}</span>
+            <span class="fechaInicio">{{
+              claseData?.fecha | date : "dd-MM-yyyy"
+            }}</span>
+            <span class="fechaInicio"
+              >Profesores:
+              {{
+                claseData?.nombreProfesores === null ||
+                claseData?.nombreProfesores === ""
+                  ? "Sin profesores"
+                  : claseData?.nombreProfesores
+              }}</span
+            >
+          </div>
+
+          <div class="d-flex align-items-center justify-content-center mt-2">
+            <button
+              class="btn btn-lg btn-primary"
+              (click)="openModal(idNumber)"
+            >
+              Asignar a la clase
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </table>
+    <div *ngIf="isModalOpen" class="modal d-block" tabindex="-1" role="dialog">
+      <form
+        (ngSubmit)="asignarClase(formAsignarClaseIndividual)"
+        #formAsignarClaseIndividual="ngForm"
+      >
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">Asignar profesor</h2>
+            </div>
+            <div class="modal-prof-container">
+              <div class="form-group row d-flex flex-column mt-2">
+                <label for="categoria" class="mb-5 mt-3">Profesores</label>
+                <ul class="list-categories">
+                  <ng-container *ngFor="let item of listOrganismosProfesores">
+                    <ng-container *ngIf="listOrganismosProfesores.length > 0">
+                      <li (click)="removeItem(item.id)">
+                        {{ item.nombre }}
+                        <i class="bx bx-x" aria-hidden="true"></i>
+                      </li>
+                    </ng-container>
+                  </ng-container>
+                </ul>
+                <select
+                  #selectElement
+                  class="form-control slc-categorias"
+                  (change)="onChangeSlc($event.target.value)"
+                  [disabled]="disableSelects"
+                >
+                  <option [selected]="selectValue">{{ selectValue }}</option>
+                  <option
+                    *ngFor="let op of organismosProfesorData"
+                    [ngClass]="itemIsSelected ? 'slc' : ''"
+                    value="{{ op.id }}"
+                  >
+                    {{ op.nombre }} {{ op.apellido }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-start mt-5">
+              <button
+                type="button"
+                data-dismiss="modal"
+                class="btn btn-link d-flex"
+                (click)="openCancelarModal()"
+              >
+                Cancelar
+              </button>
+              <app-modals
+                *ngIf="modalSwitch === true"
+                [title]="modalTitle"
+                [message]="modalMessage"
+                (triggerCancel)="closeCancelarModal()"
+                (triggerConfirm)="redirectToPage()"
+              ></app-modals>
+              <button
+                type="submit"
+                data-dismiss="modal"
+                class="btn btn-primary d-flex"
+                [disabled]="
+                  listOrganismosProfesores.length === 0 ||
+                  formAsignarClaseIndividual.invalid ||
+                  disableButton
+                "
+              >
+                Guardar
+              </button>
+            </div>
+          </div>
+          <!-- <div data-dismiss="modal" class="modal-backdrop show"></div> -->
+        </div>
+      </form>
+      <div class="row mt-5">
+        <div
+          *ngIf="correct"
+          class="form-group d-flex justify-content-center col-12 mt-5"
+        >
+          <app-alertas
+            [message]="'Se ha asignado profesor exitosamente'"
+            [type]="'alert alert-success'"
+            (onClose)="closeAlert()"
+          ></app-alertas>
+        </div>
+
+        <div
+          *ngIf="errorMessage"
+          class="form-group d-flex justify-content-center col-12 mt-5"
+        >
+          <app-alertas
+            [message]="'Error al guardar los cambios'"
+            [type]="'alert alert-danger'"
+            (onClose)="closeAlert()"
+          ></app-alertas>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>

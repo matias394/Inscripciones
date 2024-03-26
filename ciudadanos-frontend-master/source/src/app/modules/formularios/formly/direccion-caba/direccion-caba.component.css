@@ -1,0 +1,3 @@
+.form-group .ng-invalid.ng-touched:not(.ng-select):not(.contenedor-input-file){
+    border: none!important;
+}

@@ -1,0 +1,17 @@
+<input type="text" class="m-bottom-15" [(ngModel)]="busqueda" placeholder="Filtrar valores">
+<div class="contenedor-opciones-seleccionar m-bottom-15">
+  <ul>
+    <li *ngFor="let opcion of dependencias | filtrarDependencias: busqueda; let i = index">
+      <label class="custom-control custom-radio" for="valor_dependencia_campo_formulario_{{i}}">
+        <input type="checkbox" id="valor_dependencia_campo_formulario_{{i}}" [(ngModel)]="opcion.seleccionado"
+          (ngModelChange)="actualizarDependencias()">
+        <span class="label-file-selector">
+          {{opcion.nombre}}
+        </span>
+      </label>
+    </li>
+  </ul>
+</div>
+<button type="button" class="btn btn-default" (click)="seleccionarTodosLosValores()">
+  Seleccionar todos los valores
+</button>

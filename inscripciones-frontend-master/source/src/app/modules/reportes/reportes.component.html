@@ -1,0 +1,97 @@
+<div class="bg-light p-4">
+  <div>
+    <div class="mt-4">
+      <div class="navbar-search d-responsive ml-auto"></div>
+    </div>
+
+    <div class="table mt-4 px-5 py-3 bg-white">
+      <div
+        class="d-flex align-items-left justify-content-between flex-column mt-3 mb-4"
+      >
+        <h1>Reportes</h1>
+        <p class="subtitle">
+          Para generar reportes selecciona una de las siguientes alternativas
+        </p>
+      </div>
+      <table
+        class="table border-0"
+        aria-label="tabla con todos los tipos de reportes disponibles"
+      >
+        <thead>
+          <tr>
+            <th scope="col" class="d-none"></th>
+            <th scope="col" class="d-none"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alumnos Inscriptos</td>
+            <td>
+              <button
+                class="btn btn-primary float-right"
+                [routerLink]="['reportes-alumnos-inscriptos']"
+              >
+                Generar reporte
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Asistencia</td>
+            <td>
+              <button
+                class="btn btn-primary float-right"
+                [routerLink]="['reportes-asistencias']"
+              >
+                Generar reporte
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Cursos / Eventos asignados</td>
+            <td>
+              <button
+                class="btn btn-primary float-right"
+                [routerLink]="['reportes-cursos-eventos']"
+              >
+                Generar reporte
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Medios de asignación</td>
+            <td>
+              <button
+                class="btn btn-primary float-right"
+                [routerLink]="['reportes-medios']"
+              >
+                Generar reporte
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Profesores asignados</td>
+            <td>
+              <button
+                class="btn btn-primary float-right"
+                [routerLink]="['reportes-profesores-asignados']"
+              >
+                Generar reporte
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>Usuarios</td>
+            <td>
+              <button
+                class="btn btn-primary float-right"
+                [routerLink]="['reportes-usuarios']"
+              >
+                Generar reporte
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

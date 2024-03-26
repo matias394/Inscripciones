@@ -1,0 +1,137 @@
+<div id="content-incripciones" class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">{{ isEditMode ? "Editar" : "Crear" }} inscripción</h1>
+    <p>
+      Para agregar una inscripción al sistema complete el formulario a
+      continuación.
+    </p>
+  </div>
+
+  <ng-stepper #cdkStepper [linear]="!isEditMode">
+    <cdk-step [optional]="true">
+      <ng-template cdkStepLabel>
+        <div
+          [ngClass]="
+            activeStep === 2 || activeStep === 3 ? 'step-bullet-done' : ''
+          "
+          class="step-bullet"
+        >
+          {{ activeStep === 2 || activeStep === 3 ? "✓" : "1" }}
+        </div>
+        <div class="step-title">Configuración General</div>
+      </ng-template>
+      <form-step-one
+        [form]="formInscripciones"
+        [isEditMode]="isEditMode"
+        [categoriaFormControl]="categoriaFormControl"
+        (eventModal)="openModal()"
+        (eventChangeStep)="changeStep()"
+        (eventDataEdit)="getDataEdit()"
+        (evenSetDataOrganismo)="setDataOrganismo($event)"
+      ></form-step-one>
+    </cdk-step>
+
+    <cdk-step [optional]="true">
+      <ng-template cdkStepLabel>
+        <div
+          class="step-bullet"
+          [ngClass]="
+            activeStep === 2
+              ? 'step-bullet-active'
+              : activeStep === 3
+              ? 'step-bullet-done'
+              : 'step-bullet-disabled'
+          "
+        >
+          {{ activeStep === 3 ? "✓" : "2" }}
+        </div>
+        <div class="step-title">Agenda</div>
+      </ng-template>
+      <div class="p-5 bg-white rounded mt-3">
+        <form-step-two
+          [form]="formInstancias"
+          [formInscripciones]="formInscripciones"
+          (eventModalCancel)="openModal()"
+          (eventModalIns)="changeStatusModalInstSede($event)"
+          (eventChangeStep)="changeStep()"
+          (eventStepDown)="stepDown()"
+          (eventResetForm)="prepareFormInstancias()"
+          (eventShowAlert)="onShowAlert($event.status, $event.message)"
+        ></form-step-two>
+
+        <!-- ALERTAS -->
+        <div class="row mt-5">
+          <div *ngIf="showAlert" class="form-group col-12">
+            <app-alertas
+              [message]="messageAlert"
+              [type]="'alert ' + statusAlert"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+        </div>
+      </div>
+    </cdk-step>
+
+    <cdk-step [optional]="false">
+      <ng-template cdkStepLabel>
+        <app-step-head
+          [activeStep]="3"
+          [completedStep]="activeStep > 3"
+          [title]="'Formularios asociados'"
+          [classActiveStep]="
+            activeStep === 3 ? 'step-bullet-active' : 'step-bullet-disabled'
+          "
+        ></app-step-head>
+      </ng-template>
+      <div class="p-5 bg-white rounded mt-3">
+        <form-step-three
+          [form]="formInscripciones"
+          [myForm]="formInstanciasFormulario"
+          [isEditMode]="isEditMode"
+          [formIsSubmitted]="formIsSubmitted"
+          (eventModalCancel)="openModal()"
+          (eventModalForms)="changeStatusModalForms()"
+          (eventChangeStep)="changeStep()"
+          (eventStepDown)="stepDown()"
+          (eventSubmit)="sendformInscripcion()"
+          [listaFormularios]="listForms"
+        ></form-step-three>
+        <!-- ALERTAS -->
+        <div class="d-flex mt-5">
+          <div *ngIf="showAlert">
+            <app-alertas
+              [message]="messageAlert"
+              [type]="'alert ' + statusAlert"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+        </div>
+      </div>
+    </cdk-step>
+  </ng-stepper>
+
+  <app-modals
+    *ngIf="modalSwitch === true"
+    [title]="modalTitle"
+    [message]="modalMessage"
+    (triggerCancel)="closeModal()"
+    (triggerConfirm)="redirectToPage()"
+  ></app-modals>
+
+  <modal-instancia
+    *ngIf="modalFormInstanciaSede"
+    [form]="formInstSedes"
+    [formInscripciones]="formInscripciones"
+    [formInst]="formInstancias"
+    [indexInstCurrent]="instActive"
+    (eventModalSede)="changeStatusModalInstSede()"
+    (resetForm)="initInstanciaSedes()"
+    (addDias)="addDays()"
+  ></modal-instancia>
+
+  <modal-forms
+    *ngIf="modalForms"
+    [myForm]="formInstanciasFormulario"
+    (eventModalIns)="changeStatusModalForms($event)"
+  ></modal-forms>
+</div>

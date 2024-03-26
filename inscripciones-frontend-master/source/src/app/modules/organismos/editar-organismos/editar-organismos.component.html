@@ -1,0 +1,99 @@
+<div class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">Editar organismo</h1>
+    <p>
+      Para editar el Organismo en el sistema complete el formulario a
+      continuación.
+    </p>
+  </div>
+
+  <form
+    class="mt-8 form-wrpper p-5 bg-white rounded"
+    (ngSubmit)="editOrganismo(formOrganismo)"
+    #formOrganismo="ngForm"
+  >
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="nombre">Codigo</label>
+        <input
+          type="text"
+          class="form-control mt-2"
+          id="codigo"
+          name="codigo"
+          ngModel
+          [ngModel]="organismoId"
+          [disabled]="true"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="d-flex mt-2">
+      <div class="form-group col-6 d-flex flex-column">
+        <label for="name-input">Nombre del organismo</label>
+        <input
+          type="text"
+          class="form-control mt-2"
+          id="nombre"
+          name="nombre"
+          placeholder="Ingresa nombre del organismo"
+          ngModel
+          #nombre="ngModel"
+          [ngModel]="name"
+          required
+        />
+      </div>
+    </div>
+
+    <div
+      *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+      class="invalid-msg"
+    >
+      <div *ngIf="nombre.errors?.['required']">
+        <span class="danger">*</span>
+        El nombre del organismo es requerido
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-12">
+        <div class="btn-wrapper d-flex justify-content-start mt-3">
+          <button type="button" class="btn btn-link mr-4" (click)="openModal()">
+            Cancelar
+          </button>
+          <app-modals
+            *ngIf="modalSwitch === true"
+            [title]="modalTitle"
+            [message]="modalMessage"
+            (triggerCancel)="closeModal()"
+            (triggerConfirm)="redirectToPage()"
+          ></app-modals>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="formOrganismo.invalid"
+          >
+            Guardar
+          </button>
+        </div>
+        <div class="row">
+          <div *ngIf="correct" class="form-group col-6 mt-5">
+            <app-alertas
+              [message]="'El organismo se ha editado exitosamente'"
+              [type]="'alert alert-success'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+
+          <div *ngIf="error" class="form-group col-6 mt-5">
+            <app-alertas
+              [message]="'Error al editar el organismo'"
+              [type]="'alert alert-danger'"
+              (onClose)="closeAlert()"
+            ></app-alertas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

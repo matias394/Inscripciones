@@ -1,0 +1,408 @@
+<form
+  [formGroup]="form"
+  (submit)="sendformInstancias()"
+  id="instancias"
+  name="instancias"
+>
+  <div class="d-flex align-items-center">
+    <!--DURACION-->
+    <div class="form-group col-3">
+      <app-text-input
+        [type]="'number'"
+        [id]="'duracionSemana'"
+        [control]="form.controls.duracionSemana"
+        [label]="'Duración en semanas'"
+        [placeholder]="'Indicar cantidad'"
+        [disabled]="true"
+        [messageError]="'El valor debe ser mayor a 0'"
+        [max]="'32'"
+        (change)="setValue($event.target.value, 'duracionSemana', 'number')"
+      ></app-text-input>
+      <!--DURACION-->
+    </div>
+
+    <!--LIMITE-->
+    <div class="form-group col-3">
+      <app-text-input
+        [type]="'number'"
+        [id]="'limiteInscripcion'"
+        [control]="form.controls.limiteInscripcion"
+        [label]="'Día limite de inscripción'"
+        [placeholder]="'Indicar cantidad'"
+        [disabled]="true"
+        [max]="'31'"
+        (change)="setValue($event.target.value, 'limiteInscripcion', 'number')"
+      ></app-text-input>
+    </div>
+    <!--LIMITE-->
+
+    <!--VIGENCIA-->
+    <div class="form-group col-6">
+      <label for="name-input label">Vigencia</label>
+      <div class="d-flex mt-2">
+        <div class="col-6 pl-0 pr-2">
+          <div class="d-flex align-items-center gap-1">
+            <span>Desde</span>
+            <date-piker
+              class="input-date"
+              #datePikerVD
+              [name]="'vigenciaInicio'"
+              [placeholder]="'yyyy-mm-dd'"
+              [datepiker]="datePikerVD"
+              [control]="form.controls.vigenciaInicio"
+              (changeValue)="changeMinDate($event)"
+            ></date-piker>
+          </div>
+        </div>
+        <div class="col-6 pl-2 pr-0">
+          <div class="d-flex align-items-center gap-1">
+            <span>Hasta</span>
+            <date-piker
+              class="input-date"
+              #datePikerVH
+              [placeholder]="'yyyy-mm-dd'"
+              [name]="'vigenciaFin'"
+              [datepiker]="datePikerVH"
+              [control]="form.controls.vigenciaFin"
+              [minDate]="minDate"
+            ></date-piker>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--VIGENCIA-->
+  </div>
+
+  <div class="d-flex">
+    <!--MODALIDAD-->
+    <div class="form-group col-6">
+      <app-select-input
+        [id]="'modalidad'"
+        [control]="form.controls.modalidad"
+        [label]="'Modalidad de inscripción'"
+        [listaOptions]="listaModalidades"
+        (change)="setValue($event.target.value, 'modalidad', 'number')"
+      ></app-select-input>
+    </div>
+    <!--MODALIDAD-->
+  </div>
+
+  <div class="d-flex">
+    <div class="col-6">
+      <div class="">
+        <button
+          type="submit"
+          class="btn btn-primary float-left mt-4 mb-4"
+          [disabled]="formIsSubmitted || form.invalid"
+        >
+          Generar
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<ng-template
+  [ngIf]="
+    dataSource.length === 0 || (dataSource.length === 1 && getValidDataSource())
+  "
+  [ngIfElse]="validateChange"
+>
+  <div class="col-12 display-error">
+    <span class="text-danger ml-1"
+      >* Debe completar al menos una instancia
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #validateChange>
+  <div
+    class="col-12 display-error"
+    *ngIf="formInscripciones.get('instancias').invalid"
+  >
+    <span class="text-danger ml-1"
+      >* Agregue al menos una Sede a la instancia en color rojo
+    </span>
+  </div>
+</ng-template>
+
+<div class="d-flex">
+  <div class="col-12">
+    <div class="table mt-4 px-3 py-3 bg-white">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex justify-content-around"></div>
+      </div>
+
+      <table
+        #table
+        mat-table
+        [dataSource]="dataSource"
+        multiTemplateDataRows
+        class="mat-elevation-z8"
+      >
+        <ng-container
+          [matColumnDef]="column.ref"
+          *ngFor="let column of headersToDisplayII"
+        >
+          <th mat-header-cell *matHeaderCellDef>{{ column.title }}</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element[column.ref] }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let element; let dataIndex = dataIndex">
+            <div class="d-flex justify-content-evenly gap-2 mr-3">
+              <div
+                alt="plus_icon"
+                class="action-btn primary btn-icon-font"
+                role="button"
+                (click)="
+                  this.eventModalIns.emit(dataIndex); $event.stopPropagation()
+                "
+              >
+                <i class="bx bx-plus bx-grey"></i>
+              </div>
+              <div
+                alt="plus_icon"
+                class="action-btn"
+                role="button"
+                (click)="
+                  deleteInstancia(element.id, dataIndex);
+                  $event.stopPropagation()
+                "
+              >
+                <i class="bx bx-trash bx-grey btn-icon-font"></i>
+              </div>
+              <div *ngIf="false">
+                <div class="modal d-block mt-5" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">¿Desea eliminar el usuario?</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>
+                          Si eliminas este Usuario no podremos recuperar sus
+                          datos.
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Cancelar
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                          Confirmar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div data-dismiss="modal" class="modal-backdrop show"></div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expand">
+          <th mat-header-cell *matHeaderCellDef aria-label="row">&nbsp;</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <div
+              alt="plus_icon"
+              class="action-btn-expand"
+              aria-label="expand row"
+              role="button"
+            >
+              <i
+                *ngIf="expandedElement !== element"
+                class="bx bx-chevron-down"
+              ></i>
+
+              <i
+                *ngIf="expandedElement === element"
+                class="bx bx-chevron-up"
+              ></i>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let element; let k = dataIndex"
+            [attr.colspan]="columnsToDisplayWithExpand.length"
+            class="td-detail"
+          >
+            <div
+              class="example-element-detail"
+              [@detailExpand]="
+                element == expandedElement ? 'expanded' : 'collapsed'
+              "
+              *ngIf="element.estado === 1"
+            >
+              <div class="example-element-description">
+                <table>
+                  <tr class="tr-head-table-expanded">
+                    <th scope="col">Sede</th>
+                    <th scope="col">Modalidad</th>
+                    <th scope="col">Desde/Hasta</th>
+                    <th scope="col">Horario</th>
+                    <th scope="col">Cant. Cupos</th>
+                    <th scope="col"></th>
+                  </tr>
+                  <tr
+                    *ngFor="
+                      let item of element.instanciaSedes;
+                      let indexSede = index
+                    "
+                  >
+                    <td
+                      class="example-element-description-attribution"
+                      *ngIf="element.modalidad === MODALIDAD_PRESENSIAL"
+                    >
+                      {{ item.sede | sedeName : this.listaSedes }}
+                    </td>
+                    <td
+                      class="example-element-description-attribution"
+                      *ngIf="element.modalidad === MODALIDAD_VIRTUAL"
+                    >
+                      <!-- {{ item.urlSede }} -->
+                      Online
+                    </td>
+                    <td class="example-element-description-attribution">
+                      {{ element.modalidadName }}
+                    </td>
+                    <td class="example-element-description-attribution">
+                      <span class="item-horaio">
+                        {{ item.vigenciaInicio | formatDateES }} /
+                        {{ item.vigenciaFin | formatDateES }}
+                      </span>
+                    </td>
+                    <td class="example-element-description-attribution">
+                      <span
+                        class="item-horaio"
+                        *ngFor="let h of item.claseHorarios"
+                        >{{ h }}</span
+                      >
+                      <div *ngIf="1 > 2">
+                        <div *ngFor="let clase of item.claseDTOMapperList">
+                          <span class="item-horaio">
+                            {{
+                              clase.fecha | titlecase | dayName | slice : 0 : 3
+                            }}: {{ clase.fecha | formatDateES }} -
+                            {{ item.horaInicio | timeShort }} a
+                            {{ item.horaFin | timeShort }}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="example-element-description-attribution">
+                      {{ item.cupos + " cupos" }}
+                    </td>
+                    <td class="example-element-description-attribution">
+                      <div class="d-flex justify-content-center gap-2">
+                        <div
+                          *ngIf="1 > 1"
+                          alt="plus_icon"
+                          class="action-btn"
+                          role="button"
+                        >
+                          <i class="bx bx-edit-alt bx-grey btn-icon-font"></i>
+                        </div>
+                        <div
+                          alt="plus_icon"
+                          class="action-btn"
+                          role="button"
+                          (click)="deleteInstSede(k, indexSede, item.id)"
+                        >
+                          <i class="bx bx-trash bx-grey btn-icon-font"></i>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="columnsToDisplayWithExpand"
+          class="t-head"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="
+            let element;
+            columns: columnsToDisplayWithExpand;
+            let i = index
+          "
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="
+            expandedElement = expandedElement === element ? null : element
+          "
+          [ngStyle]="
+            element.instanciaSedes.length === 0
+              ? { 'background-color': '#F8D7DA' }
+              : !element.show
+              ? { display: 'none' }
+              : { 'background-color': '#23C16B33' }
+          "
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: ['expandedDetail']"
+          class="example-detail-row"
+        ></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex">
+  <div class="col-12">
+    <div class="form-group">
+      <div class="btn-wrapper d-flex justify-content-start mt-5">
+        <button
+          type="button"
+          class="btn btn-link mr-4"
+          (click)="openModalCancel()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary mr-4"
+          cdkStepperPrevious
+          (click)="stepDown()"
+          [disabled]="
+            formInscripciones.get('instancias').invalid ||
+            dataSource.length === 0
+          "
+        >
+          Volver
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          cdkStepperNext
+          (click)="changeStep()"
+          [disabled]="
+            formInscripciones.get('instancias').invalid ||
+            dataSource.length === 0
+          "
+        >
+          Continuar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

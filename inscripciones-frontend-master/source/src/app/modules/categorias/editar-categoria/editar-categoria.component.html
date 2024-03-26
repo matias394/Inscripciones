@@ -1,0 +1,128 @@
+<div class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">Editar categoría</h1>
+    <p>
+      Para editar la categoría en el sistema complete el formulario a continuación
+    </p>
+  </div>
+  <form
+    class="mt-8 p-5 bg-white rounded"
+    #formCategoria="ngForm"
+    (ngSubmit)="createCategoria(formCategoria)"
+  >
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="name-input">Código</label>
+        <div class="form-search position-relative">
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="codigo"
+            name="codigo"
+            disabled
+            [(ngModel)]="idCategoria"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex" [formGroup]="form">
+      <div class="form-group col-6">
+        <label for="name-input">Nombre de la categoría</label>
+        <div class="form-search position-relative">
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="nombre"
+            name="nombre"
+            placeholder="Ingresá nombre de la categoría"
+            formControlName="nombre"
+            required
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="invalid-msg col-10"
+      *ngIf="nombre.invalid && (nombre.touched || nombre.dirty)"
+    >
+            <span class="danger" *ngIf="nombre.errors['required']"
+            >* Nombre es requerido</span
+            >
+      <span class="danger" *ngIf="nombre.errors['invalidName']"
+      >* Nombre inválido</span
+      >
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-6">
+        <label for="name-input">Organismo</label>
+        <div class="form-search position-relative">
+          <select
+            class="custom-select mt-2"
+            id="organismoId"
+            name="organismoId"
+            ngModel
+            [(ngModel)]="organismoId"
+            ngModelOptions="{standalone: true}"
+            required
+          >
+            <option *ngFor="let s of opcionesOrganismo" [ngValue]="s.id">
+              {{ s.nombre }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-12">
+        <div class="btn-wrapper d-flex justify-content-start mt-5">
+          <button type="button" class="btn btn-link mr-4" (click)="openModal()">
+            Cancelar
+          </button>
+          <app-modals
+            *ngIf="modalSwitch === true"
+            [title]="modalTitle"
+            [message]="modalMessage"
+            (triggerCancel)="closeModal()"
+            (triggerConfirm)="redirectToPage()"
+          ></app-modals>
+          <button
+            type="submit"
+            [disabled]="formCategoria.invalid || disableButton"
+            class="btn btn-primary"
+          >
+            Guardar
+          </button>
+        </div>
+        <div class="row">
+          <div class="form-group col-6 mt-5">
+            <div *ngIf="confirm">
+              <app-alertas
+                [message]="'Categoría actualizada exitosamente'"
+                [type]="'alert alert-success'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+
+            <div *ngIf="error">
+              <app-alertas
+                [message]="'Nombre de categoría ya existente'"
+                [type]="'alert alert-danger'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  $(function () {
+    $(".selectpicker").selectpicker();
+  });
+</script>

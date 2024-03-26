@@ -1,0 +1,88 @@
+<form [formGroup]="form" (submit)="eventSubmit.emit()">
+  <div class="d-flex">
+    <div class="form-group" style="width: 100%">
+      <select-search
+        [placeholder]="'Buscar formulario asociado'"
+        [listOptions]="listaFormularios"
+        [typeSearch]="'searchFilter'"
+        (changeValue)="$any(formSelect$.next($event))"
+      ></select-search>
+    </div>
+  </div>
+  <div
+    class="mt-5"
+    *ngIf="
+      (form.get('formularioInscripcion').invalid &&
+        form.get('formularioInscripcion').errors) ||
+      this.listaFormSubmit.length === 0
+    "
+  >
+    <span class="text-danger ml-1">* Por favor seleccione un formulario </span>
+  </div>
+  <div class="table mt-2 px-5 py-3 bg-white">
+    <table class="table border-0">
+      <thead>
+        <tr>
+          <th scope="col">Nombre de formulario</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Dirigido</th>
+          <th scope="col" class="ml-1">Acciones</th>
+        </tr>
+      </thead>
+      <span class="border-bottom"></span>
+      <tbody>
+        <tr *ngFor="let form of listaFormSubmit; let i = index">
+          <td>{{ form.nombre }}</td>
+          <td>{{ form.descripcion }}</td>
+          <td>
+            {{
+              form.dirigido == 1
+                ? "A mí"
+                : form.dirigido == 2
+                ? "A otro"
+                : "A mi grupo"
+            }}
+          </td>
+          <td class="d-flex">
+            <div class="d-flex justify-content-center">
+              <img
+                src="./assets/icons/delete.svg"
+                class="ml-4"
+                alt="delete_icon"
+                (click)="deleteForm(form.id, i)"
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="form-group col-12">
+    <div class="btn-wrapper d-flex justify-content-start mt-5">
+      <button
+        type="button"
+        class="btn btn-link mr-4"
+        (click)="openModalCancel()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary mr-4"
+        cdkStepperPrevious
+        (click)="stepDown()"
+      >
+        Volver
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="
+          form.invalid || formIsSubmitted || listaFormSubmit.length === 0
+        "
+      >
+        {{ isEditMode ? "Editar" : "Crear" }}
+      </button>
+    </div>
+  </div>
+</form>

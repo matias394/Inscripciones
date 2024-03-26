@@ -1,0 +1,48 @@
+.input-file-trigger {
+  display: inline-block;
+  padding: 0.625em 1em;
+  transition: all .4s;
+  cursor: pointer;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.input-file {
+  position: absolute;
+  top: 0; left: 0;
+  width: 14em;
+  opacity: 0;
+  padding: 0.9em 0;
+  cursor: pointer;
+  width: 100%;
+  display: none;
+}
+.file-return-error{
+  color: #e74c3c;
+  margin: 0;
+  font-style: italic;
+  font-size: .9em;
+}
+.file-return-error:not(:empty){
+  margin: 0.5em 0 1em;
+  font-size: 0.9em;
+}
+
+.file-return {
+  margin: 0;
+}
+.file-return:not(:empty) {
+  margin: 0.5em 0 1em;
+  font-size: 0.9em;
+}
+.file-return {
+  font-style: italic;
+  font-size: .9em;
+  font-weight: bold;
+}
+.file-return:not(:empty):before {
+  content: "Archivo seleccionado: ";
+  font-style: normal;
+  font-weight: normal;
+}

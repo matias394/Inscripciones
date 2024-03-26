@@ -1,0 +1,97 @@
+.radio-button label {
+  font-weight: 500 !important;
+}
+
+#form-sedes .modal-header {
+  background: #ffdb2e;
+  padding: 15px 0px;
+}
+
+#form-sedes .modal-header h3 {
+  margin: auto;
+}
+
+.container-dias {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.gap-1 {
+  gap: 6px;
+}
+.gap-2 {
+  gap: 12px;
+}
+
+.bx-plus:before {
+  color: #4c5a6c;
+}
+
+.bx-grey {
+  color: #4c5a6c;
+}
+
+.btn-icon-font {
+  font-size: 26px;
+}
+.bx-trash,
+.bx-edit-alt {
+  margin-top: 4px;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+thead tr th {
+  border-bottom: 1px solid #e6ebf0;
+  border-collapse: separate;
+  border-spacing: 5px 5px;
+  font-weight: 500;
+}
+
+tbody tr#first td {
+  border-top: 3px solid #e6ebf0;
+  border-collapse: separate;
+  border-spacing: 5px 5px;
+}
+.horario {
+  display: block;
+}
+.column-dias,
+.column-hrs {
+  width: 40%;
+}
+.column-acciones {
+  width: 20%;
+  text-align: center;
+}
+
+.custom-check label {
+  font-weight: 500 !important;
+}
+
+.label-check {
+  font-weight: 500 !important;
+}
+
+#form-sedes .modal-footer {
+  padding-right: 2.5rem;
+  padding-left: 2.5rem;
+}
+
+.table-disabled {
+  cursor: none;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.modal-body {
+  max-height: 450px;
+  overflow-y: auto;
+}

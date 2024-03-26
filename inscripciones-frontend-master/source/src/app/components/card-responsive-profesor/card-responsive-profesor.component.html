@@ -1,0 +1,27 @@
+<div>
+  <ng-container *ngFor="let item of data">
+    <ng-container *ngFor="let it of item.instanciaSedes">
+      <div class="card-ins">
+        <h2 class="card-title">{{ item?.nombre }}</h2>
+        <div class="card-body">
+          <span class="fechaInicio">#{{ item.modalidadName }}</span>
+          <span class="fechaInicio"
+            >Del {{ item.fechaInicio | date : "dd/MM/yyyy" }} al
+            {{ item.fechaFin | date : "dd/MM/yyyy" }}</span
+          >
+          <span class="horaInicio">{{
+            it?.modalidad === null ? "Sin Modalidad" : it.modalidad
+          }}</span>
+        </div>
+        <ng-container>
+          <button
+            class="card-btn btn btn-primary"
+            [routerLink]="['../../../asistencia/mob', item.inscripcion, it.id]"
+          >
+            {{ messageButton }}
+          </button>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

@@ -1,0 +1,15 @@
+<div cdkDropListGroup class="">
+  <app-seccion-formulario
+    *ngFor="let seccion of secciones; let i = index"
+    [attr.data-index]="i"
+    [numero]="i + 1"
+    [seccion]="seccion"
+    [usuarioPuedeEditar]="usuarioPuedeEditar"
+  ></app-seccion-formulario>
+</div>
+<div class="btn-block-wrapper">
+<button *ngIf="usuarioPuedeEditar" class="btn btn-secondary btn-block" (click)="agregarSeccion(secciones.length)">
+  <i class='bx bx-add-to-queue' ></i>
+  Agregar sección
+</button>
+</div>

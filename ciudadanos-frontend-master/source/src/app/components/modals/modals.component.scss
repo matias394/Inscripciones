@@ -1,0 +1,9 @@
+.modal-content{
+  width: 420px;
+}
+
+@media screen and (max-width: 768px) {
+  .modal-content{
+    width: 100%;
+  }
+}

@@ -1,0 +1,81 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+.stepper {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.steps {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 auto !important;
+}
+
+.stepper .step-title {
+  font-size: 16px;
+  font-weight: normal;
+  pointer-events: none !important;
+}
+
+.step .step-bullet {
+  z-index: 2;
+}
+
+.stepper-body {
+  padding: 1rem 0 !important;
+}
+
+.stepper .steps .step:after {
+  content: "" !important;
+  position: absolute;
+  width: 100% !important;
+  height: 3px !important;
+  background-color: #b3babe !important;
+  top: 50% !important;
+  left: -50% !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+.stepper .steps .step:first-child:after {
+  content: none !important;
+}
+
+.step[_ngcontent-xxh-c122] {
+  position: relative !important;
+}
+
+.stepper .steps .step {
+  width: 33.33% !important;
+  border: none !important;
+  background-color: transparent !important;
+  height: 2.625rem !important;
+  pointer-events: none !important;
+}
+
+.stepper .steps .step.active {
+  background-color: transparent !important;
+}
+
+.step-bullet {
+  background-color: #ffdb2e !important;
+  color: #38485c !important;
+}
+
+.step-bullet-done {
+  background-color: #23c16b !important;
+  color: #ffffff !important;
+}
+
+.step-bullet-disabled {
+  background-color: #cdd1d6 !important;
+  color: #ffffff !important;
+}
+
+@media screen and (max-width: 768px) {
+  .stepper .steps .step {
+    width: 100% !important;
+    margin-right: 20px !important;
+    /* padding-right: 100px !important; */
+  }
+}

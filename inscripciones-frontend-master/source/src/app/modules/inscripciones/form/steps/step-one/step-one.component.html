@@ -1,0 +1,210 @@
+<form [formGroup]="form" class="p-5 bg-white rounded mt-3" id="config">
+  <div class="d-flex">
+    <div class="form-group col-6 mb-2">
+      <app-text-input
+        [id]="'nombre'"
+        [control]="form.controls['nombre']"
+        [messageError]="'Debe ingresar un nombre válido'"
+        [label]="'Nombre de la inscripción'"
+        [placeholder]="'Ingresá nombre'"
+        (focusout)="onBlur(form.get('nombre').value)"
+        (keyup)="onKeyPress($event,form.get('nombre').value)"
+      ></app-text-input>
+    </div>
+    <div class="form-group col-6">
+      <app-text-input
+        [id]="'url'"
+        [control]="form.controls['url']"
+        [label]="'URL de la inscripción'"
+        [placeholder]="'ejemplo.com/url'"
+        [disabled]="true"
+      ></app-text-input>
+      <div
+        #tooltip
+        class="copy-action-input"
+        placement="top"
+        tooltipClass="tootip-success"
+        ngbTooltip="Url copiada"
+        triggers="click"
+        [autoClose]="true"
+        (click)="clipboard.copy(form.get('url').value)"
+      >
+        <i class="bx bx-copy"></i>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="form-group col-6">
+      <div class="d-flex flex-column">
+        <select-search
+          [label]="'Organismo responsable'"
+          [placeholder]="'Seleccione un organismo'"
+          [name]="'organismo'"
+          [listOptions]="listaOrganismos"
+          (changeValue)="$any(organismoSelect$.next($event))"
+          [inputControl]="form.controls['organismo']"
+          [optionSelected]="optionSelected"
+        ></select-search>
+      </div>
+    </div>
+    <div class="form-group col-6">
+      <app-text-input
+        [id]="'url-retorno'"
+        [control]="form.controls['retornoUrl']"
+        [label]="'URL de redirección'"
+        [placeholder]="'ejemplo.com/url'"
+        [type]="'url'"
+        [messageError]="'URL no válida'"
+      ></app-text-input>
+      <div
+        #tooltip
+        class="copy-action-input"
+        placement="top"
+        tooltipClass="tootip-success"
+        ngbTooltip="Url copiada"
+        triggers="click"
+        [autoClose]="true"
+        (click)="clipboard.copy(form.get('retornoUrl').value)"
+      >
+        <i class="bx bx-copy"></i>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="form-group col-6">
+      <app-select-input
+        [id]="'plantilla'"
+        [control]="form.controls['correo']"
+        [label]="'Plantilla'"
+        [listaOptions]="listaCorreos"
+        (change)="setValue($event.target.value, 'correo', 'number')"
+      ></app-select-input>
+    </div>
+    <div class="form-group col-6">
+      <app-select-input
+        [id]="'categoria'"
+        [control]="form.controls['categoria']"
+        [label]="'Categoria'"
+        [listaOptions]="listaCategorias"
+        [disabled]="form.get('organismo').value === ''"
+        (change)="
+          setValue($event.target.value, 'categoria', 'number');
+          getOrgaCateByCategoria($event.target.value)
+        "
+      ></app-select-input>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="form-group col-6">
+      <app-select-input
+        [id]="'tipo'"
+        [control]="form.controls['tipo']"
+        [label]="'Tipo de inscripción'"
+        [listaOptions]="listaTipos"
+        (change)="setValue($event.target.value, 'tipo', 'number')"
+      ></app-select-input>
+    </div>
+
+    <div class="form-group col-6">
+      <app-text-input
+        [id]="'cantidadMaxima'"
+        [control]="form.controls['cantidadMaxima']"
+        [label]="'Cantidad máxima de inscripciones por ciudadano'"
+        [placeholder]="'Cantidad máxima de inscripciones por ciudadano'"
+        (change)="setValue($event.target.value, 'cantidadMaxima', 'number')"
+      ></app-text-input>
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <div class="form-group col-6">
+      <app-select-input
+        [id]="'notificacion'"
+        [control]="form.controls['notificacion']"
+        [label]="'Notificación'"
+        [listaOptions]="listaNotificaciones"
+        (change)="setValue($event.target.value, 'notificacion', 'number')"
+      ></app-select-input>
+    </div>
+
+    <div class="form-group col-6">
+      <div class="d-flex">
+        <div class="form-group col-6">
+          <div class="d-flex flex-column">
+            <toggle-switch
+              [label]="'Login con MIBA'"
+              [titleActive]="'Sí'"
+              [titleDisabled]="'No'"
+              [oneTitle]="true"
+              name="loginMiba"
+              [valueDefault]="form.get('loginMiba').value"
+              (changeValue)="setValue($event, 'loginMiba', 'boolean')"
+            >
+            </toggle-switch>
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <div class="d-flex flex-column">
+            <toggle-switch
+              [label]="'Permite feriado'"
+              [titleActive]="'Sí'"
+              [titleDisabled]="'No'"
+              [oneTitle]="true"
+              name="feriado"
+              [valueDefault]="form.get('feriado').value"
+              (changeValue)="setValue($event, 'feriado', 'boolean')"
+            >
+            </toggle-switch>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex">
+        <div class="form-group col-6">
+          <div class="d-flex flex-column">
+            <toggle-switch
+              [label]="'Permitir cupos grupales'"
+              [titleActive]="'Sí'"
+              [titleDisabled]="'No'"
+              [oneTitle]="true"
+              class="mt-2"
+              [name]="'cuposGrupales'"
+              [valueDefault]="form.get('cuposGrupales').value"
+              (changeValue)="setValue($event, 'cuposGrupales', 'boolean')"
+            >
+            </toggle-switch>
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <div class="d-flex flex-column">
+            <toggle-switch
+              [label]="'Permitir cupos para otros'"
+              [titleActive]="'Sí'"
+              [titleDisabled]="'No'"
+              [oneTitle]="true"
+              class="mt-2"
+              [name]="'cuposParaOtros'"
+              [valueDefault]="form.get('cuposParaOtros').value"
+              (changeValue)="setValue($event, 'cuposParaOtros', 'boolean')"
+            >
+            </toggle-switch>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-wrapper d-flex justify-content-start ml-3 mt-5">
+    <button type="button" class="btn btn-link mr-4" (click)="openModal()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      cdkStepperNext
+      (click)="changeStep()"
+      [disabled]="form.invalid"
+    >
+      Continuar
+    </button>
+  </div>
+</form>

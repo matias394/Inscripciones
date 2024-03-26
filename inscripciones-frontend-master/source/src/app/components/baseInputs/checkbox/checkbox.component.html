@@ -1,0 +1,13 @@
+<div class="container-days">
+  <div class="item">
+    <input
+      [formControl]="control"
+      [id]="id"
+      [name]="name"
+      [type]="'checkbox'"
+      [disabled]="disabled"
+      [value]="control.value.value"
+    />
+    <label class="label-item">{{ label }}</label>
+  </div>
+</div>

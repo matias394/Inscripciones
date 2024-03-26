@@ -1,0 +1,49 @@
+<div *ngIf="mostrarElemento">
+  <label>{{to.label}}{{to.required ? ' *' : ''}}</label>
+  <br />
+  <small>{{ descripciones }}</small>
+  <div class="grid-wraper">
+    <div class="container">
+      <div class="row" [ngClass]="{ required: to.required }" [formGroup]="formTelefono">
+        <div class="col-4 col-md-1 ml-n3"> 
+          <input
+            type="text"
+            class="form-control input-size"
+            formControlName="codigopais"
+            maxlength="4"
+            placeholder="+54"
+            (keyup)="validateFormat('codigopais')"
+            [readonly]="!this.field['editableOperador'] && (this.nuevaInscripcion == null || !this.nuevaInscripcion)" />
+        </div>
+        <div class="col-4 col-md-1 ml-lg-n3 ml-n3">
+          <input
+            type="text" 
+            class="form-control input-size" 
+            formControlName="codigoarea" 
+            (keyup)="validateFormat('codigoarea')" 
+            maxlength="4"
+            placeholder="11"
+            [readonly]="!this.field['editableOperador'] && (this.nuevaInscripcion == null || !this.nuevaInscripcion)"
+            />
+        </div>
+        <div class="col-4 col-md-2 ml-n3 ml-xl-n3">
+          <input
+            type="text" 
+            class="form-control" 
+            formControlName="numerotelefono" 
+            (keyup)="validateFormat('numerotelefono')" 
+            maxlength="8"
+            placeholder="99999999"
+            [readonly]="!this.field['editableOperador'] && (this.nuevaInscripcion == null || !this.nuevaInscripcion)"
+            />
+        </div>
+        <div class="col-1 col-md-1 ml-n3">
+        </div> 
+      </div>
+    </div>
+    <div *ngIf="errorPhone">
+      <span class="form-control-feedback is-invalid"></span>
+      <div class="invalid-feedback">{{ errorPhoneMessage }}</div>
+    </div>
+  </div>
+</div>

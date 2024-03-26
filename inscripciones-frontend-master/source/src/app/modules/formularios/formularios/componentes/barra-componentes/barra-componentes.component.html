@@ -1,0 +1,194 @@
+<ul class="btn-group-vertical popover-components rounded" role="group">
+  <li>
+    <button
+      class="btn btn-link textolargo"
+      [disabled]="disabled"
+      data-toggle="tooltip"
+      data-placement="right"
+      (click)="componenteSeleccionado('textoInformativo')"
+      title="Agregar texto informativo"
+    >
+      <i class="bx bx-font-family" aria-hidden="true"></i>
+    </button>
+  </li>
+  <li>
+    <button
+      class="btn btn-link"
+      [disabled]="disabled"
+      data-toggle="tooltip"
+      data-placement="right"
+      (click)="componenteSeleccionado('textoCorto')"
+      title="Agregar texto corto"
+    >
+      <i class="bx bx-font" aria-hidden="true"></i>
+    </button>
+  </li>
+  <li>
+    <button
+      class="btn btn-link"
+      [disabled]="disabled"
+      data-toggle="tooltip"
+      data-placement="right"
+      (click)="componenteSeleccionado('listaDesplegable')"
+      title="Agregar lista desplegable"
+    >
+      <i class="bx bx-list-plus" aria-hidden="true"></i>
+    </button>
+  </li>
+  <li class="btn-add-component bg-sky-2">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-toggle="modal"
+      data-target="#modalComponentes"
+      title="Todos los componentes"
+      [disabled]="disabled"
+    >
+      <i class="bx bx-plus-circle" aria-hidden="true"></i>
+    </button>
+  </li>
+</ul>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalComponentes">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row mb-2 ml-2 text-center">
+          <h4>Componentes básicos</h4>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('textoCorto')"
+            >
+              Texto corto
+            </button>
+          </div>
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('textoLargo')"
+            >
+              Texto largo
+            </button>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('textoInformativo')"
+            >
+              Texto informativo
+            </button>
+          </div>
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('selectorMultiple')"
+            >
+              Selector múltiple
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('selectorExcluyente')"
+            >
+              Selector excluyente
+            </button>
+          </div>
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('listaDesplegable')"
+            >
+              Lista desplegable
+            </button>
+          </div>
+        </div>
+        <hr />
+
+        <div class="row mb-2 ml-2 text-left">
+          <h4>Componentes avanzados</h4>
+        </div>
+        <hr />
+
+        <div class="row mb-2">
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('listaDesplegableFiltro')"
+            >
+              Lista desplegable con filtro
+            </button>
+          </div>
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('fecha')"
+            >
+              Fecha
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('direccionUsig')"
+            >
+              Dirección USIG
+            </button>
+          </div>
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('archivo')"
+            >
+              Archivo
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('telefono')"
+            >
+              Teléfono
+            </button>
+          </div>
+          <div class="btn-block-wrapper col-6">
+            <button
+              class="btn btn-link btn-block fontsize"
+              data-dismiss="modal"
+              (click)="componenteSeleccionado('cuitRazonSocial')"
+            >
+              CUIT y razón social
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

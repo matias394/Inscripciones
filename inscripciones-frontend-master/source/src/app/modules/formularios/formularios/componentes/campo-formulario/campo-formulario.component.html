@@ -1,0 +1,12 @@
+<div class="row campo-formulario" #container>
+  <div class="p-2 flex-grow-1 seccion-input">
+    <ng-template componenteDinamico></ng-template>
+    <app-controles-campo-formulario *ngIf="usuarioPuedeEditar"></app-controles-campo-formulario>
+  </div>
+  <ng-container *ngIf="usuarioPuedeEditar">
+    <div class="p-2 drag-icon-container">
+      <div class="drag-icon" cdkDragHandle></div>
+    </div>
+  </ng-container>
+</div>
+<app-seccion-grupo-iterativo *ngIf="campo.grupoIterativo" [grupo]="campo.modelo" [usuarioPuedeEditar]="usuarioPuedeEditar"></app-seccion-grupo-iterativo>

@@ -1,0 +1,124 @@
+<div class="bg-light p-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>Inscripciones</h1>
+    <button class="btn btn-primary" routerLink="crear">
+      Crear Inscripción
+    </button>
+  </div>
+  <div>
+    <div class="mt-4">
+      <app-search-bar
+        [placeholder]="'Buscar inscripciones'"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+
+    <div class="table mt-4 px-3 py-3 bg-white rounded-1">
+      <div
+        class="d-flex align-items-center justify-content-between px-3 mt-3 mb-4"
+      >
+        <h4>Lista de Inscripciones</h4>
+        <div class="d-flex align-items-center table-btn"></div>
+      </div>
+      <table
+        class="table border-0"
+        aria-label="tabla con todas las inscripciones disponibles"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Organismo</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Tipo</th>
+            <th scope="col" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <span class="border-bottom"></span>
+        <tbody>
+          <ng-container *ngIf="tableData.length > 0; else noResults">
+            <tr *ngFor="let item of tableData">
+              <td>{{ item?.nombre }}</td>
+              <td>{{ item?.organismo }}</td>
+              <td>{{ item?.categoria }}</td>
+              <td>
+                {{
+                  item?.tipo === "" || item?.tipo === null
+                    ? "Sin Tipo"
+                    : item?.tipo
+                }}
+              </td>
+              <td>
+                <div class="d-flex justify-content-between cursorPointer">
+                  <img
+                    src="./assets/icons/edit.svg"
+                    alt="edit_icon"
+                    [routerLink]="['editar', item.id]"
+                  />
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#07a500"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    alt="check_circle_icon"
+                    role="button"
+                    class="img-check-active"
+                    *ngIf="item.estado === '1'"
+                  >
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    alt="check_circle_icon_inactivo"
+                    class="img-check-inactive"
+                    *ngIf="item.estado !== '1'"
+                  >
+                    <path
+                      d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+                    />
+                  </svg>
+
+                  <img
+                    src="./assets/icons/delete.svg"
+                    alt="delete_icon"
+                    (click)="openModal(item.id)"
+                    class="img-disabled"
+                  />
+                  <app-modals
+                    *ngIf="modalSwitch === true"
+                    [title]="modalTitle"
+                    [message]="modalMessage"
+                    (triggerCancel)="closeModal()"
+                  ></app-modals>
+                  <!-- (triggerConfirm)="deleteInscripcionById(idNumber)" -->
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <ng-template #noResults>
+          <tr>
+            <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold">
+              Sin resultados. Realizá una nueva búsqueda.
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+    <ng-container *ngIf="tableData.length > 0">
+      <app-pagination
+        [allPagesNumber]="allInscripcionesPages"
+        (changePage)="onInscripcionesPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</div>

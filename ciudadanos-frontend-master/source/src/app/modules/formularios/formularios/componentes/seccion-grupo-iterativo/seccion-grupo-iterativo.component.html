@@ -1,0 +1,14 @@
+<div class="campos-grupo-iterativo" cdkDropList [cdkDropListData]="campos" (cdkDropListDropped)="drop($event)">
+  <h3 *ngIf="!grupoIterativoVacio" class="titulo">{{etiquetaGrupoIterativo}}</h3>
+  <div *ngFor="let campo of campos" cdkDrag [cdkDragData]="campo">
+    <app-campo-formulario [usuarioPuedeEditar]="usuarioPuedeEditar"></app-campo-formulario>
+    <div class="row campo-placeholder" *cdkDragPlaceholder appCampoPlaceholder></div>
+  </div>
+  <div *ngIf="grupoIterativoVacio" [ngClass]="{'active':contenedorSinComponentesActivo}"
+    class="contenedor-seccion-sin-componentes" (click)="clickEnGrupoIterativoSinComponentes($event)"
+    #contenedorSeccionSinComponentes>
+    <p>No tenés componentes cargados en este grupo.<br>
+      <b>Creá uno nuevo desde la barra de la derecha.</b>
+    </p>
+  </div>
+</div>

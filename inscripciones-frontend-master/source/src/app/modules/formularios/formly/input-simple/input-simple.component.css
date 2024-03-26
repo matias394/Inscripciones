@@ -1,0 +1,17 @@
+.input-miba {
+    background: #eee !important;
+        background-color: rgb(238, 238, 238);
+        background-position-x: 0%;
+        background-position-y: 0%;
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-image: none;
+        background-size: auto;
+        background-origin: padding-box;
+        background-clip: border-box;
+}
+
+.invalid-msg {
+  color: red;
+  margin-left: 12px;
+}

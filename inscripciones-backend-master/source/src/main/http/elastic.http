@@ -1,0 +1,17 @@
+# curl -u elastic:HrRuxWtMMBCwoYrlHKAa -X POST "http://inscripciones-elasticsearch-inscripciones-dev.apps.ocp4-dev.gcba.gob.ar" -H 'Content-Type: application/json' -d'
+#{
+#  "query": {
+#    "match_all": {}
+#  }
+#}'
+POST http://inscripciones-elasticsearch-inscripciones-dev.apps.ocp4-dev.gcba.gob.ar/
+Authorization: Basic elastic PzGD5RFydGpWCiRvdRGe
+Content-Type: application/json
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+###
+

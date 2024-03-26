@@ -1,0 +1,93 @@
+<main class="grid-wraper" role="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+
+        </div>
+      </div>
+
+
+      <!-- Content -->
+      <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+
+       <!-- <div class="col-md-12 alert alert-danger" *ngIf="errorHandler.hayError()">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          {{errorHandler.obtenerMensajeError()}}
+        </div>-->
+        <div>
+          <h2>Formularios</h2>
+          <h4>Administración de formularios</h4>
+        </div>
+
+        <div class="form-wrapper mb-2 buscador-back has-button">
+          <input type="search" #myInput placeholder="Buscar formularios" class="form-control" maxlength="150"
+            (keyup.enter)="filterItem(myInput.value)"/>
+          <button class="btn" (click)="filterItem(myInput.value)">
+            <i class="bx bx-search"></i>
+          </button>
+        </div>
+
+
+        <!--modificar botones-->
+        <div class="cards-container acciones-tabla">
+          <div class="cards-container rounded p-1">
+            <div>
+              <div class="row">
+                <div class="col-4 d-flex justify-content-start pt-2">
+                  <button
+                          class="btn btn-success mt-2 mb-2 mr-1" title="Nuevo"
+                          (click)="crearFormulario()"><i class="bx bx-plus-circle"></i> Nuevo
+                  </button>
+                  <div *ngIf="formularios && mostrarResultados()">
+                    <button class="btn btn-info mt-2 mb-2 mr-1 ml-2"
+                          [title]="usuarioPuedeEditar ? 'Editar' : 'Ver'"
+                          [disabled]="desactivarAcciones()" (click)="editarFormulario()">
+                    <i
+                      [class]="usuarioPuedeEditar ? 'bx bx-edit-alt' : 'bx bx-low-vision'"></i> Editar
+                  </button>
+                  <button class="btn btn-azul mt-2 mb-2 mr-2 ml-1" title="Previsualizar"
+                          [disabled]="desactivarAcciones()" (click)="previsualizarFormulario()"><i
+                    class="bx bx-show-alt"></i>
+                </button>
+                  </div>
+                </div>
+                <div class="col-8 d-flex justify-content-end pt-2" *ngIf="formularios && mostrarResultados()">
+                  <button class="btn btn-secondary mt-2 mb-2 mr-1 ml-2"
+                          [disabled]="desactivarAcciones()" (click)="copiarPortapapeles()"><i
+                    class='bx bx-copy-alt'></i> Copiar URL
+                  </button>
+                  <button *ngIf="mostrarResultados()" class="btn btn-secondary mt-2 mb-2 mr-1 ml-2"
+                          title="Exportar" (click)="exportarCsv()"><i class='bx bx-export' ></i>
+                    Exportar
+                  </button>
+                  <button class="btn btn-secondary mt-2 mb-2 mr-1 ml-2" (click)="exportar()"
+                          [disabled]="desactivarAcciones()"><i class='bx bx-download'></i> Json formulario
+                  </button>
+                  <button
+                          class="btn btn-danger mt-2 mb-2 ml-1" title="Eliminar"
+                          [disabled]="desactivarAcciones()" (click)="eliminarFormulario()"><i
+                    class="bx bx-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="formularios; else templateMensajeBusqueda">
+          <div *ngIf="mostrarResultados(); else templateMensajeSinResultados">
+     <!--       <app-grilla-paginable [paginables]="resultadosParaGrilla" [columns]=" columns "
+                                  (filaSeleccionadaEvent)="actualizarFilaSeleccionada({nuevaFilaSeleccionada : $event}) ">
+            </app-grilla-paginable>-->
+          </div>
+        </div>
+        <ng-template #templateMensajeBusqueda>
+          <div class="alert alert-info ">No se han ingresado formularios</div>
+        </ng-template>
+        <ng-template #templateMensajeSinResultados>
+          <div class="alert alert-info ">No se encontraron resultados para "{{valorBuscado}} "</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  </main>

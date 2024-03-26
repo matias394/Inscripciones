@@ -1,0 +1,21 @@
+<div class="container-base-input">
+  <label class="label-text" [for]="id">
+    {{ label }}
+  </label>
+  <input
+    [type]="type"
+    class="form-control mt-2"
+    [ngClass]="control.invalid && control.touched ? 'has-error-input' : ''"
+    [id]="id"
+    [formControl]="control"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [max]="type === 'number' && max"
+  />
+  <error-input
+    [showError]="control.invalid && control.touched"
+    [message]="messageError"
+    [errors]="control.errors"
+  >
+  </error-input>
+</div>

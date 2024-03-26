@@ -1,0 +1,56 @@
+<ng-template #templateDesk> </ng-template>
+
+<ng-template #templateMob>
+  <div class="px-0 pt-5">
+    <div class="mt-4 mb-4">
+      <div class="d-flex align-items-center justify-content-start">
+        <img
+          src="./assets/icons/chevron-left.svg"
+          class="mr-1"
+          role="button"
+          [routerLink]="['../../../']"
+          alt="flecha-atras"
+        />
+        <h4 class="mt-1 col-11">
+          Instancias de
+          {{ cursoNombre }}
+        </h4>
+      </div>
+      <div class="d-flex align-items-center mt-3">
+        <div class="dropdown mr-3">
+          <button
+            type="button"
+            class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              src="./assets/icons/organizar.svg"
+              class="mr-2"
+              alt="organizar"
+            />
+          </button>
+          <div class="dropdown-menu w-auto">
+            <button class="dropdown-item" type="button" (click)="sortByName()">
+              Por nombre del curso
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <tr *ngIf="showNoInstancesMessage()">
+      <td>No hay instancias activas en este evento</td>
+    </tr>
+  </div>
+
+  <app-card-responsive-instancias
+    [data]="tableData"
+    messageButton="Ver Sedes"
+    (onClick)="$any(btnClickInscribite$.next($event))"
+  ></app-card-responsive-instancias>
+</ng-template>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>

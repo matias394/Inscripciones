@@ -1,0 +1,11 @@
+    <label [for]="vista.nombre">
+        {{vista.etiqueta}}
+    </label>
+    <small *ngIf="vista.descripcion" class="form-text">
+        {{vista.descripcion}}
+    </small>
+
+    <input type="text"
+    class="form-control"
+    [placeholder]="vista.placeholder"
+    [id]="vista.nombre" readonly />

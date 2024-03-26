@@ -1,0 +1,137 @@
+<div class="bg-light p-4">
+  <div class="flex-column">
+    <h1 class="-mb-3">Inscriptos</h1>
+    <p>
+      Complete alguno de los siguientes campos y presione el botón para ubicar
+      un inscripto
+    </p>
+  </div>
+  <form class="mt-8 p-5 bg-white rounded" #formUser="ngForm">
+    <div class="d-flex align-items-center">
+      <div class="form-group col-6 d-flex justify-content-between">
+        <div class="d-flex flex-column w-100 mr-3">
+          <label for="name-input">Nombre</label>
+          <input
+            type="text"
+            class="form-control mt-2"
+            name="nombre"
+            id="nombre"
+            placeholder="Nombre del ciudadano"
+            ngModel
+          />
+        </div>
+
+        <div class="d-flex flex-column w-100">
+          <label for="name-input">Apellido</label>
+          <input
+            type="text"
+            class="form-control mt-2"
+            id="apellido"
+            name="apellido"
+            placeholder="Apellido del ciudadano"
+            ngModel
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-6 d-flex flex-column">
+        <label for="name-input">Número de documento</label>
+        <input
+          type="text"
+          class="form-control mt-2"
+          id="documento"
+          name="documento"
+          placeholder="CUIL/DNI/Pasaporte del ciudadano"
+          required
+          ngModel
+        />
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div class="form-group col-12">
+        <div class="btn-wrapper d-flex justify-content-start mt-5">
+          <button
+            type="button"
+            class="btn btn-link mr-4"
+            (click)="limpiarCampos()"
+          >
+            Limpiar
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!hasValue(formUser)"
+            (click)="fetchInscriptos(true)"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="d-flex">
+      <div class="form-group col-12">
+        <div class="btn-wrapper d-flex justify-content-start mt-5">
+          <button
+            type="button"
+            class="btn btn-link mr-4"
+            (click)="createInscription()"
+          >
+            Crear inscripción
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!selectedRow"
+            (click)="verInscripciones(selectedRow)"
+          >
+            Ver inscripciones
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="table mt-4 px-3 py-3 bg-white">
+        <table class="table pl-4 pr-0 border-0 text-left">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Correo</th>
+              <th scope="col" class="text-center">Número de documento</th>
+            </tr>
+          </thead>
+          <span class="border-bottom"></span>
+          <tbody>
+            <tr *ngIf="listFiltered.length === 0">
+              <td>No hay cursos asignados</td>
+            </tr>
+            <tr
+              [class.selected]="item === selectedRow"
+              *ngFor="let item of listFiltered"
+              (click)="selectRow(item)"
+            >
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.apellido }}</td>
+              <td>{{ item.email }}</td>
+              <td class="text-center">{{ item.cuil }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-container *ngIf="listFiltered.length > 0">
+        <app-pagination
+          [allPagesNumber]="allPages"
+          (changePage)="onPageChange($event)"
+          [_currentPage]="currentPage"
+        ></app-pagination>
+      </ng-container>
+    </div>
+  </form>
+</div>

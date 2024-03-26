@@ -1,0 +1,82 @@
+<div class="bg-light p-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>Organismos</h1>
+    <button class="btn btn-primary" routerLink="crear">Crear organismo</button>
+  </div>
+  <div>
+    <div class="mt-4">
+      <app-search-bar
+        [placeholder]="'Buscar organismo'"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+
+    <div class="table mt-4 px-5 py-3 bg-white">
+      <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+        <h4>Lista de organismos</h4>
+      </div>
+      <table
+        class="table border-0"
+        aria-label="tabla con todos los organismos disponibles"
+        id="table-list-oragnismo"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Nombre del organismo</th>
+            <th scope="col" class="float-right mr-3">Acciones</th>
+          </tr>
+        </thead>
+        <span class="border-bottom"></span>
+        <tbody>
+          <ng-container *ngIf="tableData.length > 0; else noResults">
+            <tr *ngFor="let data of tableData">
+              <td class="sortable">{{ data?.id }}</td>
+              <td>{{ data?.nombre }}</td>
+              <td>
+                <div class="d-flex justify-content-center float-right mr-3">
+                  <img
+                    src="./assets/icons/edit.svg"
+                    alt="edit_icon"
+                    class="mr-4"
+                    (click)="goEdit(data.id)"
+                    role="button"
+                  />
+                  <img
+                    src="./assets/icons/delete.svg"
+                    alt="delete_icon"
+                    (click)="openModal(data.id)"
+                    role="button"
+                    class="img-disabled"
+                  />
+                  <app-modals
+                    *ngIf="modalSwitch === true"
+                    [title]="modalTitle"
+                    [message]="modalMessage"
+                    (triggerCancel)="closeModal()"
+                    (triggerConfirm)="deleteOrganismo(idNumber)"
+                  ></app-modals>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <ng-template #noResults>
+          <tr>
+            <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold">
+              Sin resultados. Realizá una nueva búsqueda.
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+    <ng-container *ngIf="tableData.length > 0">
+      <app-pagination
+        [allPagesNumber]="allPages"
+        (changePage)="onPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</div>

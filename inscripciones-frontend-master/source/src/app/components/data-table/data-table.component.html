@@ -1,0 +1,67 @@
+<div class="table mt-4 px-5 py-3 bg-white">
+  <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+    <h4>Usuarios Registrados</h4>
+    <div class="d-flex justify-content-around">
+      <div class="d-flex justify-content-between">
+        <p class="mr-4">
+          <img src="/assets/icons/organizar.svg" alt="organizar" /> Organizar
+        </p>
+      </div>
+      <div>
+        <p><img src="/assets/icons/filtrar.svg" alt="filtrar" /> Filtrar</p>
+      </div>
+    </div>
+  </div>
+  <table class="table border-0" aria-label="tabla con usuarios registrados">
+    <thead>
+      <tr>
+        <th scope="col">Usuario</th>
+        <th scope="col">CUIL</th>
+        <th scope="col">Organismo</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <span class="border-bottom"></span>
+    <tbody>
+      <tr>
+        <td>
+          <div class="d-flex justify-content-between">
+            <img src="/assets/icons/edit.svg" alt="edit_icon" />
+            <img src="/assets/icons/delete.svg" alt="delete_icon" />
+            <div>
+              <div class="modal d-block mt-5" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">¿Desea eliminar el usuario?</h4>
+                    </div>
+                    <div class="modal-body">
+                      <p>
+                        Si eliminas este Usuario no podremos recuperar sus
+                        datos.
+                      </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Cancelar
+                      </button>
+                      <button type="button" class="btn btn-danger">
+                        Confirmar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div data-dismiss="modal" class="modal-backdrop show"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

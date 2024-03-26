@@ -1,0 +1,589 @@
+<ng-template #templateDesk>
+  <div class="p-4">
+    <div class="mt-4 px-3 py-3 bg-white rounded-1">
+      <div
+        class="d-flex align-items-center justify-content-between px-3 mt-4 mb-2 col-12"
+      >
+        <div class="d-flex flex-column justify-content-center">
+          <div class="d-flex align-items-center">
+            <img
+              src="./assets/icons/chevron-left.svg"
+              class="mr-2"
+              [routerLink]="['../../../..']"
+              role="button"
+              alt="flecha-atras"
+            />
+            <h1>{{ tableData?.nombreClase }}</h1>
+          </div>
+          <div class="asistencia-subtitle">
+            <span
+              >Sede: {{ tableData?.nombreSede }}, del
+              {{ tableData?.fechaInicio | date : "dd/MM/yyyy" }} al
+              {{ tableData?.fechaFinal | date : "dd/MM/yyyy" }}, desde las
+              {{ tableData?.horaInicio }} hs</span
+            >
+          </div>
+        </div>
+        <div
+          class="d-flex mt-5 align-items-center flex-column justify-content-around"
+        >
+          <button
+            class="btn btn-primary position-relative"
+            (click)="openDayPicker(claseFecha)"
+          >
+            Buscar clase
+          </button>
+          <div
+            class="form-group date-picker position-absolute"
+            *ngIf="showDatepicker"
+          >
+            <ngb-datepicker
+              #dp
+              [(ngModel)]="model"
+              (dateSelect)="onDateSelection($event)"
+              [dayTemplate]="t"
+              outsideDays="hidden"
+              [displayMonths]="1"
+            >
+              <ng-template
+                #t
+                let-date="date"
+                let-focused="focused"
+                let-selected="selected"
+              >
+                <span
+                  class="custom-day"
+                  [ngStyle]="{ backgroundColor: isSelected(date) }"
+                  [class.focused]="focused"
+                >
+                  {{ date.day }}
+                </span>
+              </ng-template>
+            </ngb-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="mb-4 col-12">
+        <div class="d-flex align-items-center justify-content-between">
+          <ng-container *ngFor="let item of dtoData; let i = index">
+            <div
+              *ngIf="item?.id === tableData?.id"
+              class="d-flex justify-content-between asistencia-warning"
+            >
+              <img
+                src="./assets/icons/chevron-left.svg"
+                class="mr-3"
+                role="button"
+                (click)="cambiarDeClaseMenos(i)"
+                alt="flecha-atras"
+              />
+              <app-modals
+                *ngIf="modalSwitchThree === true"
+                [title]="modalTitleTwo"
+                [message]="modalMessageTwo"
+                (triggerCancel)="closeModalThree()"
+                (triggerConfirm)="cambiarDeClaseMenosHelper(i)"
+              ></app-modals>
+              <span
+                >{{ tableData?.nombreClase }}:
+                {{ item?.fecha | date : "dd/MM/yyyy" }}</span
+              >
+              <img
+                src="./assets/icons/chevron-right.svg"
+                class="ml-3"
+                role="button"
+                (click)="cambiarDeClaseMas(i)"
+                alt="flecha-adelante"
+              />
+              <app-modals
+                *ngIf="modalSwitchTwo === true"
+                [title]="modalTitleTwo"
+                [message]="modalMessageTwo"
+                (triggerCancel)="closeModalTwo()"
+                (triggerConfirm)="cambiarDeClaseMasHelper(i)"
+              ></app-modals>
+            </div>
+          </ng-container>
+
+          <div class="d-flex align-items-center justify-content-between mt-2">
+            <div class="dropdown">
+              <button
+                type="button"
+                class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <img src="./assets/icons/organizar.svg" alt="organizar" />
+                Organizar
+              </button>
+              <div class="dropdown-menu dropdown-menu-right w-auto">
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  (click)="sortByName()"
+                >
+                  Por nombre y apellido
+                </button>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  (click)="sortByCuil()"
+                >
+                  Por DNI/CUIL/PAS
+                </button>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  (click)="sortByEmail()"
+                >
+                  Por E-mail
+                </button>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  (click)="sortByAsistencias()"
+                >
+                  Por Asistencias
+                </button>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  (click)="sortByAusencias()"
+                >
+                  Por Ausencias
+                </button>
+                <button
+                  class="dropdown-item"
+                  type="button"
+                  (click)="sortByPromedio()"
+                >
+                  Por % Asistencia
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form
+        (ngSubmit)="editAsistencia(formAsistencia)"
+        #formAsistencia="ngForm"
+      >
+        <table
+          class="table table-selectable border-0 text-left pl-4 ml-3"
+          aria-label="tabla con alumnos de la clase"
+        >
+          <thead>
+            <tr class="position-relative">
+              <th scope="col">
+                <button
+                  autoClose="outside"
+                  placement="bottom"
+                  ngbTooltip="Al seleccionar, verificas la asistencia"
+                  type="button"
+                  class="btn btn-primary me-2 btn-sm tooltip-button py-1 px-1 d-flex"
+                >
+                  <img src="./assets/icons/help-circle.svg" alt="ayuda" />
+                </button>
+              </th>
+              <th scope="col">
+                <input
+                  type="checkbox"
+                  [disabled]="deshabilitarAsistencias === true"
+                  aria-label="checkbox"
+                  name="all"
+                  [checked]="todosEstanSeleccionados()"
+                  (change)="handleAllChecked($event)"
+                />
+              </th>
+              <th scope="col">Nombres y apellidos</th>
+              <th scope="col">CUIL/DNI/PAS</th>
+              <th scope="col">E-mail</th>
+              <th scope="col" class="text-center">Asistencias</th>
+              <th scope="col" class="text-center">Ausencias</th>
+              <th scope="col" class="text-center">% Asistencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <h2
+              *ngIf="
+                alumnosTableData[claseId] === null ||
+                alumnosTableData[claseId] === undefined ||
+                alumnosTableData[claseId]?.length === 0
+              "
+              class="ml-4 mt-4"
+            >
+              Sin estudiantes
+            </h2>
+            <tr *ngFor="let item of alumnosTableData[claseId]; let i = index">
+              <td></td>
+              <td>
+                <input
+                  type="checkbox"
+                  name="item"
+                  [disabled]="deshabilitarAsistencias === true"
+                  [checked]="item.asistio"
+                  (change)="changeCheckbox($event, item.id)"
+                />
+              </td>
+              <td>{{ item.nombreApellido }}</td>
+              <td>{{ item.cuil }}</td>
+              <td>{{ item.email }}</td>
+              <td class="text-center">{{ item.asitencias }}</td>
+              <td class="text-center">{{ item.ausencias }}</td>
+              <td class="text-center">{{ item.porcentajeAsistencia }} %</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex mt-4">
+          <div class="form-group ml-4 col-12">
+            <div class="btn-wrapper d-flex justify-content-start mt-3">
+              <button
+                type="button"
+                class="btn btn-link mr-4"
+                (click)="openModal()"
+              >
+                Cancelar
+              </button>
+              <app-modals
+                *ngIf="modalSwitch === true"
+                [title]="modalTitle"
+                [message]="modalMessage"
+                (triggerCancel)="closeModal()"
+                (triggerConfirm)="redirectToPage()"
+              ></app-modals>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="
+                  alumnosTableData[claseId] === null ||
+                  alumnosTableData[claseId] === undefined ||
+                  alumnosTableData[claseId].length === 0 ||
+                  deshabilitarAsistencias === true
+                "
+              >
+                Guardar
+              </button>
+            </div>
+            <div class="row mt-5">
+              <div *ngIf="correct" class="form-group m-auto col-5 mt-5">
+                <app-alertas
+                  [message]="'Se han guardado los cambios exitosamente'"
+                  [type]="'alert alert-success'"
+                  (onClose)="closeAlert()"
+                ></app-alertas>
+              </div>
+
+              <div *ngIf="error" class="form-group m-auto col-5 mt-5">
+                <app-alertas
+                  [message]="'Error al guardar los cambios'"
+                  [type]="'alert alert-danger'"
+                  (onClose)="closeAlert()"
+                ></app-alertas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #templateMob>
+  <div class="py-3 pt-2 rounded-1">
+    <div class="d-flex align-items-center justify-content-between mt-4 mb-2">
+      <div class="d-flex flex-column justify-content-start">
+        <div
+          class="d-flex align-items-center justify-content-start col-8 nombre-class-container"
+        >
+          <img
+            src="./assets/icons/chevron-left.svg"
+            [routerLink]="['../../../..']"
+            class="mr-1 chev-left"
+            role="button"
+            alt="flecha-atras"
+          />
+          <h3 class="mt-2">{{ tableData?.nombreClase }}</h3>
+        </div>
+        <div class="asistencia-subtitle">
+          <span>Sede: {{ tableData?.nombreSede }} </span><br />
+          <span
+            >Del: {{ tableData?.fechaInicio | date : "dd/MM/yyyy" }} al
+            {{ tableData?.fechaFinal | date : "dd/MM/yyyy" }}</span
+          >
+          <br />
+          <span> Desde las {{ tableData?.horaInicio }} hs</span>
+        </div>
+      </div>
+      <div
+        class="d-flex mt-5 align-items-center flex-column justify-content-around col-4 text-sm"
+      >
+        <button
+          class="btn btn-primary btn-mobile position-relative"
+          (click)="openDayPicker(claseFecha)"
+        >
+          Buscar clase
+        </button>
+      </div>
+    </div>
+    <div class="mb-4 w-100">
+      <div class="d-flex align-items-center justify-content-between">
+        <ng-container *ngFor="let item of dtoData; let i = index">
+          <div
+            *ngIf="item?.id === tableData?.id"
+            class="d-flex justify-content-between asistencia-warning"
+          >
+            <img
+              src="./assets/icons/chevron-left.svg"
+              class="mr-3"
+              role="button"
+              (click)="cambiarDeClaseMenos(i)"
+              alt="flecha-atras"
+            />
+            <app-modals
+              *ngIf="modalSwitchThree === true"
+              [title]="modalTitleTwo"
+              [message]="modalMessageTwo"
+              (triggerCancel)="closeModalThree()"
+              (triggerConfirm)="cambiarDeClaseMenosHelper(i)"
+            ></app-modals>
+            <span
+              >{{ tableData?.nombreClase }}:
+              {{ item?.fecha | date : "dd/MM/yyyy" }}</span
+            >
+            <img
+              src="./assets/icons/chevron-right.svg"
+              class="ml-3"
+              role="button"
+              (click)="cambiarDeClaseMas(i)"
+              alt="flecha-adelante"
+            />
+            <div
+              class="form-group date-picker position-absolute date-picker-container"
+              *ngIf="showDatepicker"
+            >
+              <ngb-datepicker
+                #dp
+                [(ngModel)]="model"
+                (dateSelect)="onDateSelection($event)"
+                [dayTemplate]="t"
+                outsideDays="hidden"
+                [displayMonths]="1"
+              >
+                <ng-template
+                  #t
+                  let-date="date"
+                  let-focused="focused"
+                  let-selected="selected"
+                >
+                  <span
+                    class="custom-day"
+                    [ngStyle]="{ backgroundColor: isSelected(date) }"
+                    [class.focused]="focused"
+                  >
+                    {{ date.day }}
+                  </span>
+                </ng-template>
+              </ngb-datepicker>
+            </div>
+            <app-modals
+              *ngIf="modalSwitchTwo === true"
+              [title]="modalTitleTwo"
+              [message]="modalMessageTwo"
+              (triggerCancel)="closeModalTwo()"
+              (triggerConfirm)="cambiarDeClaseMasHelper(i)"
+            ></app-modals>
+          </div>
+        </ng-container>
+      </div>
+      <div class="d-flex align-items-center justify-content-start ml-1 mt-4">
+        <div class="dropdown mr-3">
+          <button
+            type="button"
+            class="btn btn-dropdown border-0 btn-dropdown-border d-flex justify-content-between btn-dropdown-sm dropdown-toggle position-relative"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              src="./assets/icons/organizar.svg"
+              class="mr-2"
+              alt="organizar"
+            />
+          </button>
+          <div class="dropdown-menu w-auto">
+            <button class="dropdown-item" type="button" (click)="sortByName()">
+              Por nombre y apellido
+            </button>
+            <button class="dropdown-item" type="button" (click)="sortByCuil()">
+              Por DNI/CUIL/PAS
+            </button>
+            <button class="dropdown-item" type="button" (click)="sortByEmail()">
+              Por E-mail
+            </button>
+            <button
+              class="dropdown-item"
+              type="button"
+              (click)="sortByAsistencias()"
+            >
+              Por Asistencias
+            </button>
+            <button
+              class="dropdown-item"
+              type="button"
+              (click)="sortByAusencias()"
+            >
+              Por Ausencias
+            </button>
+            <button
+              class="dropdown-item"
+              type="button"
+              (click)="sortByPromedio()"
+            >
+              Por % Asistencia
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form (ngSubmit)="editAsistencia(formAsistencia)" #formAsistencia="ngForm">
+      <table
+        class="table table-selectable border-0 text-left"
+        aria-label="tabla con alumnos de la clase"
+      >
+        <thead>
+          <tr>
+            <th scope="col">
+              <input
+                type="checkbox"
+                [disabled]="deshabilitarAsistencias === true"
+                aria-label="checkbox"
+                name="all"
+                [checked]="todosEstanSeleccionados()"
+                (change)="handleAllChecked($event)"
+              />
+            </th>
+            <th scope="col" class="nombre-apell">Nombres y apellidos</th>
+            <th scope="col" class="text-center">Asistencias</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td>
+              <h4
+                *ngIf="
+                  alumnosTableData[claseId] === null ||
+                  alumnosTableData[claseId] === undefined ||
+                  alumnosTableData[claseId].length === 0
+                "
+                class="mt-4"
+              >
+                Sin estudiantes
+              </h4>
+            </td>
+            <td></td>
+          </tr>
+
+          <ng-container *ngFor="let item of listFiltered; let i = index">
+            <tr>
+              <td>
+                <input
+                  type="checkbox"
+                  name="item"
+                  [disabled]="deshabilitarAsistencias === true"
+                  [checked]="item.asistio"
+                  (change)="changeCheckbox($event, item.id)"
+                />
+              </td>
+              <td>
+                {{ item.nombreApellido }}
+                <img
+                  src="./assets/icons/chevron-down.svg"
+                  alt="flecha-abajo"
+                  role="button"
+                  class="ml-2"
+                  (click)="expandRowContent(item.id)"
+                />
+              </td>
+              <td class="text-center">
+                {{ item.asitencias }}/{{ dtoData.length }}
+              </td>
+            </tr>
+            <!-- TABLA DOS -->
+            <ng-container *ngIf="expandContent">
+              <tr [hidden]="item.id !== selectedId" class="table-two">
+                <td></td>
+                <td class="table-two-expand">
+                  DNI/CUIL: {{ item.cuil }} <br />
+                  {{ item.email }}
+                </td>
+                <td></td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+      <ng-container *ngIf="listFiltered.length > 0">
+        <app-pagination
+          [allPagesNumber]="allPages"
+          (changePage)="onPageChange($event)"
+          [_currentPage]="currentPage"
+        ></app-pagination>
+      </ng-container>
+      <div class="d-flex mt-4">
+        <div class="form-group">
+          <div class="btn-wrapper d-flex justify-content-start mt-3">
+            <button
+              type="button"
+              class="btn btn-link mr-4"
+              (click)="openModal()"
+            >
+              Cancelar
+            </button>
+            <app-modals
+              *ngIf="modalSwitch === true"
+              [title]="modalTitle"
+              [message]="modalMessage"
+              (triggerCancel)="closeModal()"
+              (triggerConfirm)="redirectToPage()"
+            ></app-modals>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="
+                alumnosTableData[claseId] === null ||
+                alumnosTableData[claseId] === undefined ||
+                alumnosTableData[claseId].length === 0 ||
+                deshabilitarAsistencias === true
+              "
+            >
+              Guardar
+            </button>
+          </div>
+          <div class="row mt-5">
+            <div *ngIf="correct" class="form-group m-auto px-3 mt-5">
+              <app-alertas
+                [message]="'Se han guardado los cambios exitosamente'"
+                [type]="'alert alert-success'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+
+            <div *ngIf="error" class="form-group m-auto px-3 mt-5">
+              <app-alertas
+                [message]="'Error al guardar los cambios'"
+                [type]="'alert alert-danger'"
+                (onClose)="closeAlert()"
+              ></app-alertas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-container
+  *ngTemplateOutlet="windowWidth <= maxWidthMobile ? templateMob : templateDesk"
+></ng-container>

@@ -1,0 +1,30 @@
+.modal-content {
+}
+
+.modal-header {
+  border-radius: 8px 8px 0px 0px;
+  background: var(--amarillo-obelisco, #ffdb2e);
+  padding: 28px 50px 15px !important;
+}
+
+.modal-footer {
+  justify-content: flex-start !important;
+}
+
+.modal-backdrop {
+  opacity: 0.3 !important;
+}
+
+table th {
+  color: var(--Black-Darkest, #141920);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px; /* 137.5% */
+}
+
+@media screen and (max-width: 768px) {
+  .modal-content {
+    width: 100%;
+  }
+}

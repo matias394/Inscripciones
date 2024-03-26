@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <app-header></app-header>
+  <app-banner [image]="image" [description]="description"></app-banner>
+  <div class="content-wrapper">
+    <div class="content-body">
+      <div class="container p-4">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

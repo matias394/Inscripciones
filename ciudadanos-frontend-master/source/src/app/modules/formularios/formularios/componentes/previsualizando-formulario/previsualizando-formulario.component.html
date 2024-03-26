@@ -1,0 +1,58 @@
+<main class="form-wrapper p-4" role="main">
+  <div class="row d-flex justify-content-center">
+    <!-- <h1 class="col-xl-auto">{{nombre}}</h1> -->
+    <div *ngIf="secciones" class="col-12 col-md-9 col-lg-9">
+      <form
+        [formGroup]="form"
+        (ngSubmit)="onSubmit(model)"
+        *ngIf="secciones.length > 0"
+      >
+        <mat-horizontal-stepper #stepper>
+          <mat-step
+            *ngFor="let seccion of secciones; let index = index"
+            [completed]="false"
+          >
+            <formly-form
+              [form]="form.at(index)"
+              [model]="model"
+              [fields]="seccion.fields"
+              [options]="options[index]"
+            >
+              <!-- {{JSON.stringify(model)}} -->
+            </formly-form>
+            <div class="grid-wraper">
+              <div class="row">
+                <div class="col-6">
+                  <div>
+                    <button
+                      *ngIf="esPosibleRetrocederSeccion()"
+                      matStepperPrevious
+                      class="btn btn-secondary"
+                      type="button"
+                      (click)="seccionPrevia()"
+                    >
+                      Atrás
+                    </button>
+                  </div>
+                </div>
+                <div class="col-6 text-right">
+                  <button
+                    *ngIf="esPosibleAvanzarSeccion()"
+                    class="btn btn-primary"
+                    type="button"
+                    (click)="siguienteSeccion()"
+                  >
+                    Siguiente
+                  </button>
+                  <!-- <button *ngIf="!esPosibleAvanzarSeccion()" class="btn btn-primary" type="submit">
+                            Enviar
+                          </button> -->
+                </div>
+              </div>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </form>
+    </div>
+  </div>
+</main>

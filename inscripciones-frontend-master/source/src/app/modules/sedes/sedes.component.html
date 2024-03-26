@@ -1,0 +1,112 @@
+<div class="bg-light p-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1>Sedes</h1>
+    <button class="btn btn-primary" routerLink="crear">Crear sede</button>
+  </div>
+  <div>
+    <div class="mt-4">
+      <app-search-bar
+        [placeholder]="'Buscar sedes'"
+        (searchEnter)="onSearchEnter($event)"
+        (searchInput)="onSearchInput($event)"
+      ></app-search-bar>
+    </div>
+
+    <div class="table mt-4 px-5 py-3 bg-white">
+      <div class="d-flex align-items-center justify-content-between mt-3 mb-4">
+        <h4>Lista de sedes</h4>
+      </div>
+      <table
+        class="table border-0"
+        aria-label="tabla con lista de todas las sedes"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Nombre de la sede</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Piso</th>
+            <th scope="col">Contacto</th>
+            <th scope="col" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <span class="border-bottom"></span>
+        <tbody>
+          <ng-container *ngIf="tableData.length > 0; else noResults">
+            <tr *ngFor="let data of tableData">
+              <td>{{ data?.id }}</td>
+              <td>{{ data?.nombre }}</td>
+              <td>{{ data?.direccion }}</td>
+              <td>
+                {{
+                  data?.piso === null || data?.piso.length === 0
+                    ? "-"
+                    : data?.piso
+                }}
+              </td>
+              <td>
+                {{
+                  data?.telefono || data?.email
+                    ? data?.email
+                      ? data.email
+                      : data?.telefono
+                    : "Sin Contacto"
+                }}
+              </td>
+              <td>
+                <div class="text-center">
+                  <img
+                    src="./assets/icons/edit.svg"
+                    alt="edit_icon"
+                    class="mr-4"
+                    (click)="goEdit(data.id)"
+                    role="button"
+                  />
+                  <img
+                    src="./assets/icons/delete.svg"
+                    alt="delete_icon"
+                    (click)="openModal(data.id)"
+                    role="button"
+                    class="img-disabled"
+                  />
+                  <app-modals
+                    #modal
+                    *ngIf="modalSwitch === true"
+                    [title]="modalTitle"
+                    [message]="modalMessage"
+                    (triggerCancel)="closeModal()"
+                    (triggerConfirm)="deleteSedesById(idNumber)"
+                  ></app-modals>
+
+                  <app-modals
+                    #modal
+                    *ngIf="modalDelete === true"
+                    [title]="modalTitleDelete"
+                    [message]="modalMessageDelete"
+                    (triggerCancel)="closeDeleteModal()"
+                    (triggerConfirm)="closeDeleteModal()"
+                  ></app-modals>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+        <ng-template #noResults>
+          <tr>
+            <td colspan="6" class="text-center mt-5 pt-5 font-weight-bold">
+              Sin resultados. Realizá una nueva búsqueda.
+            </td>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+
+    <ng-container *ngIf="tableData.length > 0">
+      <app-pagination
+        [allPagesNumber]="allSedesPages"
+        (changePage)="onSedesPageChange($event)"
+        [_currentPage]="currentPage"
+      ></app-pagination>
+    </ng-container>
+  </div>
+</div>

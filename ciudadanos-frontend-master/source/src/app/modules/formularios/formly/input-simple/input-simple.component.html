@@ -1,0 +1,15 @@
+<div class="form-group" *ngIf="mostrarElemento">
+  <label for="inputSimple">{{to.label}}{{to.required ? ' *' : ''}}</label>
+  <br />
+  <small class="descripcion">{{to.description}}</small>
+ <!-- <div *ngIf="to.subsanacion">
+    <div class="mensajeSubsanacion"><p><i class="fa fa-comments" aria-hidden="true"></i> {{to.subsanacion.comentario}}</p></div>
+  </div>-->
+  <div class="d-flex justify-content-between contenedor-has-btn">
+    <input type="text" [readonly]="to.readonly" minlength="{{to.minLength}}" maxlength="{{to.maxLength}}" class="form-control {{to.readonly ? 'input-read-only' : ''}}" id="inputSimple" aria-describedby="descripcion"
+           [formControl]="formControl" [formlyAttributes]="field" [(ngModel)]="valor" [placeholder]="to.placeholder ? to.placeholder : ''"/>
+   <button *ngIf="editarEnMiba" class="btn btn-success" type="button" [disabled]="isButtonDisabled()" (click)="redirigirMiba()" title="Editar en miBA" (keypress)="validateFormat($event)">
+      <i class='bx bx-edit-alt'></i>
+    </button>
+  </div>
+</div>

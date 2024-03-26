@@ -1,0 +1,13 @@
+.valor-del-componente {
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .selector-concepto-pago .ng-select-container {
+  height: 2.0em !important;
+  border-radius: 3px !important;
+}
+
+.input-item-concepto-pago {
+  border-radius: 3px !important;
+}

@@ -1,0 +1,95 @@
+<div class="home-container">
+  <h2 class="py-3 px-3 banner-title">
+    Seleccioná la inscripción que se ajuste a tu necesidad
+  </h2>
+  <span class="px-3">Seleccioná un lugar</span>
+  <div class="mt-4">
+    <div class="navbar-search d-responsive ml-auto">
+      <form class="form-search form-search-sm">
+        <div class="form-group col-6">
+          <input
+            type="search"
+            class="form-control form-control-sm bg-white input-search"
+            id="searchInput"
+            name="header-search"
+            (keyup.enter)="onInputKeyUp($event)"
+            (input)="onInputChanged($event)"
+            placeholder="Buscar sede o dirección"
+          />
+          <button
+            class="reset"
+            type="reset"
+            (click)="onInputKeyUp($event)"
+          ></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="table table-stripped mt-5 px-3 py-3 bg-white">
+    <div *ngIf="bodyData.length === 0" class="mt-4">
+      <p>Sin resultados. Por favor realize una nueva búsqueda.</p>
+    </div>
+    <table class="table border-0 table-stripped" *ngIf="bodyData.length > 0">
+      <thead>
+        <tr>
+          <th>Sede</th>
+          <th>Dirección</th>
+          <th>Fecha de inicio</th>
+          <th>Días</th>
+          <th>Horario</th>
+          <th>Modalidad</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <span class="border-bottom"></span>
+      <tbody>
+        <ng-container *ngFor="let item of bodyData; let i = index">
+          <tr>
+            <td class="sede">
+              {{ item.modalidad == "Virtual" ? "Online" : item.nombreSede }}
+            </td>
+            <td class="direccion">
+              {{
+                item.modalidad == "Virtual"
+                  ? "Online"
+                  : item.direccionSede.trim() === ""
+                  ? "Sin Dirección"
+                  : item.direccionSede
+              }}
+            </td>
+            <td class="fechaInicio">
+              {{ item.fechaInicio | date : "dd/MM/yyyy" }}
+            </td>
+            <td class="dias">
+              <table>
+                <ng-container *ngFor="let horario of item.horarios">
+                  <p>{{ horario.dias }}</p>
+                </ng-container>
+              </table>
+            </td>
+
+            <td class="horario">
+              <table>
+                <ng-container *ngFor="let horario of item.horarios">
+                  <p class="horario">{{ horario.horario }}</p>
+                </ng-container>
+              </table>
+            </td>
+            <td class="modalidad">
+              {{ item.modalidad }}
+            </td>
+            <td>
+              <button
+                class="btn btn-primary"
+                (click)="goToInscriptionPage(item)"
+              >
+                Inscribite
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
